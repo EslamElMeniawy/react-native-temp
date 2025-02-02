@@ -7,7 +7,7 @@
     "reverse": "adb start-server && adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090",
     "android-clean": "cd android && ./gradlew clean && cd ..",
     "pods": "run-script-os",
-    "pods:macos": "npx pod-install --project-directory=ios",
+    "pods:macos": "cd ios && bundle exec pod install --repo-update && cd ..",
     "pods:default": "echo '\\033[0;33m\"pods\" command available on mac only!'",
     "android:dev": "react-native run-android --mode=developmentdebug",
     "android:staging": "react-native run-android --mode=stagingdebug",
