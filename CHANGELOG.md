@@ -1,4 +1,11 @@
+# Changelog
 
+## 3.8.0 (2025-02-03)
+
+* feat: upgrade `ReactNative` to version `0.77.0` ([e5a2bb3](https://github.com/EslamElMeniawy/react-native-temp/commit/e5a2bb3))
+* refactor: use ruby for installing pods ([130a1f8](https://github.com/EslamElMeniawy/react-native-temp/commit/130a1f8))
+* build: update dependencies ([a823f87](https://github.com/EslamElMeniawy/react-native-temp/commit/a823f87))
+* build: upgrade `yarn` to version `4.6.0` ([ffb9ab2](https://github.com/EslamElMeniawy/react-native-temp/commit/ffb9ab2))
 
 ## [3.7.0](https://github.com/EslamElMeniawy/react-native-temp/compare/v3.6.3...v3.7.0) (2024-07-07)
 
