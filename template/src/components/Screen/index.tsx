@@ -4,7 +4,7 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {StatusBar, NavigationBar} from '@src/components';
+import {SystemBars} from '@src/components';
 import {useAppTheme} from '@src/utils';
 import styles from './styles';
 import type {Props} from './types';
@@ -29,21 +29,29 @@ export default React.memo((props: Props) => {
     paddingLeft: !edges || edges?.includes('left') ? insets.left : 0,
   };
 
+  const statusBarContainerStyle = {
+    height: !edges || edges?.includes('top') ? insets.top : 0,
+    backgroundColor: statusBarColor ?? theme.colors.background,
+  };
+
+  const navigationBarContainerStyle = {
+    height: !edges || edges?.includes('bottom') ? insets.bottom : 0,
+    backgroundColor: navigationBarColor ?? theme.colors.background,
+  };
+
   return (
     <SafeAreaProvider>
-      <StatusBar
-        edges={edges}
+      <View style={statusBarContainerStyle} />
+      <SystemBars
         statusBarProps={statusBarProps}
         statusBarColor={statusBarColor}
+        navigationBarProps={navigationBarProps}
+        navigationBarColor={navigationBarColor}
       />
       <View style={StyleSheet.flatten([styles.content, contentStyle, style])}>
         {children}
       </View>
-      <NavigationBar
-        edges={edges}
-        navigationBarProps={navigationBarProps}
-        navigationBarColor={navigationBarColor}
-      />
+      <View style={navigationBarContainerStyle} />
     </SafeAreaProvider>
   );
 });

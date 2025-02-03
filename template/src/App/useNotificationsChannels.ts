@@ -1,5 +1,5 @@
+import notifee from '@notifee/react-native';
 import * as React from 'react';
-import {default as PushNotification} from 'react-native-push-notification';
 import {translate} from '@src/core';
 import {defaultChannelId, localChannelId} from '@src/utils';
 
@@ -21,14 +21,15 @@ export const useNotificationsChannels = () => {
     const createNotificationsChannel = (channelId: string) => {
       console.info(getLogMessage('createNotificationsChannel'), channelId);
 
-      PushNotification.createChannel(
-        {
-          channelId: channelId,
-          channelName: translate('app_name'),
-          soundName: 'default',
-        },
-        created => console.info(getLogMessage('created'), channelId, created),
-      );
+      notifee
+        .createChannel({
+          id: channelId,
+          name: translate('app_name'),
+          sound: 'default',
+        })
+        .then(createdChannelId => {
+          console.info(getLogMessage('createdChannelId'), createdChannelId);
+        });
     };
 
     /**

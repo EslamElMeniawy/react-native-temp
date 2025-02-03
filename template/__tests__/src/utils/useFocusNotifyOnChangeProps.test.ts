@@ -1,5 +1,5 @@
 import {describe, test, expect} from '@jest/globals';
-import {renderHookWithProviders} from '@src/utils';
+import {renderHookWithProviders} from '@src/utils/TestUtils';
 import {useFocusNotifyOnChangeProps} from '@src/utils/useFocusNotifyOnChangeProps';
 
 describe('useFocusNotifyOnChangeProps', () => {

@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingVertical: vs(32),
     gap: vs(8),
+    flexGrow: 1,
+    justifyContent: 'center',
   },
 });
 

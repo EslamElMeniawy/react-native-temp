@@ -1,22 +1,11 @@
 import {test, expect, jest, afterEach} from '@jest/globals';
-import {default as PushNotificationIOS} from '@react-native-community/push-notification-ios';
-import {Platform} from 'react-native';
-import {default as PushNotification} from 'react-native-push-notification';
+import notifee from '@notifee/react-native';
 import {clearNotifications} from '@src/utils/NotificationUtils/Helpers';
 
-const mockCancelLocalNotification = jest.spyOn(
-  PushNotification,
-  'cancelLocalNotification',
-);
-
-const mockRemoveDeliveredNotifications = jest.spyOn(
-  PushNotificationIOS,
-  'removeDeliveredNotifications',
-);
+const mockCancelLocalNotification = jest.spyOn(notifee, 'cancelNotification');
 
 afterEach(() => {
   mockCancelLocalNotification?.mockClear();
-  mockRemoveDeliveredNotifications?.mockClear();
 });
 
 test('should clear local notification when notification ID is a string', () => {
@@ -29,10 +18,6 @@ test('should clear local notification when notification ID is a string', () => {
 
   clearNotifications(notification);
   expect(mockCancelLocalNotification).toHaveBeenCalledWith('123');
-
-  if (Platform.OS === 'ios') {
-    expect(mockRemoveDeliveredNotifications).toHaveBeenCalledWith(['123']);
-  }
 });
 
 test('should not clear local notification when notification ID is undefined or null', () => {
@@ -45,10 +30,6 @@ test('should not clear local notification when notification ID is undefined or n
 
   clearNotifications(notification);
   expect(mockCancelLocalNotification).not.toHaveBeenCalled();
-
-  if (Platform.OS === 'ios') {
-    expect(mockRemoveDeliveredNotifications).not.toHaveBeenCalled();
-  }
 });
 
 test('should not clear notification when ID is not a string', () => {
@@ -61,7 +42,6 @@ test('should not clear notification when ID is not a string', () => {
 
   clearNotifications(notification);
   expect(mockCancelLocalNotification).not.toHaveBeenCalled();
-  expect(mockRemoveDeliveredNotifications).not.toHaveBeenCalled();
 });
 
 test('should not clear iOS notification when platform is not iOS', () => {
@@ -74,8 +54,4 @@ test('should not clear iOS notification when platform is not iOS', () => {
 
   clearNotifications(notification);
   expect(mockCancelLocalNotification).toHaveBeenCalledWith('123');
-
-  if (Platform.OS !== 'ios') {
-    expect(mockRemoveDeliveredNotifications).not.toHaveBeenCalled();
-  }
 });

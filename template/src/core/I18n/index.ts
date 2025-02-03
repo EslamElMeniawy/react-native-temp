@@ -1,6 +1,6 @@
 import {use} from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import {Platform, NativeModules, I18nManager} from 'react-native';
+import {Platform, Settings, I18nManager} from 'react-native';
 import {default as Config} from 'react-native-config';
 import * as RNLocalize from 'react-native-localize';
 import RNRestart from 'react-native-restart';
@@ -19,12 +19,11 @@ const resources = {
 // Get device language.
 const deviceLanguage =
   Platform.OS === 'ios'
-    ? NativeModules.SettingsManager.settings.AppleLocale ||
-      NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
-    : NativeModules.I18nManager.localeIdentifier;
+    ? Settings.get('AppleLocale') || Settings.get('AppleLanguages')?.[0]
+    : I18nManager.getConstants().localeIdentifier;
 
 const defaultLocale: string =
-  deviceLanguage.toLowerCase().indexOf(AppLanguages.ARABIC) > -1
+  deviceLanguage?.toLowerCase()?.indexOf(AppLanguages.ARABIC) > -1
     ? AppLanguages.ARABIC
     : AppLanguages.ENGLISH;
 
@@ -45,7 +44,7 @@ export const setI18nConfig = async () => {
 
   await i18n.init({
     debug: Config.ENABLE_LOCAL_LOG === 'true',
-    compatibilityJSON: 'v3',
+    compatibilityJSON: 'v4',
     resources,
     lng: defaultLocale,
     interpolation: {

@@ -14,17 +14,17 @@ export const useNotificationsInteraction = () => {
     (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
       const title =
         remoteMessage.notification?.title ??
-        typeof remoteMessage.data?.title === 'object'
+        (typeof remoteMessage.data?.title === 'object'
           ? undefined
-          : remoteMessage.data?.title;
+          : remoteMessage.data?.title);
 
       console.info(getLogMessage('title'), title);
 
       const body =
         remoteMessage.notification?.body ??
-        typeof remoteMessage.data?.body === 'object'
+        (typeof remoteMessage.data?.body === 'object'
           ? undefined
-          : remoteMessage.data?.body;
+          : remoteMessage.data?.body);
 
       console.info(getLogMessage('body'), body);
 

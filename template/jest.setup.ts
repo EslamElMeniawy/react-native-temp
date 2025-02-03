@@ -61,94 +61,138 @@ jest.mock('react-native-bootsplash', () => {
   };
 });
 
-jest.mock('react-native-keyboard-aware-scroll-view', () => {
-  const KeyboardAwareScrollView = ({
-    children,
-  }: Readonly<React.PropsWithChildren<{}>>) => children;
+jest.mock('react-native-keyboard-controller', () => {
+  const values = {
+    animated: {
+      progress: 0,
+      height: 0,
+    },
+    reanimated: {
+      progress: {value: 0, get: jest.fn().mockReturnValue(0), set: jest.fn()},
+      height: {value: 0, get: jest.fn().mockReturnValue(0), set: jest.fn()},
+    },
+  };
+  const inputData = {
+    target: 1,
+    parentScrollViewTarget: -1,
+    layout: {
+      x: 0,
+      y: 0,
+      width: 200,
+      height: 40,
+      absoluteX: 0,
+      absoluteY: 100,
+    },
+  };
+  const focusedInput = {
+    input: {
+      value: inputData,
+      get: jest.fn().mockReturnValue(inputData),
+      set: jest.fn(),
+    },
+  };
 
-  return {KeyboardAwareScrollView};
+  const RNKeyboardController = {
+    // hooks
+    /// keyboard
+    useKeyboardAnimation: jest.fn().mockReturnValue(values.animated),
+    useReanimatedKeyboardAnimation: jest
+      .fn()
+      .mockReturnValue(values.reanimated),
+    useResizeMode: jest.fn(),
+    useGenericKeyboardHandler: jest.fn(),
+    useKeyboardHandler: jest.fn(),
+    useKeyboardContext: jest.fn().mockReturnValue(values),
+    /// input
+    useReanimatedFocusedInput: jest.fn().mockReturnValue(focusedInput),
+    useFocusedInputHandler: jest.fn(),
+    /// module
+    useKeyboardController: jest
+      .fn()
+      .mockReturnValue({setEnabled: jest.fn(), enabled: true}),
+    // modules
+    KeyboardController: {
+      setInputMode: jest.fn(),
+      setDefaultMode: jest.fn(),
+      dismiss: jest.fn().mockReturnValue(Promise.resolve()),
+      setFocusTo: jest.fn(),
+      isVisible: jest.fn().mockReturnValue(false),
+      state: jest.fn().mockReturnValue(null),
+    },
+    AndroidSoftInputModes: {
+      SOFT_INPUT_ADJUST_NOTHING: 48,
+      SOFT_INPUT_ADJUST_PAN: 32,
+      SOFT_INPUT_ADJUST_RESIZE: 16,
+      SOFT_INPUT_ADJUST_UNSPECIFIED: 0,
+      SOFT_INPUT_IS_FORWARD_NAVIGATION: 256,
+      SOFT_INPUT_MASK_ADJUST: 240,
+      SOFT_INPUT_MASK_STATE: 15,
+      SOFT_INPUT_MODE_CHANGED: 512,
+      SOFT_INPUT_STATE_ALWAYS_HIDDEN: 3,
+      SOFT_INPUT_STATE_ALWAYS_VISIBLE: 5,
+      SOFT_INPUT_STATE_HIDDEN: 2,
+      SOFT_INPUT_STATE_UNCHANGED: 1,
+      SOFT_INPUT_STATE_UNSPECIFIED: 0,
+      SOFT_INPUT_STATE_VISIBLE: 4,
+    },
+    KeyboardEvents: {
+      addListener: jest.fn(() => ({remove: jest.fn()})),
+    },
+    // views
+    KeyboardControllerView: 'KeyboardControllerView',
+    KeyboardGestureArea: 'KeyboardGestureArea',
+    OverKeyboardView: 'OverKeyboardView',
+    // providers
+    KeyboardProvider: 'KeyboardProvider',
+  };
+
+  return RNKeyboardController;
 });
 
 jest.mock('react-native', () => {
   const RN = jest.requireActual<typeof import('react-native')>('react-native');
 
-  RN.NativeModules.I18nManager = {
-    allowRTL: jest.fn(),
-    forceRTL: jest.fn(),
-    swapLeftAndRightInRTL: jest.fn(),
-    getConstants: () => ({
-      isRTL: false,
-      doLeftAndRightSwapInRTL: true,
+  Object.defineProperty(RN, 'Settings', {
+    get: jest.fn(() => {
+      return {get: jest.fn(), set: jest.fn(), watchKeys: jest.fn()};
     }),
-  };
+  });
 
-  RN.NativeModules.SettingsManager = {
-    settings: {
-      AppleLocale: 'en-US',
-      AppleLanguages: ['en-US'],
-    },
-  };
+  Object.defineProperty(RN, 'I18nManager', {
+    get: jest.fn(() => {
+      return {
+        getConstants: () => ({isRTL: false}),
+      };
+    }),
+  });
 
   return RN;
 });
 
-jest.mock('@react-native-community/push-notification-ios', () => ({
-  FetchResult: 'UIBackgroundFetchResultNewData',
-  AuthorizationStatus: 2,
-  presentLocalNotification: jest.fn(),
-  scheduleLocalNotification: jest.fn(),
-  addNotificationRequest: jest.fn(),
-  cancelAllLocalNotifications: jest.fn(),
-  removeAllPendingNotificationRequests: jest.fn(),
-  removePendingNotificationRequests: jest.fn(),
-  removeAllDeliveredNotifications: jest.fn(),
-  getDeliveredNotifications: jest.fn(),
-  removeDeliveredNotifications: jest.fn(),
-  setApplicationIconBadgeNumber: jest.fn(),
-  getApplicationIconBadgeNumber: jest.fn(),
-  cancelLocalNotifications: jest.fn(),
-  getScheduledLocalNotifications: jest.fn(),
-  getPendingNotificationRequests: jest.fn(),
-  addEventListener: jest.fn(),
-  removeEventListener: jest.fn(),
-  requestPermissions: jest.fn(() => Promise.resolve()),
-  abandonPermissions: jest.fn(),
-  checkPermissions: jest.fn(),
-  getInitialNotification: jest.fn(() => Promise.resolve()),
-  setNotificationCategories: jest.fn(),
-}));
+jest.mock('@notifee/react-native', () => {
+  /**
+   * Devido a vários problemas ao importar o mock oferecido pela notifee, resolvi
+   * criar manualmente o mock apenas das funcionalidades que utilizamos no app.
+   * https://github.com/invertase/notifee/issues/739
+   */
 
-jest.mock('react-native-push-notification', () => ({
-  configure: jest.fn(),
-  unregister: jest.fn(),
-  localNotification: jest.fn(),
-  localNotificationSchedule: jest.fn(),
-  requestPermissions: jest.fn(() => Promise.resolve()),
-  subscribeToTopic: jest.fn(),
-  unsubscribeFromTopic: jest.fn(),
-  presentLocalNotification: jest.fn(),
-  scheduleLocalNotification: jest.fn(),
-  cancelLocalNotifications: jest.fn(),
-  cancelLocalNotification: jest.fn(),
-  clearLocalNotification: jest.fn(),
-  cancelAllLocalNotifications: jest.fn(),
-  setApplicationIconBadgeNumber: jest.fn(),
-  getApplicationIconBadgeNumber: jest.fn(),
-  popInitialNotification: jest.fn(),
-  abandonPermissions: jest.fn(),
-  checkPermissions: jest.fn(),
-  clearAllNotifications: jest.fn(),
-  removeAllDeliveredNotifications: jest.fn(),
-  getDeliveredNotifications: jest.fn(),
-  getScheduledLocalNotifications: jest.fn(),
-  removeDeliveredNotifications: jest.fn(),
-  invokeApp: jest.fn(),
-  getChannels: jest.fn(),
-  channelExists: jest.fn(),
-  createChannel: jest.fn(),
-  channelBlocked: jest.fn(),
-  deleteChannel: jest.fn(),
-}));
+  const notifee = {
+    getInitialNotification: jest
+      .fn<() => Promise<null>>()
+      .mockResolvedValue(null),
+    displayNotification: jest.fn<() => Promise<void>>().mockResolvedValue(),
+    onForegroundEvent: jest.fn().mockReturnValue(jest.fn()),
+    onBackgroundEvent: jest.fn(),
+    createChannelGroup: jest
+      .fn<() => Promise<string>>()
+      .mockResolvedValue('channel-group-id'),
+    createChannel: jest.fn<() => Promise<void>>().mockResolvedValue(),
+    setBadgeCount: jest.fn<() => Promise<void>>().mockResolvedValue(),
+    cancelNotification: jest.fn(),
+  };
+
+  return notifee;
+});
 
 jest.mock('@react-native-firebase/analytics', () => () => ({
   logEvent: jest.fn(),
