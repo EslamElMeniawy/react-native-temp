@@ -1,12 +1,12 @@
 import {test, expect, jest, afterEach} from '@jest/globals';
-import {default as PushNotification} from 'react-native-push-notification';
+import notifee from '@notifee/react-native';
 import {AppColors} from '@src/utils';
 import {
   displayLocalNotification,
   localChannelId,
 } from '@src/utils/NotificationUtils';
 
-const mockLocalNotification = jest.spyOn(PushNotification, 'localNotification');
+const mockLocalNotification = jest.spyOn(notifee, 'displayNotification');
 
 afterEach(() => {
   mockLocalNotification?.mockRestore();
@@ -23,14 +23,20 @@ test('should display notification when body is available', () => {
   displayLocalNotification(remoteMessage);
 
   expect(mockLocalNotification).toHaveBeenCalledWith({
+    id: '12345',
     title: 'Test Title',
-    message: 'Test Body',
-    bigText: 'Test Body',
-    color: AppColors.seed,
-    channelId: localChannelId,
-    soundName: 'default',
-    messageId: '12345',
-    userInfo: {},
+    body: 'Test Body',
+    data: {},
+    android: {
+      channelId: localChannelId,
+      color: AppColors.seed,
+      sound: 'default',
+      // TODO: Add notifications icon first
+      // smallIcon: 'ic_notification',
+    },
+    ios: {
+      sound: 'default',
+    },
   });
 });
 
@@ -57,15 +63,21 @@ test('should use title from remoteMessage.data when notification title is not av
   displayLocalNotification(remoteMessage);
 
   expect(mockLocalNotification).toHaveBeenCalledWith({
+    id: '12345',
     title: 'Test Title from data',
-    message: 'Test Body',
-    bigText: 'Test Body',
-    color: AppColors.seed,
-    channelId: localChannelId,
-    soundName: 'default',
-    messageId: '12345',
-    userInfo: {
+    body: 'Test Body',
+    data: {
       title: 'Test Title from data',
+    },
+    android: {
+      channelId: localChannelId,
+      color: AppColors.seed,
+      sound: 'default',
+      // TODO: Add notifications icon first
+      // smallIcon: 'ic_notification',
+    },
+    ios: {
+      sound: 'default',
     },
   });
 });
@@ -81,14 +93,22 @@ test('should use body from remoteMessage.data when notification body is not avai
   displayLocalNotification(remoteMessage);
 
   expect(mockLocalNotification).toHaveBeenCalledWith({
+    id: '12345',
     title: undefined,
-    message: 'Test Body from data',
-    bigText: 'Test Body from data',
-    color: AppColors.seed,
-    channelId: localChannelId,
-    soundName: 'default',
-    messageId: '12345',
-    userInfo: {body: 'Test Body from data'},
+    body: 'Test Body from data',
+    data: {
+      body: 'Test Body from data',
+    },
+    android: {
+      channelId: localChannelId,
+      color: AppColors.seed,
+      sound: 'default',
+      // TODO: Add notifications icon first
+      // smallIcon: 'ic_notification',
+    },
+    ios: {
+      sound: 'default',
+    },
   });
 });
 

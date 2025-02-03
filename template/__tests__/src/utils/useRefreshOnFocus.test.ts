@@ -1,5 +1,5 @@
 import {describe, test, expect, jest} from '@jest/globals';
-import {renderHookWithProviders} from '@src/utils';
+import {renderHookWithProviders} from '@src/utils/TestUtils';
 import {useRefreshOnFocus} from '@src/utils/useRefreshOnFocus';
 
 describe('useRefreshOnFocus', () => {

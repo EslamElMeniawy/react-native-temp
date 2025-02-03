@@ -5,10 +5,10 @@ import styles from './styles';
 
 export default React.memo(() => (
   <Screen>
-    <Header />
     <ScrollContainer
       style={styles.scrollView}
       contentContainerStyle={styles.scrollViewContent}>
+      <Header />
       <Form />
     </ScrollContainer>
   </Screen>

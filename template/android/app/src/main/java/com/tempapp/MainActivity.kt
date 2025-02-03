@@ -9,9 +9,6 @@ import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
-// Added for "react-native-bars".
-import com.zoontek.rnbars.RNBars
-
 // Added for "react-native-bootsplash".
 import com.zoontek.rnbootsplash.RNBootSplash
 
@@ -22,9 +19,6 @@ class MainActivity : ReactActivity() {
 
         // Added for "react-native-screens".
         super.onCreate(null)
-
-        // Added for "react-native-bars".
-        RNBars.init(this)
     }
 
     // Added for "react-native-orientation-locker".

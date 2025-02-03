@@ -1,5 +1,5 @@
 import {test, expect, jest, afterEach} from '@jest/globals';
-import {default as PushNotification} from 'react-native-push-notification';
+import notifee from '@notifee/react-native';
 import {store} from '@src/store';
 import {processNotification} from '@src/utils/NotificationUtils';
 import * as Helpers from '@src/utils/NotificationUtils/Helpers';
@@ -9,8 +9,8 @@ const clearNotificationsMock = jest
   .mockImplementation(() => {});
 
 const setApplicationIconBadgeNumberMock = jest
-  .spyOn(PushNotification, 'setApplicationIconBadgeNumber')
-  .mockImplementation(() => {});
+  .spyOn(notifee, 'setBadgeCount')
+  .mockImplementation(() => Promise.resolve());
 
 const processUserNotificationMock = jest
   .spyOn(Helpers, 'processUserNotification')
