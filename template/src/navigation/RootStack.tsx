@@ -3,7 +3,7 @@ import * as React from 'react';
 import type {RootStackParamList} from '@src/navigation';
 import {Splash, Login, Home, Notifications} from '@src/screens';
 
-const stack = createNativeStackNavigator<RootStackParamList>();
+const stack = createNativeStackNavigator<RootStackParamList, 'RootStack'>();
 
 export default React.memo(() => (
   <stack.Navigator
