@@ -57,7 +57,7 @@ export function renderWithProviders(
 ) {
   function Wrapper({
     children,
-  }: Readonly<React.PropsWithChildren<{}>>): JSX.Element {
+  }: Readonly<React.PropsWithChildren<{}>>) {
     const appTheme = useAppTheme();
 
     return (
@@ -106,7 +106,7 @@ export function renderHookWithProviders<Result, Props>(
 ) {
   function Wrapper({
     children,
-  }: Readonly<React.PropsWithChildren<{}>>): JSX.Element {
+  }: Readonly<React.PropsWithChildren<{}>>) {
     const appTheme = useAppTheme();
 
     return (
