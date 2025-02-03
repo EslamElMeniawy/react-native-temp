@@ -1,8 +1,7 @@
-import {default as PushNotificationIOS} from '@react-native-community/push-notification-ios';
-import {Platform} from 'react-native';
+import notifee from '@notifee/react-native';
 import {default as Config} from 'react-native-config';
-import {default as PushNotification} from 'react-native-push-notification';
 import {
+  fakerNotifications,
   queryNotifications,
   setUnreadNotificationsCount as setLocalStorageUnreadNotificationsCount,
 } from '@src/core';
@@ -30,11 +29,7 @@ export const clearNotifications = (notification: Notification) => {
   console.info(getLogMessage('clearNotifications'), notification);
 
   if (notification.id && typeof notification.id === 'string') {
-    PushNotification.cancelLocalNotification(notification.id);
-
-    if (Platform.OS === 'ios') {
-      PushNotificationIOS.removeDeliveredNotifications([notification.id]);
-    }
+    notifee.cancelNotification(notification.id);
 
     if (Config.ENV_NAME === 'Unit Testing') {
       return;
@@ -44,17 +39,18 @@ export const clearNotifications = (notification: Notification) => {
     // TODO: Change params based on API.
     queryClient
       .getMutationCache()
-      .build<
-        MarkNotificationReadResponse,
-        ServerError,
-        ApiRequest<any, string | number>,
-        unknown
-      >(queryClient, {
-        mutationFn: request => queryNotifications.markNotificationRead(request),
-        onSuccess: () => {
-          queryClient.invalidateQueries({queryKey: ['notifications']});
+      .build<MarkNotificationReadResponse, ServerError, ApiRequest, unknown>(
+        queryClient,
+        {
+          mutationFn: request =>
+            Config.USE_FAKE_API === 'true'
+              ? fakerNotifications.markNotificationRead(request)
+              : queryNotifications.markNotificationRead(request),
+          onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['notifications']});
+          },
         },
-      })
+      )
       .execute({pathVar: notification.id});
   }
 };

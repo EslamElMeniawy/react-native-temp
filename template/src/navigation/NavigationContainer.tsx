@@ -4,7 +4,7 @@ import * as React from 'react';
 import {navigationRef, RootStack} from '@src/navigation';
 
 export default React.memo(() => {
-  const routeNameRef = React.useRef<string | undefined>();
+  const routeNameRef = React.useRef<string | undefined>(undefined);
 
   return (
     <NavigationContainer

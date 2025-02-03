@@ -15,7 +15,7 @@
 }
 -keep class com.google.android.gms.common.** {*;}
 
-# Proguard rules for "react-native-fast-image".
+# Proguard rules for "@d11/react-native-fast-image".
 -keep public class com.dylanvann.fastimage.* {*;}
 -keep public class com.dylanvann.fastimage.** {*;}
 -keep public class * implements com.bumptech.glide.module.GlideModule

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <!-- AppTheme parent changed for "react-native-bars". -->
+    <!-- AppTheme parent changed for "react-native-edge-to-edge". -->
     <style name="AppTheme" parent="Theme.EdgeToEdge">
         <!-- Customize your theme here. -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
@@ -12,6 +12,9 @@
         <!-- optional, used to enforce the initial bars styles -->
         <!-- default is true in light mode, false in dark mode -->
         <item name="darkContentBarsStyle">true</item>
+
+        <!-- disable the contrasting background of the navigation bar (optional) -->
+        <item name="enforceNavigationBarContrast">false</item>
     </style>
 
     <!-- BootTheme should inherit from Theme.BootSplash or Theme.BootSplash.EdgeToEdge -->

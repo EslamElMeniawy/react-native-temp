@@ -1,5 +1,5 @@
+import notifee from '@notifee/react-native';
 import {getBundleId} from 'react-native-device-info';
-import {default as PushNotification} from 'react-native-push-notification';
 import type {Notification} from '@src/core';
 import {push} from '@src/navigation';
 import {store} from '@src/store';
@@ -41,8 +41,12 @@ export const processNotification = (
     stateUnreadNotificationsCount,
   );
 
-  const newNotificationsCount = (stateUnreadNotificationsCount ?? 1) - 1;
-  PushNotification.setApplicationIconBadgeNumber(newNotificationsCount);
+  const newNotificationsCount =
+    (stateUnreadNotificationsCount && stateUnreadNotificationsCount > 0
+      ? stateUnreadNotificationsCount
+      : 1) - 1;
+
+  notifee.setBadgeCount(newNotificationsCount);
 
   if (apiToken) {
     processUserNotification(
@@ -111,15 +115,21 @@ export const displayLocalNotification = (
 
   // If notification body available show local notification.
   if (body) {
-    PushNotification.localNotification({
+    notifee.displayNotification({
+      id: remoteMessage.messageId,
       title: title,
-      message: body,
-      bigText: body,
-      color: AppColors.seed,
-      channelId: localChannelId,
-      soundName: 'default',
-      messageId: remoteMessage.messageId,
-      userInfo: remoteMessage.data,
+      body: body,
+      data: remoteMessage.data,
+      android: {
+        channelId: localChannelId,
+        color: AppColors.seed,
+        sound: 'default',
+        // TODO: Add notifications icon first
+        // smallIcon: 'ic_notification',
+      },
+      ios: {
+        sound: 'default',
+      },
     });
   }
 };

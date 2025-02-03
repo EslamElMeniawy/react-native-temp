@@ -4,6 +4,7 @@ import {
 } from '@eslam-elmeniawy/react-native-common-components';
 import {QueryClientProvider} from '@tanstack/react-query';
 import * as React from 'react';
+import {KeyboardProvider} from 'react-native-keyboard-controller';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {ErrorDialog, Toast} from '@src/components';
@@ -31,18 +32,20 @@ export default React.memo(() => {
 
   // #region UI
   return languageLoaded ? (
-    <PaperProvider theme={theme}>
-      <ToastProvider
-        placement="top"
-        offset={getStatusBarHeight()}
-        renderToast={toastOptions => <Toast {...toastOptions} />}>
-        <QueryClientProvider client={queryClient}>
-          <NavigationContainer />
-          <ErrorDialog />
-          <LoadingDialog />
-        </QueryClientProvider>
-      </ToastProvider>
-    </PaperProvider>
+    <KeyboardProvider>
+      <PaperProvider theme={theme}>
+        <ToastProvider
+          placement="top"
+          offset={getStatusBarHeight()}
+          renderToast={toastOptions => <Toast {...toastOptions} />}>
+          <QueryClientProvider client={queryClient}>
+            <NavigationContainer />
+            <ErrorDialog />
+            <LoadingDialog />
+          </QueryClientProvider>
+        </ToastProvider>
+      </PaperProvider>
+    </KeyboardProvider>
   ) : null;
   // #endregion
 });

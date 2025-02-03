@@ -1,3 +1,4 @@
+import notifee, {EventType} from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import * as React from 'react';
 import {
@@ -9,7 +10,7 @@ import {
   useAppDispatch,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,
 } from '@src/store';
-import {displayLocalNotification} from '@src/utils';
+import {displayLocalNotification, processNotification} from '@src/utils';
 
 export const useForegroundMessagesListener = () => {
   // #region Logger
@@ -49,4 +50,21 @@ export const useForegroundMessagesListener = () => {
 
     return unsubscribe;
   }, [dispatch]);
+
+  React.useEffect(() => {
+    const unsubscribe = notifee.onForegroundEvent(({type, detail}) => {
+      console.info(getLogMessage('onForegroundEvent'), type, detail);
+
+      if (type === EventType.PRESS) {
+        processNotification({
+          id: detail?.notification?.id,
+          key: detail?.notification?.id ?? '',
+          title: detail?.notification?.title,
+          message: detail?.notification?.body,
+        });
+      }
+    });
+
+    return unsubscribe;
+  }, []);
 };
