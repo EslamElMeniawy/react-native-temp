@@ -1,5 +1,10 @@
 # Changelog
 
+## <small>3.8.1 (2025-02-03)</small>
+
+* fix: type issue for `RootStack` ([c52f50c](https://github.com/EslamElMeniawy/react-native-temp/commit/c52f50c))
+* fix: types for `TestUtils` ([c09aa6a](https://github.com/EslamElMeniawy/react-native-temp/commit/c09aa6a))
+
 ## 3.8.0 (2025-02-03)
 
 * feat: upgrade `ReactNative` to version `0.77.0` ([e5a2bb3](https://github.com/EslamElMeniawy/react-native-temp/commit/e5a2bb3))
