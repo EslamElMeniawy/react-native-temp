@@ -208,3 +208,7 @@ jest.mock('@react-native-firebase/messaging', () => () => ({
   requestPermission: jest.fn(() => Promise.resolve(true)),
   getToken: jest.fn(() => Promise.resolve('myMockToken')),
 }));
+
+jest.mock('react-native-network-logger', () => ({
+  default: jest.fn(),
+}));
