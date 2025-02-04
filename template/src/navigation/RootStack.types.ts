@@ -2,6 +2,7 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type RootStackParamList = {
   splash: undefined;
+  networkLogs: undefined;
   login: undefined;
   home: undefined;
   notifications: undefined;
