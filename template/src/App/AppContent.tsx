@@ -16,12 +16,14 @@ import {useLocalizationInitialization} from './useLocalizationInitialization';
 import {useLogInitialization} from './useLogInitialization';
 import {useNetworkListener} from './useNetworkListener';
 import {useNotificationsInteraction} from './useNotificationsInteraction';
+import {useOrientationLocker} from './useOrientationLocker';
 import {useReactQueryFocusManager} from './useReactQueryFocusManager';
 import {useReactQueryOnlineManager} from './useReactQueryOnlineManager';
 
 export default React.memo(() => {
   useLogInitialization();
   const languageLoaded = useLocalizationInitialization();
+  useOrientationLocker();
   useNetworkListener();
   useReactQueryFocusManager();
   useReactQueryOnlineManager();
