@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.9.0 (2025-02-04)
+
+* chore: change `@release-it/conventional-changelog` config ([414225a](https://github.com/EslamElMeniawy/react-native-temp/commit/414225a))
+* test: add mock for `react-native-network-logger` ([e9c75fa](https://github.com/EslamElMeniawy/react-native-temp/commit/e9c75fa))
+* feat: add network log screen ([782e222](https://github.com/EslamElMeniawy/react-native-temp/commit/782e222))
+* feat: use `react-native-orientation-locker` ([2288029](https://github.com/EslamElMeniawy/react-native-temp/commit/2288029))
+
 ## <small>3.8.1 (2025-02-03)</small>
 
 * fix: type issue for `RootStack` ([c52f50c](https://github.com/EslamElMeniawy/react-native-temp/commit/c52f50c))
