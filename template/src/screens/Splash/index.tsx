@@ -2,7 +2,8 @@ import * as React from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import {Screen} from '@src/components';
 import type {RootStackScreenProps} from '@src/navigation';
-import {useAppTheme, AppImages} from '@src/utils';
+import {AppImages} from '@modules/assets';
+import {useAppTheme} from '@modules/theme';
 import styles from './styles';
 import {useSplash} from './useSplash';
 

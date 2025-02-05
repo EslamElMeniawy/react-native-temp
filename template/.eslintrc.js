@@ -119,6 +119,7 @@ module.exports = {
         ],
         pathGroups: [
           {pattern: '@src/**/**', group: 'parent', position: 'before'},
+          {pattern: '@modules/**/**', group: 'parent', position: 'before'},
         ],
         alphabetize: {order: 'asc'},
       },

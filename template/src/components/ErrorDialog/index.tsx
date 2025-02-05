@@ -2,7 +2,7 @@ import {AlertDialog} from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector, removeErrorDialog} from '@src/store';
-import {removeUserDataLogout} from '@src/utils';
+import {removeUserDataLogout} from '@modules/utils';
 
 export default React.memo(() => {
   const {t: translate} = useTranslation();

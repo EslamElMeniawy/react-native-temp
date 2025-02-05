@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import * as React from 'react';
 import type {Notification} from '@src/core';
-import {processNotification} from '@src/utils';
+import {processNotification} from '@modules/utils';
 import type {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 
 export const useNotificationsInteraction = () => {

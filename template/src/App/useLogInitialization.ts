@@ -8,7 +8,7 @@ import mmkvPlugin from 'reactotron-react-native-mmkv';
 import {QueryClientManager, reactotronReactQuery} from 'reactotron-react-query';
 import {localStorage} from '@src/core';
 import {getCurrentRouteName, push} from '@src/navigation';
-import {queryClient} from '@src/utils';
+import {queryClient} from '@modules/utils';
 import type {ReactotronReactNative} from 'reactotron-react-native';
 
 export const useLogInitialization = () => {

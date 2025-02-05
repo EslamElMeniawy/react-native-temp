@@ -4,7 +4,7 @@ import {
   useGetUserDetailsApi,
 } from '@src/core';
 import {useAppDispatch, setApiToken as setStateApiToken} from '@src/store';
-import {saveUserData} from '@src/utils';
+import {saveUserData} from '@modules/utils';
 
 export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {
   // #region Logger

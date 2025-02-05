@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Appbar} from 'react-native-paper';
 import type {RootStackScreenProps} from '@src/navigation';
-import {removeUserDataLogout} from '@src/utils';
+import {removeUserDataLogout} from '@modules/utils';
 
 export default React.memo(() => {
   // #region Logger

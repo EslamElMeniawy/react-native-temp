@@ -6,7 +6,7 @@ import RNRestart from 'react-native-restart';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Screen} from '@src/components';
 import {translate} from '@src/core';
-import {useAppTheme} from '@src/utils';
+import {useAppTheme} from '@modules/theme';
 import styles from './styles';
 
 export default React.memo(() => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {SystemBars} from 'react-native-edge-to-edge';
 import tinyColor from 'tinycolor2';
-import {useAppTheme} from '@src/utils';
+import {useAppTheme} from '@modules/theme';
 import type {Props} from './types';
 
 export default React.memo((props: Props) => {

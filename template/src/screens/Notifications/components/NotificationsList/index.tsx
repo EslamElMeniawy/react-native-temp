@@ -8,7 +8,7 @@ import {
   NotificationItem,
   NotificationsListSeparator,
 } from '@src/screens/Notifications/components';
-import {useFocusNotifyOnChangeProps} from '@src/utils';
+import {useFocusNotifyOnChangeProps} from '@modules/utils';
 import styles from './styles';
 
 export default React.memo(() => {

@@ -9,8 +9,8 @@ import {Provider as ReduxProvider} from 'react-redux';
 import {Toast} from '@src/components';
 import type {AppStore} from '@src/store';
 import {store as reduxStore} from '@src/store';
-import {useAppTheme} from './Theme';
-import {queryClient as appQueryClient} from './queryClient';
+import {useAppTheme} from '@modules/theme';
+import {queryClient as appQueryClient} from '@modules/utils';
 import type {QueryClient} from '@tanstack/react-query';
 import type {
   RenderOptions,
@@ -35,6 +35,36 @@ interface ExtendedRenderHookOptions<Props>
   queryClient?: QueryClient;
 }
 
+function Wrapper({
+  store = reduxStore,
+  theme,
+  queryClient = appQueryClient,
+  children,
+}: Readonly<
+  React.PropsWithChildren<{
+    store?: AppStore;
+    theme?: MD3Theme;
+    queryClient?: QueryClient;
+  }>
+>) {
+  const appTheme = useAppTheme();
+
+  return (
+    <ReduxProvider store={store}>
+      <PaperProvider theme={theme ?? appTheme}>
+        <ToastProvider
+          placement="top"
+          offset={getStatusBarHeight()}
+          renderToast={toastOptions => <Toast {...toastOptions} />}>
+          <QueryClientProvider client={queryClient}>
+            <BaseNavigationContainer>{children}</BaseNavigationContainer>
+          </QueryClientProvider>
+        </ToastProvider>
+      </PaperProvider>
+    </ReduxProvider>
+  );
+}
+
 /**
  * Renders a React element with the necessary providers for the application.
  *
@@ -55,27 +85,6 @@ export function renderWithProviders(
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) {
-  function Wrapper({
-    children,
-  }: Readonly<React.PropsWithChildren<{}>>) {
-    const appTheme = useAppTheme();
-
-    return (
-      <ReduxProvider store={store}>
-        <PaperProvider theme={theme ?? appTheme}>
-          <ToastProvider
-            placement="top"
-            offset={getStatusBarHeight()}
-            renderToast={toastOptions => <Toast {...toastOptions} />}>
-            <QueryClientProvider client={queryClient}>
-              <BaseNavigationContainer>{children}</BaseNavigationContainer>
-            </QueryClientProvider>
-          </ToastProvider>
-        </PaperProvider>
-      </ReduxProvider>
-    );
-  }
-
   return {
     store,
     theme,
@@ -104,27 +113,6 @@ export function renderHookWithProviders<Result, Props>(
     ...renderOptions
   }: ExtendedRenderHookOptions<Props> = {},
 ) {
-  function Wrapper({
-    children,
-  }: Readonly<React.PropsWithChildren<{}>>) {
-    const appTheme = useAppTheme();
-
-    return (
-      <ReduxProvider store={store}>
-        <PaperProvider theme={theme ?? appTheme}>
-          <ToastProvider
-            placement="top"
-            offset={getStatusBarHeight()}
-            renderToast={toastOptions => <Toast {...toastOptions} />}>
-            <QueryClientProvider client={queryClient}>
-              <BaseNavigationContainer>{children}</BaseNavigationContainer>
-            </QueryClientProvider>
-          </ToastProvider>
-        </PaperProvider>
-      </ReduxProvider>
-    );
-  }
-
   return {
     store,
     theme,

@@ -10,7 +10,7 @@ import {
   useAppDispatch,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,
 } from '@src/store';
-import {displayLocalNotification, processNotification} from '@src/utils';
+import {displayLocalNotification, processNotification} from '@modules/utils';
 
 export const useForegroundMessagesListener = () => {
   // #region Logger

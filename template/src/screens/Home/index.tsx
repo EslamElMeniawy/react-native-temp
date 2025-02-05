@@ -2,7 +2,7 @@ import {Text} from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
 import {Screen, ScrollContainer} from '@src/components';
 import {useGetUserDetailsApi} from '@src/core';
-import {useFocusNotifyOnChangeProps, useRefreshOnFocus} from '@src/utils';
+import {useFocusNotifyOnChangeProps, useRefreshOnFocus} from '@modules/utils';
 import {Header} from './components';
 import styles from './styles';
 

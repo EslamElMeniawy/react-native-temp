@@ -5,7 +5,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import {SystemBars} from '@src/components';
-import {useAppTheme} from '@src/utils';
+import {useAppTheme} from '@modules/theme';
 import styles from './styles';
 import type {Props} from './types';
 
