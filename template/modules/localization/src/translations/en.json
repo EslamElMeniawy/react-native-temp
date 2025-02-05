@@ -1,0 +1,10 @@
+{
+  "session_expired": "Your login session has been expired.\nPlease login again.",
+  "ok": "OK",
+  "internet_lost": "Internet connection lost!",
+  "error_processing_request": "Error while processing your request",
+  "field_required": "{{field}} field is required",
+  "error_while_action": "Error while {{action}}",
+  "no_data_available": "No {{data}} available",
+  "error_load_data": "Error while loading {{data}}"
+}

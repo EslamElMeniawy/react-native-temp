@@ -5,7 +5,7 @@ import {hide as rnBootSplashHide} from 'react-native-bootsplash';
 import RNRestart from 'react-native-restart';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Screen} from '@src/components';
-import {translate} from '@src/core';
+import {translate} from '@modules/localization';
 import {useAppTheme} from '@modules/theme';
 import styles from './styles';
 
@@ -27,7 +27,7 @@ export default React.memo(() => {
             styles.text,
             styles.title,
           ])}>
-          {translate('error_fallback_title')}
+          {translate?.('error_fallback_title')}
         </Text>
         <Text
           style={StyleSheet.flatten([
@@ -35,10 +35,10 @@ export default React.memo(() => {
             styles.text,
             styles.message,
           ])}>
-          {translate('error_fallback_message')}
+          {translate?.('error_fallback_message')}
         </Text>
         <Button
-          text={translate('restart_app')}
+          text={translate?.('restart_app')}
           onPress={() => RNRestart.Restart()}
           style={StyleSheet.compose(
             {backgroundColor: theme.colors.primary},

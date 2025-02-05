@@ -1,19 +1,23 @@
+import {ar as utilsAr, en as utilsEn} from '@modules/utils';
+import {getLanguage, setLanguage} from '@src/core';
+import {ar, en} from '@src/translations';
 import {use} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import {Platform, Settings, I18nManager} from 'react-native';
 import {default as Config} from 'react-native-config';
 import * as RNLocalize from 'react-native-localize';
 import RNRestart from 'react-native-restart';
-import {getLanguage, setLanguage} from '@src/core';
-import {AppLanguages} from '@src/enums';
-import ar from '@src/translations/ar.json';
-import en from '@src/translations/en.json';
+import {AppLanguages} from '@modules/localization/src/enums';
+import {
+  ar as commonAr,
+  en as commonEn,
+} from '@modules/localization/src/translations';
 
 const getLogMessage = (message: string) => `## I18n:: ${message}`;
 
 const resources = {
-  ar: {translation: ar},
-  en: {translation: en},
+  ar: {translation: {...ar, ...commonAr, ...utilsAr}},
+  en: {translation: {...en, ...commonEn, ...utilsEn}},
 };
 
 // Get device language.

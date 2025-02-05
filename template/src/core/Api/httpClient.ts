@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {default as Config} from 'react-native-config';
 import type {ServerError, ServerErrorResponse} from '@src/core';
-import {translate, getCurrentLocale} from '@src/core/I18n';
 import {setErrorDialogMessage, store} from '@src/store';
+import {translate, getCurrentLocale} from '@modules/localization';
 import ConsoleColors from './ConsoleColors';
 import skip401Urls from './skip401Urls';
 import type {
@@ -84,13 +84,13 @@ const handle401Error = (error: AxiosError<ServerErrorResponse>) => {
   console.info(getLogMessage('status'), status);
 
   if (status === 401 && !shouldSkip401(error)) {
-    store.dispatch(setErrorDialogMessage(translate('session_expired')));
+    store.dispatch(setErrorDialogMessage(translate?.('session_expired')));
   }
 };
 
 const getErrorMessage = (error: AxiosError<ServerErrorResponse>) => {
   // TODO: Construct error message base on "ServerErrorResponse" constructed from API.
-  let errorMessage: string = translate('unknown_error');
+  let errorMessage: string = translate?.('unknown_error');
 
   if (error.response?.data?.error) {
     errorMessage = error.response?.data?.error;
@@ -182,7 +182,7 @@ const responseRejectedInterceptor = (error: any) => {
 
   const severError: ServerError = {
     ...error,
-    errorMessage: translate('unknown_error'),
+    errorMessage: translate?.('unknown_error'),
   };
 
   return Promise.reject(severError);
@@ -191,7 +191,7 @@ const responseRejectedInterceptor = (error: any) => {
 const httpClient = axios.create({
   baseURL: Config.API_URL,
   timeout: 60 * 1 * 1000,
-  timeoutErrorMessage: translate('network_error'),
+  timeoutErrorMessage: translate?.('network_error'),
 });
 
 httpClient.interceptors.request.use(

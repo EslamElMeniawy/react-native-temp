@@ -11,7 +11,7 @@ export default React.memo(() => {
       rules={{
         required: {
           value: true,
-          message: translate('filed_required', {
+          message: translate('field_required', {
             field: translate('password'),
           }),
         },

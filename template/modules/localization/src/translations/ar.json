@@ -1,0 +1,10 @@
+{
+  "session_expired": "انتهت صلاحية جلسة تسجيل الدخول الخاصة بك.\nالرجاء تسجيل الدخول من جديد.",
+  "ok": "حسناً",
+  "internet_lost": "انقطع الاتصال بالإنترنت!",
+  "error_processing_request": "خطأ أثناء تنفيذ طلبك",
+  "field_required": "حقل {{field}} مطلوب",
+  "error_while_action": "خطأ اثناء {{action}}",
+  "no_data_available": "لا توجد {{data}} متاحة",
+  "error_load_data": "خطأ اثناء تحميل {{data}}"
+}

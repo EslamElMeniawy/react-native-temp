@@ -1,4 +1,4 @@
-import {translate} from '@src/core';
+import {translate} from '@modules/localization';
 import {Linking} from 'react-native';
 import {default as Config} from 'react-native-config';
 import {Toast} from 'react-native-toast-notifications';
@@ -76,7 +76,7 @@ export const open = async (url: string, errorMessageKey?: string) => {
       throw new Error(`Failed to open: ${url}`);
     }
 
-    Toast.show(translate(errorMessageKey ?? 'error_processing_request'), {
+    Toast.show(translate?.(errorMessageKey ?? 'error_processing_request'), {
       type: 'danger',
     });
   }

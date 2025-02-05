@@ -5,7 +5,7 @@ import {
   deleteLocalStorageItem,
   LocalStorageKeys,
 } from '@src/core';
-import type {AppLanguages} from '@src/enums';
+import type {AppLanguages} from 'modules/localization';
 
 const getLogMessage = (message: string) =>
   `## LocalStorage::language:: ${message}`;
