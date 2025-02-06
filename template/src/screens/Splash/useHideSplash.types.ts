@@ -4,8 +4,8 @@ import type * as React from 'react';
 import type {Animated} from 'react-native';
 
 export interface UseHideSplashProps {
-  opacity: React.MutableRefObject<Animated.Value>;
-  translateY: React.MutableRefObject<Animated.Value>;
+  opacity: React.RefObject<Animated.Value>;
+  translateY: React.RefObject<Animated.Value>;
   navigation: NativeStackNavigationProp<
     RootStackParamList,
     'splash',

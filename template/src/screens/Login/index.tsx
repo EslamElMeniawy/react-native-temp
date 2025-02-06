@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Screen, ScrollContainer} from '@src/components';
+import {Screen, ScrollContainer} from '@modules/components';
 import {Header, Form} from './components';
 import styles from './styles';
 

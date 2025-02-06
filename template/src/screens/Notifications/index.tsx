@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Screen} from '@src/components';
+import {Screen} from '@modules/components';
 import {Header, NotificationsList} from './components';
 
 export default React.memo(() => (

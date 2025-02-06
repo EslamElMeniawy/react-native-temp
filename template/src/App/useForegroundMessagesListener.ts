@@ -2,15 +2,15 @@ import notifee, {EventType} from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import * as React from 'react';
 import {
-  getApiToken,
-  getUnreadNotificationsCount,
-  setUnreadNotificationsCount as setLocalStorageUnreadNotificationsCount,
-} from '@src/core';
-import {
   useAppDispatch,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,
 } from '@src/store';
-import {displayLocalNotification, processNotification} from '@src/utils';
+import {
+  getApiToken,
+  getUnreadNotificationsCount,
+  setUnreadNotificationsCount as setLocalStorageUnreadNotificationsCount,
+} from '@modules/core';
+import {displayLocalNotification, processNotification} from '@modules/utils';
 
 export const useForegroundMessagesListener = () => {
   // #region Logger

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
-import {HookFormTextInput} from '@src/components';
+import {HookFormTextInput} from '@modules/components';
 
 export default React.memo(() => {
   const {t: translate} = useTranslation();
@@ -11,7 +11,7 @@ export default React.memo(() => {
       rules={{
         required: {
           value: true,
-          message: translate('filed_required', {
+          message: translate('field_required', {
             field: translate('password'),
           }),
         },

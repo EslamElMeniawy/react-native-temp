@@ -2,14 +2,15 @@ import {
   LoadingDialog,
   getStatusBarHeight,
 } from '@eslam-elmeniawy/react-native-common-components';
-import {QueryClientProvider} from '@tanstack/react-query';
+import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import * as React from 'react';
 import {KeyboardProvider} from 'react-native-keyboard-controller';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {ToastProvider} from 'react-native-toast-notifications';
-import {ErrorDialog, Toast} from '@src/components';
 import {NavigationContainer} from '@src/navigation';
-import {useAppTheme, queryClient} from '@src/utils';
+import {ErrorDialog, Toast} from '@modules/components';
+import {useAppTheme} from '@modules/theme';
+import {clientPersister, queryClient} from '@modules/utils';
 import {useFirebaseMessagingInitialization} from './useFirebaseMessagingInitialization';
 import {useForegroundMessagesListener} from './useForegroundMessagesListener';
 import {useLocalizationInitialization} from './useLocalizationInitialization';
@@ -40,11 +41,13 @@ export default React.memo(() => {
           placement="top"
           offset={getStatusBarHeight()}
           renderToast={toastOptions => <Toast {...toastOptions} />}>
-          <QueryClientProvider client={queryClient}>
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{persister: clientPersister}}>
             <NavigationContainer />
             <ErrorDialog />
             <LoadingDialog />
-          </QueryClientProvider>
+          </PersistQueryClientProvider>
         </ToastProvider>
       </PaperProvider>
     </KeyboardProvider>

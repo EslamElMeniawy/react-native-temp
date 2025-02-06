@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.10.0 (2025-02-06)
+
+* feat: refactor app to use multi-module structure ([6dc6c4d](https://github.com/EslamElMeniawy/react-native-temp/commit/6dc6c4d))
+* feat: use `MMKV` to store `react-query` cache ([436f42f](https://github.com/EslamElMeniawy/react-native-temp/commit/436f42f))
+* refactor: move all translations to localization module ([6aa5a56](https://github.com/EslamElMeniawy/react-native-temp/commit/6aa5a56))
+* refactor: move components to module ([06f04e0](https://github.com/EslamElMeniawy/react-native-temp/commit/06f04e0))
+* refactor: move core to module ([be9d5e9](https://github.com/EslamElMeniawy/react-native-temp/commit/be9d5e9))
+* refactor: move localization to module ([b2b626e](https://github.com/EslamElMeniawy/react-native-temp/commit/b2b626e))
+* refactor: use multi module structure ([cedde76](https://github.com/EslamElMeniawy/react-native-temp/commit/cedde76))
+* docs: edit documentation for `multi-module` ([23812dc](https://github.com/EslamElMeniawy/react-native-temp/commit/23812dc))
+* fix: replace deprecated types ([fe36369](https://github.com/EslamElMeniawy/react-native-temp/commit/fe36369))
+* chore: change `@release-it/conventional-changelog` config ([3367d48](https://github.com/EslamElMeniawy/react-native-temp/commit/3367d48))
+* chore: edit `.gitignore` ([dd1f6b4](https://github.com/EslamElMeniawy/react-native-temp/commit/dd1f6b4))
+
 ## <small>3.9.2 (2025-02-06)</small>
 
 * chore: include `post-init-script.sh` in package ([3a6acc4](https://github.com/EslamElMeniawy/react-native-temp/commit/3a6acc4))
