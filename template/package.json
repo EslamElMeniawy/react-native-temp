@@ -58,6 +58,7 @@
     "@eslam-elmeniawy/react-native-common-components": "^1.3.0",
     "@klarna/react-native-vector-drawable": "^0.5.1",
     "@modules/assets": "link:./modules/assets",
+    "@modules/core": "link:./modules/core",
     "@modules/localization": "link:./modules/localization",
     "@modules/theme": "link:./modules/theme",
     "@modules/utils": "link:./modules/utils",

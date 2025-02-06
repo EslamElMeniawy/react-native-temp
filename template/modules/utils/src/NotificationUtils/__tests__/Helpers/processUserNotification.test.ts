@@ -1,5 +1,5 @@
 import {test, expect, jest} from '@jest/globals';
-import * as LocalStorage from '@src/core/LocalStorage/unreadNotificationsCount';
+import * as LocalStorage from '@modules/core/src/LocalStorage/unreadNotificationsCount';
 import {
   store,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,

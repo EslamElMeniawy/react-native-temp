@@ -3,7 +3,7 @@ import notifee from '@notifee/react-native';
 import {push} from '@src/navigation';
 import {store} from '@src/store';
 import {getBundleId} from 'react-native-device-info';
-import type {Notification} from '@src/core';
+import type {Notification} from '@modules/core';
 import {clearNotifications, processUserNotification} from './Helpers';
 import type {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
 

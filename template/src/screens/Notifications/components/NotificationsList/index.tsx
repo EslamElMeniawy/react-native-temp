@@ -3,11 +3,11 @@ import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {ActivityIndicator} from 'react-native-paper';
 import {ListEmptyComponent, ListLoadingMore} from '@src/components';
-import {useGetNotificationsApi} from '@src/core';
 import {
   NotificationItem,
   NotificationsListSeparator,
 } from '@src/screens/Notifications/components';
+import {useGetNotificationsApi} from '@modules/core';
 import {useFocusNotifyOnChangeProps} from '@modules/utils';
 import styles from './styles';
 

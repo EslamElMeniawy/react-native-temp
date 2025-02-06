@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {getLanguage} from '@src/core';
+import {getLanguage} from '@modules/core';
 import {updateLanguage} from 'modules/localization';
 
 export const useSplashLanguageLoader = (isBootSplashLogoLoaded: boolean) => {

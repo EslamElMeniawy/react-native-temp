@@ -1,9 +1,9 @@
 import * as React from 'react';
+import {useAppDispatch, setApiToken as setStateApiToken} from '@src/store';
 import {
   getApiToken as getLocalStorageApiToken,
   useGetUserDetailsApi,
-} from '@src/core';
-import {useAppDispatch, setApiToken as setStateApiToken} from '@src/store';
+} from '@modules/core';
 import {saveUserData} from '@modules/utils';
 
 export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {

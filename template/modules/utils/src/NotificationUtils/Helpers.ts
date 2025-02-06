@@ -1,9 +1,9 @@
-import notifee from '@notifee/react-native';
 import {
   fakerNotifications,
   queryNotifications,
   setUnreadNotificationsCount as setLocalStorageUnreadNotificationsCount,
-} from '@src/core';
+} from '@modules/core';
+import notifee from '@notifee/react-native';
 import {
   store,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,
@@ -14,7 +14,7 @@ import type {
   ServerError,
   ApiRequest,
   Notification,
-} from '@src/core';
+} from '@modules/core';
 import {openNotificationRelatedScreen, queryClient} from '@modules/utils';
 
 const getLogMessage = (message: string) =>

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Keyboard} from 'react-native';
-import {useLoginApi} from '@src/core';
 import type {FormValues} from '@src/screens/Login/components';
 import {useAppDispatch, setErrorDialogMessage} from '@src/store';
+import {useLoginApi} from '@modules/core';
 import {saveUserDataOpenHome} from '@modules/utils';
 
 const useLoginButton = () => {
