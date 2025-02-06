@@ -1,0 +1,2 @@
+bundle install
+corepack enable
