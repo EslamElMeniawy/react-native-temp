@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
-import {HookFormTextInput} from '@src/components';
+import {HookFormTextInput} from '@modules/components';
 
 export default React.memo(() => {
   const {t: translate} = useTranslation();

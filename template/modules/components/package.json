@@ -1,0 +1,14 @@
+{
+  "name": "@modules/components",
+  "version": "0.0.0",
+  "description": "Components Module",
+  "main": "src/index",
+  "author": " <> ()",
+  "license": "UNLICENSED",
+  "homepage": "#readme",
+  "create-react-native-library": {
+    "languages": "js",
+    "type": "library",
+    "version": "0.47.0"
+  }
+}

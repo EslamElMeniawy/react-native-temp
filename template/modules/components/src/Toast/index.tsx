@@ -1,8 +1,8 @@
 import {Text} from '@eslam-elmeniawy/react-native-common-components';
+import {useAppTheme} from '@modules/theme';
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import tinycolor from 'tinycolor2';
-import {useAppTheme} from '@modules/theme';
 import styles from './styles';
 import type {ToastProps} from 'react-native-toast-notifications/lib/typescript/toast';
 

@@ -1,12 +1,12 @@
 import {Text, Button} from '@eslam-elmeniawy/react-native-common-components';
+import {translate} from '@modules/localization';
+import {useAppTheme} from '@modules/theme';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {hide as rnBootSplashHide} from 'react-native-bootsplash';
 import RNRestart from 'react-native-restart';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Screen} from '@src/components';
-import {translate} from '@modules/localization';
-import {useAppTheme} from '@modules/theme';
+import {Screen} from '@modules/components';
 import styles from './styles';
 
 export default React.memo(() => {

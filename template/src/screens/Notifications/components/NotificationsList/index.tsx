@@ -2,11 +2,11 @@ import {FlatList} from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {ActivityIndicator} from 'react-native-paper';
-import {ListEmptyComponent, ListLoadingMore} from '@src/components';
 import {
   NotificationItem,
   NotificationsListSeparator,
 } from '@src/screens/Notifications/components';
+import {ListEmptyComponent, ListLoadingMore} from '@modules/components';
 import {useGetNotificationsApi} from '@modules/core';
 import {useFocusNotifyOnChangeProps} from '@modules/utils';
 import styles from './styles';

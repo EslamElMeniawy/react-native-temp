@@ -1,7 +1,7 @@
 import {ScrollView} from '@eslam-elmeniawy/react-native-common-components';
+import {percentWidth} from '@modules/utils';
 import * as React from 'react';
 import {StyleSheet, useWindowDimensions} from 'react-native';
-import {percentWidth} from '@modules/utils';
 import type {ScrollViewProps} from '@eslam-elmeniawy/react-native-common-components';
 
 export default React.memo((props: ScrollViewProps) => {
