@@ -1,5 +1,10 @@
 # Changelog
 
+## <small>3.9.1 (2025-02-06)</small>
+
+* chore: add `post-init-script.sh` ([aa0bee1](https://github.com/EslamElMeniawy/react-native-temp/commit/aa0bee1))
+* docs: update README.md ([69e0387](https://github.com/EslamElMeniawy/react-native-temp/commit/69e0387))
+
 ## 3.9.0 (2025-02-04)
 
 * chore: change `@release-it/conventional-changelog` config ([414225a](https://github.com/EslamElMeniawy/react-native-temp/commit/414225a))
