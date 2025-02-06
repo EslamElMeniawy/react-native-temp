@@ -1,5 +1,11 @@
 # Changelog
 
+## <small>3.9.2 (2025-02-06)</small>
+
+* chore: include `post-init-script.sh` in package ([3a6acc4](https://github.com/EslamElMeniawy/react-native-temp/commit/3a6acc4))
+* chore: update `post-init-script.sh` ([c5e4634](https://github.com/EslamElMeniawy/react-native-temp/commit/c5e4634))
+* chore: update `post-init-script.sh` ([fcb74d0](https://github.com/EslamElMeniawy/react-native-temp/commit/fcb74d0))
+
 ## <small>3.9.1 (2025-02-06)</small>
 
 * chore: add `post-init-script.sh` ([aa0bee1](https://github.com/EslamElMeniawy/react-native-temp/commit/aa0bee1))
