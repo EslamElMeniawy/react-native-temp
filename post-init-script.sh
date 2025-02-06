@@ -7,3 +7,5 @@ bundle install
 
 echo "Enabling corepack..."
 corepack enable
+
+echo "Post-init script completed!"
