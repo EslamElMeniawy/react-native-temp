@@ -1,6 +1,6 @@
 import {getStatusBarHeight} from '@eslam-elmeniawy/react-native-common-components';
 import {BaseNavigationContainer} from '@react-navigation/native';
-import {QueryClientProvider} from '@tanstack/react-query';
+import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {render, renderHook} from '@testing-library/react-native';
 import * as React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
@@ -10,8 +10,12 @@ import type {AppStore} from '@src/store';
 import {store as reduxStore} from '@src/store';
 import {Toast} from '@modules/components';
 import {useAppTheme} from '@modules/theme';
-import {queryClient as appQueryClient} from '@modules/utils';
+import {
+  queryClient as appQueryClient,
+  clientPersister as appClientPersister,
+} from '@modules/utils';
 import type {QueryClient} from '@tanstack/react-query';
+import type {Persister} from '@tanstack/react-query-persist-client';
 import type {
   RenderOptions,
   RenderHookOptions,
@@ -39,12 +43,14 @@ function Wrapper({
   store = reduxStore,
   theme,
   queryClient = appQueryClient,
+  clientPersister = appClientPersister,
   children,
 }: Readonly<
   React.PropsWithChildren<{
     store?: AppStore;
     theme?: MD3Theme;
     queryClient?: QueryClient;
+    clientPersister?: Persister;
   }>
 >) {
   const appTheme = useAppTheme();
@@ -56,9 +62,11 @@ function Wrapper({
           placement="top"
           offset={getStatusBarHeight()}
           renderToast={toastOptions => <Toast {...toastOptions} />}>
-          <QueryClientProvider client={queryClient}>
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{persister: clientPersister}}>
             <BaseNavigationContainer>{children}</BaseNavigationContainer>
-          </QueryClientProvider>
+          </PersistQueryClientProvider>
         </ToastProvider>
       </PaperProvider>
     </ReduxProvider>
