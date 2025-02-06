@@ -1,17 +1,21 @@
 import {getStatusBarHeight} from '@eslam-elmeniawy/react-native-common-components';
 import {BaseNavigationContainer} from '@react-navigation/native';
-import {QueryClientProvider} from '@tanstack/react-query';
+import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {render, renderHook} from '@testing-library/react-native';
 import * as React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {Provider as ReduxProvider} from 'react-redux';
-import {Toast} from '@src/components';
 import type {AppStore} from '@src/store';
 import {store as reduxStore} from '@src/store';
-import {useAppTheme} from './Theme';
-import {queryClient as appQueryClient} from './queryClient';
+import {Toast} from '@modules/components';
+import {useAppTheme} from '@modules/theme';
+import {
+  queryClient as appQueryClient,
+  clientPersister as appClientPersister,
+} from '@modules/utils';
 import type {QueryClient} from '@tanstack/react-query';
+import type {Persister} from '@tanstack/react-query-persist-client';
 import type {
   RenderOptions,
   RenderHookOptions,
@@ -35,6 +39,40 @@ interface ExtendedRenderHookOptions<Props>
   queryClient?: QueryClient;
 }
 
+function Wrapper({
+  store = reduxStore,
+  theme,
+  queryClient = appQueryClient,
+  clientPersister = appClientPersister,
+  children,
+}: Readonly<
+  React.PropsWithChildren<{
+    store?: AppStore;
+    theme?: MD3Theme;
+    queryClient?: QueryClient;
+    clientPersister?: Persister;
+  }>
+>) {
+  const appTheme = useAppTheme();
+
+  return (
+    <ReduxProvider store={store}>
+      <PaperProvider theme={theme ?? appTheme}>
+        <ToastProvider
+          placement="top"
+          offset={getStatusBarHeight()}
+          renderToast={toastOptions => <Toast {...toastOptions} />}>
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{persister: clientPersister}}>
+            <BaseNavigationContainer>{children}</BaseNavigationContainer>
+          </PersistQueryClientProvider>
+        </ToastProvider>
+      </PaperProvider>
+    </ReduxProvider>
+  );
+}
+
 /**
  * Renders a React element with the necessary providers for the application.
  *
@@ -55,27 +93,6 @@ export function renderWithProviders(
     ...renderOptions
   }: ExtendedRenderOptions = {},
 ) {
-  function Wrapper({
-    children,
-  }: Readonly<React.PropsWithChildren<{}>>) {
-    const appTheme = useAppTheme();
-
-    return (
-      <ReduxProvider store={store}>
-        <PaperProvider theme={theme ?? appTheme}>
-          <ToastProvider
-            placement="top"
-            offset={getStatusBarHeight()}
-            renderToast={toastOptions => <Toast {...toastOptions} />}>
-            <QueryClientProvider client={queryClient}>
-              <BaseNavigationContainer>{children}</BaseNavigationContainer>
-            </QueryClientProvider>
-          </ToastProvider>
-        </PaperProvider>
-      </ReduxProvider>
-    );
-  }
-
   return {
     store,
     theme,
@@ -104,27 +121,6 @@ export function renderHookWithProviders<Result, Props>(
     ...renderOptions
   }: ExtendedRenderHookOptions<Props> = {},
 ) {
-  function Wrapper({
-    children,
-  }: Readonly<React.PropsWithChildren<{}>>) {
-    const appTheme = useAppTheme();
-
-    return (
-      <ReduxProvider store={store}>
-        <PaperProvider theme={theme ?? appTheme}>
-          <ToastProvider
-            placement="top"
-            offset={getStatusBarHeight()}
-            renderToast={toastOptions => <Toast {...toastOptions} />}>
-            <QueryClientProvider client={queryClient}>
-              <BaseNavigationContainer>{children}</BaseNavigationContainer>
-            </QueryClientProvider>
-          </ToastProvider>
-        </PaperProvider>
-      </ReduxProvider>
-    );
-  }
-
   return {
     store,
     theme,

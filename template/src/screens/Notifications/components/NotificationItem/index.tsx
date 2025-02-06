@@ -2,7 +2,7 @@ import {Text} from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
 import {View} from 'react-native';
 import {TouchableRipple, Avatar} from 'react-native-paper';
-import {processNotification} from '@src/utils';
+import {processNotification} from '@modules/utils';
 import styles from './styles';
 import type {NotificationItemProps} from './types';
 

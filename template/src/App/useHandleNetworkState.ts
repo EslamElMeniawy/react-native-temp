@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {Toast} from 'react-native-toast-notifications';
-import {translate} from '@src/core';
 import {
   useAppDispatch,
   removeIsConnectionExpensive,
   setIsConnectionExpensive,
   setIsInternetAvailable,
 } from '@src/store';
+import {translate} from '@modules/localization';
 import type {NetInfoState} from '@react-native-community/netinfo';
 
 export const useHandleNetworkState = () => {
@@ -70,14 +70,14 @@ export const useHandleNetworkState = () => {
         if (internetLostToastId.current) {
           Toast.update(
             internetLostToastId.current,
-            translate('internet_lost'),
+            translate?.('internet_lost'),
             {
               type: 'danger',
               onClose: () => (internetLostToastId.current = undefined),
             },
           );
         } else {
-          internetLostToastId.current = Toast.show(translate('internet_lost'), {
+          internetLostToastId.current = Toast.show(translate?.('internet_lost'), {
             type: 'danger',
             onClose: () => (internetLostToastId.current = undefined),
           });

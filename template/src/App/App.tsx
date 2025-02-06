@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider as ReduxProvider} from 'react-redux';
 import {store} from '@src/store';
-import {useAppTheme} from '@src/utils';
+import {useAppTheme} from '@modules/theme';
 import AppContent from './AppContent';
 import styles from './styles';
 

@@ -20,6 +20,7 @@
 ## Features
 
 - Full project setup is available.
+- Using `multi-module` structure.
 - `Redux` added and configured using [`Redux Toolkit`](https://redux-toolkit.js.org).
 - [`TanStack Query (FKA React Query)`](https://tanstack.com/query/latest/) is used for `API` alongside [`axios`](https://axios-http.com).
 - `Navigation` added and configured using [`React Navigation`](https://reactnavigation.org).
@@ -41,7 +42,7 @@ After project creation please follow the following steps before running the proj
 - Create `Firebase` app and register your package and bundle.
 - Add `google-services.json` to location `/android/app/google-services.json`.
 - Add `GoogleService-Info.plist` to location `/ios/GoogleService-Info.plist`.
-- Edit `app_name` key value in each translation file in location `/src/translations/`.
+- Edit `app_name` key value in each translation file in location `/modules/localization/src/translations/`.
 - Add your app native icons.
 - Follow the [setup](https://github.com/zoontek/react-native-bootsplash#setup) for [`react-native-bootsplash`](https://github.com/zoontek/react-native-bootsplash) to add native splash screen.
 - Change values in `.env.development`, `.env.staging` and `.env.production` to values related to your project.

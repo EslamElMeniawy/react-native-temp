@@ -1,8 +1,8 @@
 import {Text} from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
-import {Screen, ScrollContainer} from '@src/components';
-import {useGetUserDetailsApi} from '@src/core';
-import {useFocusNotifyOnChangeProps, useRefreshOnFocus} from '@src/utils';
+import {Screen, ScrollContainer} from '@modules/components';
+import {useGetUserDetailsApi} from '@modules/core';
+import {useFocusNotifyOnChangeProps, useRefreshOnFocus} from '@modules/utils';
 import {Header} from './components';
 import styles from './styles';
 
