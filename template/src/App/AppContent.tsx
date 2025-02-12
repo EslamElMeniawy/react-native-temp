@@ -1,14 +1,11 @@
-import {
-  LoadingDialog,
-  getStatusBarHeight,
-} from '@eslam-elmeniawy/react-native-common-components';
+import {getStatusBarHeight} from '@eslam-elmeniawy/react-native-common-components';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import * as React from 'react';
 import {KeyboardProvider} from 'react-native-keyboard-controller';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {NavigationContainer} from '@src/navigation';
-import {ErrorDialog, Toast} from '@modules/components';
+import {Toast, ErrorDialog, LoadingDialog} from '@modules/components';
 import {useAppTheme} from '@modules/theme';
 import {clientPersister, queryClient} from '@modules/utils';
 import {useFirebaseMessagingInitialization} from './useFirebaseMessagingInitialization';

@@ -1,5 +1,10 @@
 # Changelog
 
+## <small>3.10.1 (2025-02-12)</small>
+
+* build: update `@eslam-elmeniawy/react-native-common-components` ([815c1a6](https://github.com/EslamElMeniawy/react-native-temp/commit/815c1a6))
+* fix: call correct `LoadingDialog` for app ([e1486ea](https://github.com/EslamElMeniawy/react-native-temp/commit/e1486ea))
+
 ## 3.10.0 (2025-02-06)
 
 * feat: refactor app to use multi-module structure ([6dc6c4d](https://github.com/EslamElMeniawy/react-native-temp/commit/6dc6c4d))
