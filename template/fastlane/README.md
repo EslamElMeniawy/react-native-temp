@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Manage iOS code signing
 
+### ios set_badge
+
+```sh
+[bundle exec] fastlane ios set_badge
+```
+
+Add badge to app icons
+
 ### ios beta
 
 ```sh
@@ -39,10 +47,26 @@ Build and upload iOS app to TestFlight
 
 Build and upload iOS release to App Store
 
+### ios firebase
+
+```sh
+[bundle exec] fastlane ios firebase
+```
+
+Deploy to Firebase App Distribution (for internal testing)
+
 ----
 
 
 ## Android
+
+### android set_badge
+
+```sh
+[bundle exec] fastlane android set_badge
+```
+
+Add badge to app icons
 
 ### android beta
 
