@@ -26,6 +26,7 @@
 - `Navigation` added and configured using [`React Navigation`](https://reactnavigation.org).
 - `Firebase` (`Analytics`, `Cloud Messaging` and `Crashlytics`) added and configured.
 - Most of libraries added in each project is added and configured.
+- `fastlane` scripts available.
 
 ## Usage
 

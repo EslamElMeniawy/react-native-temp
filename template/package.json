@@ -16,11 +16,11 @@
     "android:staging-release": "react-native run-android --mode=stagingrelease",
     "android:prod-release": "react-native run-android --mode=productionrelease",
     "apk:dev": "cd android && ./gradlew assembleDevelopment && cd ..",
-    "apk:staging": "cd android && ./gradlew assembleStaging && cd ..",
-    "apk:prod": "cd android && ./gradlew assembleProduction && cd ..",
+    "apk:staging": "cd android && ./gradlew assembleStagingRelease && cd ..",
+    "apk:prod": "cd android && ./gradlew assembleProductionRelease && cd ..",
     "bundle:dev": "cd android && ./gradlew bundleDevelopment && cd ..",
-    "bundle:staging": "cd android && ./gradlew bundleStaging && cd ..",
-    "bundle:prod": "cd android && ./gradlew bundleProduction && cd ..",
+    "bundle:staging": "cd android && ./gradlew bundleStagingRelease && cd ..",
+    "bundle:prod": "cd android && ./gradlew bundleProductionRelease && cd ..",
     "ios-clean": "run-script-os",
     "ios-clean:macos": "cd ios && rm -rf build && xcodebuild clean && cd ..",
     "ios-clean:default": "echo '\\033[0;33m\"ios-clean\" command available on mac only!'",
@@ -51,7 +51,8 @@
     "svg": "react-native-vector-image generate",
     "reset": "react-native clean-project-auto && yarn",
     "check-dependencies": "rnx-align-deps",
-    "fix-dependencies": "rnx-align-deps --write"
+    "fix-dependencies": "rnx-align-deps --write",
+    "fastlane": "bundle exec fastlane"
   },
   "dependencies": {
     "@d11/react-native-fast-image": "^8.9.1",
