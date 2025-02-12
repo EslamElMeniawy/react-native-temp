@@ -1,3 +1,18 @@
+diff --git a/node_modules/react-native-shake/android/build.gradle b/node_modules/react-native-shake/android/build.gradle
+index 6868b52..52b48fe 100644
+--- a/node_modules/react-native-shake/android/build.gradle
++++ b/node_modules/react-native-shake/android/build.gradle
+@@ -92,8 +92,8 @@ android {
+         java.srcDirs += [
+           "src/newarch",
+           // Codegen specs
+-          "generated/java",
+-          "generated/jni"
++          // "generated/java",
++          // "generated/jni"
+         ]
+       } else {
+         java.srcDirs += ["src/oldarch"]
 diff --git a/node_modules/react-native-shake/android/generated/java/com/shake/NativeShakeSpec.java b/node_modules/react-native-shake/android/generated/java/com/shake/NativeShakeSpec.java
 deleted file mode 100644
 index 0255e45..0000000
