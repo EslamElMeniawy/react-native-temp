@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@d11/react-native-fast-image": "^8.9.1",
-    "@eslam-elmeniawy/react-native-common-components": "^1.3.0",
+    "@eslam-elmeniawy/react-native-common-components": "^1.4.0",
     "@klarna/react-native-vector-drawable": "^0.5.1",
     "@modules/assets": "link:./modules/assets",
     "@modules/components": "link:./modules/components",
