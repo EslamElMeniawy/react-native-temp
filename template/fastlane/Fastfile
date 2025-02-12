@@ -71,7 +71,7 @@ platform :android do
   lane :set_badge do
     package = load_json(json_path: 'package.json')
     app_version = package['version']
-    add_badge(shield: "#{app_version}-orange", shield_scale: "0.90", shield_gravity: "Center", no_badge: true, glob: "/app/src/main/res/mipmap-*/{ic_launcher,ic_launcher_round,ic_launcher_foreground,ic_launcher_monochrome}.{png,PNG}")
+    add_badge(shield: "#{app_version}-orange", shield_scale: "0.90", shield_gravity: "Center", no_badge: true, glob: "/android/app/src/main/res/mipmap-*/{ic_launcher,ic_launcher_round,ic_launcher_foreground,ic_launcher_monochrome}.{png,PNG}")
   end
 
   desc "Build and upload Android app to Google Play (Beta)"
