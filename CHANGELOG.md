@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.11.0 (2025-02-13)
+
+* refactor: make some lanes private ([cef89ce](https://github.com/EslamElMeniawy/react-native-temp/commit/cef89ce))
+* fix: edit `react-native-shake+6.0.0-beta.3.patch` ([d143a54](https://github.com/EslamElMeniawy/react-native-temp/commit/d143a54))
+* fix: update fastlane android badge glob ([f168a1f](https://github.com/EslamElMeniawy/react-native-temp/commit/f168a1f))
+* docs: update `fastlane/README.md` ([e44f24f](https://github.com/EslamElMeniawy/react-native-temp/commit/e44f24f))
+* feat: add `fastlane` ([b5c229f](https://github.com/EslamElMeniawy/react-native-temp/commit/b5c229f))
+
 ## <small>3.10.1 (2025-02-12)</small>
 
 * build: update `@eslam-elmeniawy/react-native-common-components` ([815c1a6](https://github.com/EslamElMeniawy/react-native-temp/commit/815c1a6))

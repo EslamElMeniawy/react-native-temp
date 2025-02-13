@@ -1,0 +1,112 @@
+# -------------------------------
+# iOS Fastlane Configuration
+# -------------------------------
+platform :ios do
+  desc "Manage iOS code signing"
+  private_lane :certificates do
+    match(app_identifier: 'com.tempapp', type: 'development', readonly: true)
+    match(app_identifier: 'com.tempapp', type: 'appstore', readonly: true)
+  end
+
+  desc "Add badge to app icons"
+  private_lane :set_badge do
+    package = load_json(json_path: 'package.json')
+    app_version = package['version']
+    add_badge(shield: "#{app_version}-orange",
+      shield_scale: "0.90",
+      shield_gravity: "Center",
+      no_badge: true,
+      glob: "/ios/**/*.appiconset/*.{png,PNG}"
+    )
+  end
+
+  desc "Build iOS app"
+  private_lane :build_ios do |options|
+    build_app(
+      scheme: options[:scheme] || "Staging",
+      workspace: "ios/TempApp.xcworkspace",
+      include_bitcode: true,
+      export_method: "app-store",
+      clean: true
+    )
+  end
+
+  desc "Build and upload iOS app to TestFlight"
+  lane :beta do
+    certificates
+    set_badge
+    build_ios(scheme: "Staging")
+    upload_to_testflight
+  end
+
+  desc "Build and upload iOS release to App Store"
+  lane :release do
+    certificates
+    build_ios(scheme: "Release")
+    upload_to_app_store
+  end
+
+  desc "Deploy to Firebase App Distribution (for internal testing)"
+  lane :firebase do
+    certificates
+    set_badge
+    build_ios(scheme: "Staging")
+    # TODO: Add Firebase App Info.
+    firebase_app_distribution(
+      app: "your-firebase-app-id",
+      testers: "tester@example.com",
+      release_notes: "New features and bug fixes."
+    )
+  end
+end
+
+# -------------------------------
+# Android Fastlane Configuration
+# -------------------------------
+platform :android do
+  desc "Add badge to app icons"
+  private_lane :set_badge do
+    package = load_json(json_path: 'package.json')
+    app_version = package['version']
+    add_badge(shield: "#{app_version}-orange",
+      shield_scale: "0.90",
+      shield_gravity: "Center",
+      no_badge: true,
+      glob: "/android/app/src/main/res/mipmap-*/{ic_launcher,ic_launcher_round,ic_launcher_foreground,ic_launcher_monochrome}.{png,PNG}"
+    )
+  end
+
+  desc "Build Android app"
+  private_lane :build_android do |options|
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task:  options[:task] || 'assembleStaging',
+      build_type: 'Release',
+      project_dir: 'android/'
+    )
+  end
+
+  desc "Build and upload Android app to Google Play (Beta)"
+  lane :beta do
+    set_badge
+    build_android(task: 'bundleStaging')
+    upload_to_play_store(track: "beta")
+  end
+
+  desc "Build and upload Android release to Google Play Store"
+  lane :release do
+    build_android(task: 'bundleProduction')
+    upload_to_play_store(track: "production")
+  end
+
+  desc "Deploy to Firebase App Distribution (for internal testing)"
+  lane :firebase do
+    set_badge
+    build_android(task: 'assembleStaging')
+    # TODO: Add Firebase App Info.
+    firebase_app_distribution(
+      app: "your-firebase-app-id",
+      testers: "tester@example.com",
+      release_notes: "New features and bug fixes."
+    )
+  end
+end
