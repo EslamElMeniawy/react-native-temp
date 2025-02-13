@@ -15,22 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios certificates
-
-```sh
-[bundle exec] fastlane ios certificates
-```
-
-Manage iOS code signing
-
-### ios set_badge
-
-```sh
-[bundle exec] fastlane ios set_badge
-```
-
-Add badge to app icons
-
 ### ios beta
 
 ```sh
@@ -59,14 +43,6 @@ Deploy to Firebase App Distribution (for internal testing)
 
 
 ## Android
-
-### android set_badge
-
-```sh
-[bundle exec] fastlane android set_badge
-```
-
-Add badge to app icons
 
 ### android beta
 
