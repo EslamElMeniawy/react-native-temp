@@ -12,7 +12,7 @@ module.exports = {
     '<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js',
   ],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?(react-native|@react-native|@react-native-community|@react-navigation|react-redux|react-native-size-matters|reactotron-react-native-mmkv)/)',
+    'node_modules/(?!(jest-)?(react-native|@react-native|@react-native-community|@react-navigation|react-redux|reactotron-react-native-mmkv)/)',
   ],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
