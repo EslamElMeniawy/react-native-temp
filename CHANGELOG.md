@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.12.0 (2025-02-25)
+
+* build: update dependencies ([5e4ece9](https://github.com/EslamElMeniawy/react-native-temp/commit/5e4ece9))
+* style: format code ([5717313](https://github.com/EslamElMeniawy/react-native-temp/commit/5717313))
+* refactor: replace `react-native-size-matters` usage with `ResponsiveDimensions` ([954df61](https://github.com/EslamElMeniawy/react-native-temp/commit/954df61))
+* feat: upgrade `ReactNative` to version `0.78.0` ([7725de4](https://github.com/EslamElMeniawy/react-native-temp/commit/7725de4))
+
 ## 3.11.0 (2025-02-13)
 
 * refactor: make some lanes private ([cef89ce](https://github.com/EslamElMeniawy/react-native-temp/commit/cef89ce))
