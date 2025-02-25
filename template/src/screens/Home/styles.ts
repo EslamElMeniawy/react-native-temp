@@ -1,13 +1,11 @@
+import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
 import {StyleSheet} from 'react-native';
-import {vs} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
-  scrollView: {
-    marginVertical: vs(8),
-  },
+  scrollView: {marginVertical: ResponsiveDimensions.vs(8)},
   scrollViewContent: {
-    paddingVertical: vs(8),
-    gap: vs(8),
+    paddingVertical: ResponsiveDimensions.vs(8),
+    gap: ResponsiveDimensions.vs(8),
   },
 });
 

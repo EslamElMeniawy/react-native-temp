@@ -24,9 +24,7 @@ export default React.memo(() => {
     fetchNextPage,
     error,
     isLoadingError,
-  } = useGetNotificationsApi({
-    notifyOnChangeProps: notifyOnChangeProps?.(),
-  });
+  } = useGetNotificationsApi({notifyOnChangeProps: notifyOnChangeProps?.()});
 
   const notificationsList = allPages?.pages
     ?.map(page => (page.data ? page.data : []))

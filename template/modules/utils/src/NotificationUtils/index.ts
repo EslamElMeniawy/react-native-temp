@@ -127,9 +127,7 @@ export const displayLocalNotification = (
         // TODO: Add notifications icon first
         // smallIcon: 'ic_notification',
       },
-      ios: {
-        sound: 'default',
-      },
+      ios: {sound: 'default'},
     });
   }
 };

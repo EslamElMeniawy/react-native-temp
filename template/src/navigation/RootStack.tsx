@@ -24,10 +24,7 @@ export default React.memo(() => (
     {/* TODO: Add nested navigators here. */}
 
     {/* Modals */}
-    <stack.Group
-      screenOptions={{
-        presentation: 'transparentModal',
-      }}>
+    <stack.Group screenOptions={{presentation: 'transparentModal'}}>
       <>{/* TODO: Add modals screens here. */}</>
     </stack.Group>
   </stack.Navigator>

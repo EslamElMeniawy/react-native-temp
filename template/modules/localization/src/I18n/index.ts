@@ -10,10 +10,7 @@ import {ar, en} from '@modules/localization/src/translations';
 
 const getLogMessage = (message: string) => `## I18n:: ${message}`;
 
-const resources = {
-  ar: {translation: ar},
-  en: {translation: en},
-};
+const resources = {ar: {translation: ar}, en: {translation: en}};
 
 // Get device language.
 const deviceLanguage =
@@ -46,9 +43,7 @@ export const setI18nConfig = async () => {
     compatibilityJSON: 'v4',
     resources,
     lng: defaultLocale,
-    interpolation: {
-      escapeValue: false,
-    },
+    interpolation: {escapeValue: false},
   });
 
   const locales = RNLocalize.getLocales();

@@ -22,11 +22,7 @@ const useAppTheme = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const defaultTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
 
-  return {
-    ...defaultTheme,
-    colors: appThemeColors,
-    fonts: fonts,
-  } as MD3Theme;
+  return {...defaultTheme, colors: appThemeColors, fonts: fonts} as MD3Theme;
 };
 
 export default useAppTheme;

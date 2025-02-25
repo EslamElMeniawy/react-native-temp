@@ -32,11 +32,13 @@ const notification = {
 const shouldSkipOpenNotificationsScreen = false;
 
 test('should clear the notification successfully when notification is provided', () => {
-  const storeMock = jest.spyOn(store, 'getState').mockReturnValue({
-    user: {unreadNotificationsCount: 5, apiToken: 'token'},
-    dialogs: {},
-    networkState: {},
-  });
+  const storeMock = jest
+    .spyOn(store, 'getState')
+    .mockReturnValue({
+      user: {unreadNotificationsCount: 5, apiToken: 'token'},
+      dialogs: {},
+      networkState: {},
+    });
 
   processNotification(notification, shouldSkipOpenNotificationsScreen);
   expect(clearNotificationsMock).toHaveBeenCalledWith(notification);

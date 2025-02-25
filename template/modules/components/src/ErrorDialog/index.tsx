@@ -31,10 +31,7 @@ export default React.memo(() => {
     <AlertDialog
       title={errorDialogTitle}
       message={errorDialogMessage}
-      dialogProps={{
-        visible: Boolean(errorDialogMessage),
-        onDismiss: onDismiss,
-      }}
+      dialogProps={{visible: Boolean(errorDialogMessage), onDismiss: onDismiss}}
       actions={[{action: translate('ok'), actionProps: {onPress: onDismiss}}]}
     />
   );

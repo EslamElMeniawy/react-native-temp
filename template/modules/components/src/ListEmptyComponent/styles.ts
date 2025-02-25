@@ -1,5 +1,5 @@
+import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
 import {StyleSheet} from 'react-native';
-import {vs} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,12 +8,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: vs(16),
+    paddingVertical: ResponsiveDimensions.vs(16),
   },
-  message: {
-    marginTop: vs(8),
-    textAlign: 'center',
-  },
+  message: {marginTop: ResponsiveDimensions.vs(8), textAlign: 'center'},
 });
 
 export default styles;

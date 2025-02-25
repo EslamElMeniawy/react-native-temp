@@ -34,9 +34,7 @@ test('should display notification when body is available', () => {
       // TODO: Add notifications icon first
       // smallIcon: 'ic_notification',
     },
-    ios: {
-      sound: 'default',
-    },
+    ios: {sound: 'default'},
   });
 });
 
@@ -66,9 +64,7 @@ test('should use title from remoteMessage.data when notification title is not av
     id: '12345',
     title: 'Test Title from data',
     body: 'Test Body',
-    data: {
-      title: 'Test Title from data',
-    },
+    data: {title: 'Test Title from data'},
     android: {
       channelId: localChannelId,
       color: AppColors.seed,
@@ -76,9 +72,7 @@ test('should use title from remoteMessage.data when notification title is not av
       // TODO: Add notifications icon first
       // smallIcon: 'ic_notification',
     },
-    ios: {
-      sound: 'default',
-    },
+    ios: {sound: 'default'},
   });
 });
 
@@ -96,9 +90,7 @@ test('should use body from remoteMessage.data when notification body is not avai
     id: '12345',
     title: undefined,
     body: 'Test Body from data',
-    data: {
-      body: 'Test Body from data',
-    },
+    data: {body: 'Test Body from data'},
     android: {
       channelId: localChannelId,
       color: AppColors.seed,
@@ -106,9 +98,7 @@ test('should use body from remoteMessage.data when notification body is not avai
       // TODO: Add notifications icon first
       // smallIcon: 'ic_notification',
     },
-    ios: {
-      sound: 'default',
-    },
+    ios: {sound: 'default'},
   });
 });
 
