@@ -21,10 +21,7 @@ jest.mock('react-native-localize', () => {
     groupingSeparator: ',',
   });
 
-  const findBestLanguageTag = () => ({
-    languageTag: 'en-US',
-    isRTL: false,
-  });
+  const findBestLanguageTag = () => ({languageTag: 'en-US', isRTL: false});
 
   const getTemperatureUnit = () => 'celsius';
   const getTimeZone = () => 'Europe/Paris';
@@ -53,20 +50,15 @@ jest.mock('react-native-bootsplash', () => {
   return {
     hide: jest.fn<() => Promise<void>>().mockResolvedValue(),
     isVisible: jest.fn<() => Promise<boolean>>().mockResolvedValue(false),
-    useHideAnimation: jest.fn().mockReturnValue({
-      container: {},
-      logo: {source: 0},
-      brand: {source: 0},
-    }),
+    useHideAnimation: jest
+      .fn()
+      .mockReturnValue({container: {}, logo: {source: 0}, brand: {source: 0}}),
   };
 });
 
 jest.mock('react-native-keyboard-controller', () => {
   const values = {
-    animated: {
-      progress: 0,
-      height: 0,
-    },
+    animated: {progress: 0, height: 0},
     reanimated: {
       progress: {value: 0, get: jest.fn().mockReturnValue(0), set: jest.fn()},
       height: {value: 0, get: jest.fn().mockReturnValue(0), set: jest.fn()},
@@ -75,14 +67,7 @@ jest.mock('react-native-keyboard-controller', () => {
   const inputData = {
     target: 1,
     parentScrollViewTarget: -1,
-    layout: {
-      x: 0,
-      y: 0,
-      width: 200,
-      height: 40,
-      absoluteX: 0,
-      absoluteY: 100,
-    },
+    layout: {x: 0, y: 0, width: 200, height: 40, absoluteX: 0, absoluteY: 100},
   };
   const focusedInput = {
     input: {
@@ -135,9 +120,7 @@ jest.mock('react-native-keyboard-controller', () => {
       SOFT_INPUT_STATE_UNSPECIFIED: 0,
       SOFT_INPUT_STATE_VISIBLE: 4,
     },
-    KeyboardEvents: {
-      addListener: jest.fn(() => ({remove: jest.fn()})),
-    },
+    KeyboardEvents: {addListener: jest.fn(() => ({remove: jest.fn()}))},
     // views
     KeyboardControllerView: 'KeyboardControllerView',
     KeyboardGestureArea: 'KeyboardGestureArea',
@@ -160,9 +143,7 @@ jest.mock('react-native', () => {
 
   Object.defineProperty(RN, 'I18nManager', {
     get: jest.fn(() => {
-      return {
-        getConstants: () => ({isRTL: false}),
-      };
+      return {getConstants: () => ({isRTL: false})};
     }),
   });
 
@@ -209,6 +190,4 @@ jest.mock('@react-native-firebase/messaging', () => () => ({
   getToken: jest.fn(() => Promise.resolve('myMockToken')),
 }));
 
-jest.mock('react-native-network-logger', () => ({
-  default: jest.fn(),
-}));
+jest.mock('react-native-network-logger', () => ({default: jest.fn()}));

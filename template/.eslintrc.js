@@ -25,46 +25,28 @@ module.exports = {
   rules: {
     '@typescript-eslint/naming-convention': [
       'error',
-      {
-        selector: 'default',
-        format: ['camelCase'],
-      },
-      {
-        selector: 'variable',
-        format: ['camelCase', 'UPPER_CASE'],
-      },
+      {selector: 'default', format: ['camelCase']},
+      {selector: 'variable', format: ['camelCase', 'UPPER_CASE']},
       {
         selector: 'variable',
         types: ['function'],
         format: ['PascalCase', 'camelCase'],
       },
-      {
-        selector: 'function',
-        format: ['PascalCase', 'camelCase'],
-      },
+      {selector: 'function', format: ['PascalCase', 'camelCase']},
       {
         selector: 'parameter',
         format: ['camelCase'],
         leadingUnderscore: 'allow',
       },
-      {
-        selector: 'enumMember',
-        format: ['UPPER_CASE'],
-      },
+      {selector: 'enumMember', format: ['UPPER_CASE']},
       {
         selector: 'memberLike',
         modifiers: ['private'],
         format: ['camelCase'],
         leadingUnderscore: 'require',
       },
-      {
-        selector: 'typeLike',
-        format: ['PascalCase'],
-      },
-      {
-        selector: 'import',
-        format: ['PascalCase', 'camelCase'],
-      },
+      {selector: 'typeLike', format: ['PascalCase']},
+      {selector: 'import', format: ['PascalCase', 'camelCase']},
       {
         selector: [
           'classProperty',
@@ -82,10 +64,7 @@ module.exports = {
       {
         selector: ['objectLiteralProperty'],
         format: null,
-        filter: {
-          regex: '(screen_name|screen_class)',
-          match: true,
-        },
+        filter: {regex: '(screen_name|screen_class)', match: true},
       },
     ],
     'arrow-body-style': ['error', 'as-needed'],
@@ -143,13 +122,8 @@ module.exports = {
     project: './tsconfig.json',
   },
   settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
-    'import/resolver': {
-      typescript: true,
-      node: true,
-    },
+    'import/parsers': {'@typescript-eslint/parser': ['.ts', '.tsx']},
+    'import/resolver': {typescript: true, node: true},
   },
   overrides: [
     {

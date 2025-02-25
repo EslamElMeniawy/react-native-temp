@@ -77,10 +77,13 @@ export const useHandleNetworkState = () => {
             },
           );
         } else {
-          internetLostToastId.current = Toast.show(translate?.('internet_lost'), {
-            type: 'danger',
-            onClose: () => (internetLostToastId.current = undefined),
-          });
+          internetLostToastId.current = Toast.show(
+            translate?.('internet_lost'),
+            {
+              type: 'danger',
+              onClose: () => (internetLostToastId.current = undefined),
+            },
+          );
         }
       } else if (internetLostToastId.current) {
         Toast.hide(internetLostToastId.current);

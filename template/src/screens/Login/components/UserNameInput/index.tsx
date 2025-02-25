@@ -11,9 +11,7 @@ export default React.memo(() => {
       rules={{
         required: {
           value: true,
-          message: translate('field_required', {
-            field: translate('username'),
-          }),
+          message: translate('field_required', {field: translate('username')}),
         },
       }}
       textInputProps={{

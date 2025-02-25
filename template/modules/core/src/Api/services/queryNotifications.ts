@@ -15,9 +15,7 @@ const queryNotifications = {
     request: ApiRequest,
   ): Promise<PagingResponse<Notification>> =>
     httpClient
-      .get<NotificationsResponse>('/notifications', {
-        params: request.params,
-      })
+      .get<NotificationsResponse>('/notifications', {params: request.params})
       .then(response => ({
         currentPage: response.data.meta?.currentPage,
         lastPage: response.data.meta?.totalPages,
