@@ -89,13 +89,13 @@
     "access": "public"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.6.1",
-    "@commitlint/config-conventional": "^19.6.0",
-    "@evilmartians/lefthook": "^1.10.10",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@evilmartians/lefthook": "^1.11.1",
     "@release-it/conventional-changelog": "^10.0.0",
-    "commitlint": "^19.6.1",
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2",
+    "commitlint": "^19.7.1",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.2",
     "release-it": "^18.1.2",
     "typescript": "5.0.4"
   },
