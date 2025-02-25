@@ -1,10 +1,8 @@
+import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
 import {StyleSheet} from 'react-native';
-import {vs} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
-  loadingMore: {
-    marginVertical: vs(8),
-  },
+  loadingMore: {marginVertical: ResponsiveDimensions.vs(8)},
 });
 
 export default styles;
