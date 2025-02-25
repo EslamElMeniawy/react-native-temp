@@ -39,12 +39,7 @@ const useAppThemeFonts = () => {
     },
   } as const;
 
-  return configureFonts({
-    config: {
-      ...baseVariants,
-      ...customVariants,
-    },
-  });
+  return configureFonts({config: {...baseVariants, ...customVariants}});
 };
 
 export default useAppThemeFonts;

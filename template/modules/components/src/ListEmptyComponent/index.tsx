@@ -20,7 +20,7 @@ export default React.memo((props: Props) => {
       />
       <Text variant="bodyLarge" style={styles.message}>
         {isLoadingError
-          ? error?.errorMessage ?? translate('error_load_data', {data: data})
+          ? (error?.errorMessage ?? translate('error_load_data', {data: data}))
           : translate('no_data_available', {data: data})}
       </Text>
     </View>

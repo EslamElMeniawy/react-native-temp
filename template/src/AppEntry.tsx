@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
 import messaging from '@react-native-firebase/messaging';
 import * as React from 'react';
 import {enableScreens} from 'react-native-screens';
@@ -13,6 +14,12 @@ function getLogMessage(message: string) {
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.info(getLogMessage('BackgroundMessageHandler'), remoteMessage);
 });
+
+// Set base dimensions for responsive components.
+ResponsiveDimensions.setBaseDimensions(
+  // TODO: Replace with your app's base dimensions (Figma screen size).
+  {width: 430, height: 932},
+);
 
 function AppEntry({isHeadless}: Readonly<{isHeadless?: boolean}>) {
   if (isHeadless) {

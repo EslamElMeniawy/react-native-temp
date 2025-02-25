@@ -3,7 +3,7 @@ buildscript {
         buildToolsVersion = "35.0.0"
         minSdkVersion = 24
         compileSdkVersion = 35
-        targetSdkVersion = 34
+        targetSdkVersion = 35
         ndkVersion = "27.1.12297006"
         kotlinVersion = "2.0.21"
     }
@@ -20,7 +20,7 @@ buildscript {
 
         // Added for "react-native-firebase".
         classpath 'com.google.gms:google-services:4.4.2'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.3'
     }
 }
 

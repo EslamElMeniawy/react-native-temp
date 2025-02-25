@@ -28,9 +28,7 @@ export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {
     data: apiUser,
     isError: isErrorApi,
     isSuccess: isSuccessApi,
-  } = useGetUserDetailsApi({
-    enabled: shouldStartUserLoading,
-  });
+  } = useGetUserDetailsApi({enabled: shouldStartUserLoading});
   // #endregion
 
   const getSavedUserToken = React.useCallback(() => {

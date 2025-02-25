@@ -52,10 +52,7 @@ export default React.memo((props: Props) => {
         statusBar: statusBarStyle ?? defaultStatusBarStyle,
         navigationBar: navigationBarStyle ?? defaultNavigationBarStyle,
       }}
-      hidden={{
-        statusBar: statusBarHidden,
-        navigationBar: navigationBarHidden,
-      }}
+      hidden={{statusBar: statusBarHidden, navigationBar: navigationBarHidden}}
     />
   );
 });

@@ -11,15 +11,10 @@ export default React.memo(() => {
       rules={{
         required: {
           value: true,
-          message: translate('field_required', {
-            field: translate('password'),
-          }),
+          message: translate('field_required', {field: translate('password')}),
         },
       }}
-      textInputProps={{
-        label: translate('password'),
-        secureTextEntry: true,
-      }}
+      textInputProps={{label: translate('password'), secureTextEntry: true}}
     />
   );
 });

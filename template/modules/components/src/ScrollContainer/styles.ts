@@ -2,7 +2,10 @@ import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-compone
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
-  loadingMore: {marginVertical: ResponsiveDimensions.vs(8)},
+  contentContainer: {
+    width: ResponsiveDimensions.percentWidth(100),
+    paddingHorizontal: ResponsiveDimensions.percentWidth(5),
+  },
 });
 
 export default styles;

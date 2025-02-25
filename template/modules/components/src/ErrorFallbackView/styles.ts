@@ -1,16 +1,12 @@
+import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
 import {StyleSheet} from 'react-native';
-import {vs} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
-    paddingVertical: vs(16),
+    paddingVertical: ResponsiveDimensions.vs(16),
   },
-  text: {
-    textAlign: 'center',
-    width: '90%',
-    alignSelf: 'center',
-  },
+  text: {textAlign: 'center', width: '90%', alignSelf: 'center'},
   title: {
     // TODO: Add font family relative to app font.
     // fontFamily: 'Cairo-Bold',
@@ -22,7 +18,7 @@ const styles = StyleSheet.create({
   btn: {
     width: '90%',
     alignSelf: 'center',
-    marginTop: vs(32),
+    marginTop: ResponsiveDimensions.vs(32),
   },
   btnTxt: {
     // TODO: Add font family relative to app font.

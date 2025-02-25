@@ -16,9 +16,7 @@ export const useLogInitialization = () => {
     const appName = getApplicationName();
     const isLocalLogEnable = Config.ENABLE_LOCAL_LOG === 'true';
 
-    const queryClientManager = new QueryClientManager({
-      queryClient,
-    });
+    const queryClientManager = new QueryClientManager({queryClient});
 
     configureLog?.({
       appName: appName,
