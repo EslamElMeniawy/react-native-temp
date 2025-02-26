@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>3.12.1 (2025-02-26)</small>
+
+* fix: `Firebase` warning ([531820d](https://github.com/EslamElMeniawy/react-native-temp/commit/531820d))
+
 ## 3.12.0 (2025-02-25)
 
 * build: update dependencies ([5e4ece9](https://github.com/EslamElMeniawy/react-native-temp/commit/5e4ece9))
