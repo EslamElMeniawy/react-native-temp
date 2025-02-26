@@ -1,4 +1,8 @@
-import messaging from '@react-native-firebase/messaging';
+import {
+  getMessaging,
+  onNotificationOpenedApp,
+  getInitialNotification,
+} from '@react-native-firebase/messaging';
 import * as React from 'react';
 import type {Notification} from '@modules/core';
 import {processNotification} from '@modules/utils';
@@ -41,21 +45,20 @@ export const useNotificationsInteraction = () => {
   );
 
   React.useEffect(() => {
-    const unsubscribe = messaging().onNotificationOpenedApp(remoteMessage => {
+    const messaging = getMessaging();
+    const unsubscribe = onNotificationOpenedApp(messaging, remoteMessage => {
       console.info(getLogMessage('onNotificationOpenedApp'), remoteMessage);
       processNotification(getNotificationFromMessage(remoteMessage));
     });
 
     // Check whether an initial notification is available.
-    messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
-        console.info(getLogMessage('getInitialNotification'), remoteMessage);
+    getInitialNotification(messaging).then(remoteMessage => {
+      console.info(getLogMessage('getInitialNotification'), remoteMessage);
 
-        if (remoteMessage) {
-          processNotification(getNotificationFromMessage(remoteMessage));
-        }
-      });
+      if (remoteMessage) {
+        processNotification(getNotificationFromMessage(remoteMessage));
+      }
+    });
 
     return unsubscribe;
   }, [getNotificationFromMessage]);

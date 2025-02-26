@@ -1,6 +1,9 @@
 import 'react-native-gesture-handler';
 import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
-import messaging from '@react-native-firebase/messaging';
+import {
+  getMessaging,
+  setBackgroundMessageHandler,
+} from '@react-native-firebase/messaging';
 import * as React from 'react';
 import {enableScreens} from 'react-native-screens';
 
@@ -11,7 +14,7 @@ function getLogMessage(message: string) {
 }
 
 // Register background handler for firebase messages.
-messaging().setBackgroundMessageHandler(async remoteMessage => {
+setBackgroundMessageHandler(getMessaging(), async remoteMessage => {
   console.info(getLogMessage('BackgroundMessageHandler'), remoteMessage);
 });
 

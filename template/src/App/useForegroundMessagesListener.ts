@@ -1,5 +1,5 @@
 import notifee, {EventType} from '@notifee/react-native';
-import messaging from '@react-native-firebase/messaging';
+import {getMessaging, onMessage} from '@react-native-firebase/messaging';
 import * as React from 'react';
 import {
   useAppDispatch,
@@ -23,7 +23,7 @@ export const useForegroundMessagesListener = () => {
   // #endregion
 
   React.useEffect(() => {
-    const unsubscribe = messaging().onMessage(remoteMessage => {
+    const unsubscribe = onMessage(getMessaging(), remoteMessage => {
       console.info(getLogMessage('onMessage'), remoteMessage);
       const apiToken = getApiToken();
 

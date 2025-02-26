@@ -6,7 +6,7 @@ import {
   removeApiToken as removeLocalStorageApiToken,
   removeFcmToken as removeLocalStorageFcmToken,
 } from '@modules/core';
-import messaging from '@react-native-firebase/messaging';
+import {getMessaging, deleteToken} from '@react-native-firebase/messaging';
 import {reset} from '@src/navigation';
 import {
   store,
@@ -84,8 +84,8 @@ export const removeReduxUserData = () => {
  * Asynchronously removes user data by performing the following steps:
  * 1. Logs a message indicating the start of the process.
  * 2. Removes user data from local storage by calling 'removeLocalStorageUserData' function.
- * 3. Deletes the messaging token by calling 'messaging().deleteToken()' function.
- * 4. Removes user data from Redux store by calling 'removeReduxUserData' function.
+ * 3. Deletes the messaging token by calling `deleteToken(getMessaging())` function.
+ * 4. Removes user data from Redux store by calling `removeReduxUserData` function.
  * 5. Calls the optional 'onFinish' callback function if provided.
  *
  * @param onFinish Optional callback function to be executed after the user data removal process is completed.
@@ -94,7 +94,7 @@ export const removeReduxUserData = () => {
 export const removeUserData = async (onFinish?: () => void): Promise<void> => {
   console.info(getLogMessage('removeUserData'));
   removeLocalStorageUserData();
-  await messaging().deleteToken();
+  await deleteToken(getMessaging());
   removeReduxUserData();
   onFinish?.();
 };
