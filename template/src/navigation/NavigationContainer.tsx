@@ -1,4 +1,4 @@
-import analytics from '@react-native-firebase/analytics';
+import {getAnalytics, logScreenView} from '@react-native-firebase/analytics';
 import {NavigationContainer} from '@react-navigation/native';
 import * as React from 'react';
 import {View} from 'react-native';
@@ -30,7 +30,7 @@ export default React.memo(() => {
         const currentRouteName = navigationRef.getCurrentRoute()?.name;
 
         if (previousRouteName !== currentRouteName) {
-          await analytics().logScreenView({
+          await logScreenView(getAnalytics(), {
             screen_name: currentRouteName,
             screen_class: currentRouteName,
           });
