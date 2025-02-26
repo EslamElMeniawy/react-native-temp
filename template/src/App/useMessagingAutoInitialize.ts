@@ -1,4 +1,8 @@
-import messaging from '@react-native-firebase/messaging';
+import {
+  getMessaging,
+  isAutoInitEnabled,
+  setAutoInitEnabled,
+} from '@react-native-firebase/messaging';
 import * as React from 'react';
 
 export const useMessagingAutoInitialize = () => {
@@ -15,9 +19,10 @@ export const useMessagingAutoInitialize = () => {
      */
     const checkMessagingAutoInitialize = () => {
       console.info(getLogMessage('checkMessagingAutoInitialize'));
+      const messaging = getMessaging();
 
-      if (!messaging().isAutoInitEnabled) {
-        messaging().setAutoInitEnabled(true);
+      if (!isAutoInitEnabled(messaging)) {
+        setAutoInitEnabled(messaging, true);
       }
     };
 

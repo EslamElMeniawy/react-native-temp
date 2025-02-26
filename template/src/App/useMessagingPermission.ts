@@ -1,4 +1,9 @@
-import messaging from '@react-native-firebase/messaging';
+import {
+  getMessaging,
+  requestPermission as firebaseRequestPermission,
+  AuthorizationStatus,
+  hasPermission as firebaseHasPermission,
+} from '@react-native-firebase/messaging';
 import * as React from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 
@@ -7,6 +12,8 @@ export const useMessagingPermission = () => {
   const getLogMessage = (message: string) =>
     `## App::useMessagingPermission:: ${message}`;
   // #endregion
+
+  const messaging = getMessaging();
 
   const checkAndroidPermissions = React.useCallback(async () => {
     if (Platform.OS === 'android') {
@@ -22,19 +29,19 @@ export const useMessagingPermission = () => {
   }, []);
 
   const requestPermission = React.useCallback(async () => {
-    const authStatus = await messaging().requestPermission();
+    const authStatus = await firebaseRequestPermission(messaging);
     console.info(getLogMessage('authStatus'), authStatus);
 
     const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      authStatus === AuthorizationStatus.AUTHORIZED ||
+      authStatus === AuthorizationStatus.PROVISIONAL;
 
     console.info(getLogMessage('enabled'), enabled);
 
     if (!enabled) {
       console.warn(getLogMessage('Notifications Disabled'));
     }
-  }, []);
+  }, [messaging]);
 
   React.useEffect(() => {
     /**
@@ -48,7 +55,7 @@ export const useMessagingPermission = () => {
 
       try {
         await checkAndroidPermissions();
-        const hasPermission = await messaging().hasPermission();
+        const hasPermission = await firebaseHasPermission(messaging);
         console.info(getLogMessage('hasPermission'), hasPermission);
 
         if (!hasPermission) {
@@ -60,5 +67,5 @@ export const useMessagingPermission = () => {
     };
 
     checkMessagingPermission();
-  }, [checkAndroidPermissions, requestPermission]);
+  }, [checkAndroidPermissions, requestPermission, messaging]);
 };

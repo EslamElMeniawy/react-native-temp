@@ -176,6 +176,8 @@ jest.mock('@notifee/react-native', () => {
 });
 
 jest.mock('@react-native-firebase/analytics', () => () => ({
+  getAnalytics: jest.fn(),
+  logScreenView: jest.fn(() => Promise.resolve()),
   logEvent: jest.fn(),
   setUserProperties: jest.fn(),
   setUserId: jest.fn(),
@@ -183,7 +185,15 @@ jest.mock('@react-native-firebase/analytics', () => () => ({
 }));
 
 jest.mock('@react-native-firebase/messaging', () => () => ({
+  getMessaging: jest.fn(),
+  deleteToken: jest.fn(),
+  setBackgroundMessageHandler: jest.fn(),
+  onMessage: jest.fn(),
+  isAutoInitEnabled: jest.fn(() => true),
+  setAutoInitEnabled: jest.fn(),
   hasPermission: jest.fn(() => Promise.resolve(true)),
+  onNotificationOpenedApp: jest.fn(),
+  getInitialNotification: jest.fn(() => Promise.resolve(null)),
   subscribeToTopic: jest.fn(),
   unsubscribeFromTopic: jest.fn(),
   requestPermission: jest.fn(() => Promise.resolve(true)),
