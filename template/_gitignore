@@ -83,3 +83,7 @@ ios/tmp.xcconfig
 # firebase config files
 google-services.json
 GoogleService-Info.plist
+
+# Qodo Gen (Codium VS Code)
+.qodo/
+.qodo
