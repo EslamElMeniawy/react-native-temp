@@ -91,3 +91,7 @@ template/Gemfile.lock
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Qodo Gen (Codium VS Code)
+.qodo/
+.qodo
