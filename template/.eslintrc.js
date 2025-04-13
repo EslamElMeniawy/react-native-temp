@@ -5,7 +5,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:eslint-comments/recommended',
-    'plugin:@tanstack/eslint-plugin-query/recommended',
+    'plugin:@tanstack/query/recommended',
   ],
   ignorePatterns: [
     '.eslintrc.js',

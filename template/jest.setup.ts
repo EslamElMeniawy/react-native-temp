@@ -143,7 +143,12 @@ jest.mock('react-native', () => {
 
   Object.defineProperty(RN, 'I18nManager', {
     get: jest.fn(() => {
-      return {getConstants: () => ({isRTL: false})};
+      return {
+        getConstants: () => ({isRTL: false}),
+        allowRTL: jest.fn(),
+        forceRTL: jest.fn(),
+        isRTL: false,
+      };
     }),
   });
 

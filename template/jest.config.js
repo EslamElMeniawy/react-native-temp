@@ -15,5 +15,5 @@ module.exports = {
     'node_modules/(?!(jest-)?(react-native|@react-native|@react-native-community|@react-navigation|react-redux|reactotron-react-native-mmkv)/)',
   ],
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{ts,tsx}'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', 'modules/*/src/**/*.{ts,tsx}'],
 };
