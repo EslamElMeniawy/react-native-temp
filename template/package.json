@@ -161,7 +161,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@4.9.2",
+  "packageManager": "yarn@4.9.3",
   "rnx-kit": {
     "kitType": "app",
     "alignDeps": {
