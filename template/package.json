@@ -50,6 +50,8 @@
     "ver": "yarn version ${0} && react-native-version --reset-build",
     "svg": "react-native-vector-image generate",
     "reset": "react-native clean-project-auto && yarn",
+    "fresh-install": "rm -rf ./vendor && rm -rf ./Gemfile.lock && bundle install && rm -rf ./node_modules && rm -rf ./ios/Pods && rm -rf ./ios/Podfile.lock && yarn install && yarn pods && yarn lefthook install && watchman watch-del-all && yarn android-clean",
+    "fresh-start": "yarn fresh-install && yarn start --reset-cache",
     "check-dependencies": "rnx-align-deps",
     "fix-dependencies": "rnx-align-deps --write",
     "fastlane": "bundle exec fastlane"
