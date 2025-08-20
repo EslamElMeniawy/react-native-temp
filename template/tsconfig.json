@@ -1,5 +1,5 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json",
+  "extends": "@react-native/typescript-config",
   "compilerOptions": {
     "module": "esnext",
     "baseUrl": ".",
@@ -9,6 +9,6 @@
       "@appJson": ["./app.json"]
     }
   },
-  "include": ["./index.js", "src", "@types", "modules"],
-  "exclude": ["jest.setup.ts", "__mocks__"]
+  "include": ["**/*.ts", "**/*.tsx", "./index.js", "src", "@types", "modules"],
+  "exclude": ["**/node_modules", "**/Pods", "jest.setup.ts", "__mocks__"]
 }
