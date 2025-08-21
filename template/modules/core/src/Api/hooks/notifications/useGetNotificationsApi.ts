@@ -1,6 +1,6 @@
-import {useInfiniteQuery} from '@tanstack/react-query';
-import {default as Config} from 'react-native-config';
-import {fakerNotifications, queryNotifications} from '@modules/core';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { default as Config } from 'react-native-config';
+import { fakerNotifications, queryNotifications } from '@modules/core';
 import type {
   PagingResponse,
   Notification,
@@ -19,7 +19,6 @@ const useGetNotificationsApi = (
       PagingResponse<Notification>,
       ServerError,
       InfiniteData<PagingResponse<Notification>, ApiRequest>,
-      any,
       QueryKey,
       ApiRequest
     >,
@@ -33,14 +32,14 @@ const useGetNotificationsApi = (
     QueryKey,
     ApiRequest
   >({
-    queryFn: ({pageParam}) =>
+    queryFn: ({ pageParam }) =>
       Config.USE_FAKE_API === 'true'
         ? fakerNotifications.getNotifications(pageParam)
         : queryNotifications.getNotifications(pageParam),
     queryKey: ['notifications'],
     initialPageParam: {
       // TODO: Change `params` object to match API.
-      params: {page: 1, size: 10},
+      params: { page: 1, size: 10 },
     },
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.currentPage === lastPage.lastPage

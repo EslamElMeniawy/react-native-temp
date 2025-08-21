@@ -1,4 +1,4 @@
-import {randomIntFromInterval} from '@modules/utils';
+import { randomIntFromInterval } from '@modules/utils';
 import type {
   ApiRequest,
   PagingResponse,
@@ -26,7 +26,7 @@ const fakerNotifications = {
           res({
             currentPage: page,
             lastPage: 10,
-            data: Array.from({length: pageSize}, (_, i) => {
+            data: Array.from({ length: pageSize }, (_, i) => {
               const id = page * pageSize - pageSize + 1 + i;
 
               return {
@@ -50,7 +50,7 @@ const fakerNotifications = {
     return new Promise(res =>
       setTimeout(
         () => {
-          res({message: 'Updated FCM token successfully'});
+          res({ message: 'Updated FCM token successfully' });
         },
         randomIntFromInterval(100, 1000),
       ),
@@ -64,7 +64,7 @@ const fakerNotifications = {
     return new Promise(res =>
       setTimeout(
         () => {
-          res({message: 'Marked notification read successfully'});
+          res({ message: 'Marked notification read successfully' });
         },
         randomIntFromInterval(100, 1000),
       ),

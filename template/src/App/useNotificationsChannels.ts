@@ -1,7 +1,7 @@
 import notifee from '@notifee/react-native';
 import * as React from 'react';
-import {translate} from '@modules/localization';
-import {defaultChannelId, localChannelId} from '@modules/utils';
+import { translate } from '@modules/localization';
+import { defaultChannelId, localChannelId } from '@modules/utils';
 
 export const useNotificationsChannels = () => {
   // #region Logger
