@@ -6,6 +6,8 @@ export default {
   restartApp: 'أعد تشغيل التطبيق',
   sessionExpired:
     'انتهت صلاحية جلسة تسجيل الدخول الخاصة بك.\nالرجاء تسجيل الدخول من جديد.',
+  unknownError: 'حدث خطأ غير معروف',
+  networkError: 'حدث خطأ في الشبكة',
   ok: 'حسناً',
   internetLost: 'انقطع الاتصال بالإنترنت!',
   errorProcessingRequest: 'خطأ أثناء تنفيذ طلبك',

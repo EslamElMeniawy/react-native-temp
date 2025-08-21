@@ -84,13 +84,13 @@ const handle401Error = (error: AxiosError<ServerErrorResponse>) => {
   console.info(getLogMessage('status'), status);
 
   if (status === 401 && !shouldSkip401(error)) {
-    store.dispatch(setErrorDialogMessage(translate?.('session_expired')));
+    store.dispatch(setErrorDialogMessage(translate?.('sessionExpired')));
   }
 };
 
 const getErrorMessage = (error: AxiosError<ServerErrorResponse>) => {
   // TODO: Construct error message base on "ServerErrorResponse" constructed from API.
-  let errorMessage: string = translate?.('unknown_error');
+  let errorMessage: string = translate?.('unknownError');
 
   if (error.response?.data?.error) {
     errorMessage = error.response?.data?.error;
@@ -182,7 +182,7 @@ const responseRejectedInterceptor = (error: any) => {
 
   const severError: ServerError = {
     ...error,
-    errorMessage: translate?.('unknown_error'),
+    errorMessage: translate?.('unknownError'),
   };
 
   return Promise.reject(severError);
@@ -191,7 +191,7 @@ const responseRejectedInterceptor = (error: any) => {
 const httpClient = axios.create({
   baseURL: Config.API_URL,
   timeout: 60 * 1 * 1000,
-  timeoutErrorMessage: translate?.('network_error'),
+  timeoutErrorMessage: translate?.('networkError'),
 });
 
 httpClient.interceptors.request.use(

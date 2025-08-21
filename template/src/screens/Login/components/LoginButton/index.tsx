@@ -4,11 +4,12 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator } from 'react-native-paper';
 import type { FormValues } from '@src/screens/Login/components';
+import { TranslationNamespaces } from '@modules/localization';
 import styles from './styles';
 import useLoginButton from './useLoginButton';
 
 export default React.memo(() => {
-  const { t: translate } = useTranslation();
+  const { t: translate } = useTranslation(TranslationNamespaces.LOGIN);
   const { isLoggingIn, onLoginPress } = useLoginButton();
 
   // #region Form

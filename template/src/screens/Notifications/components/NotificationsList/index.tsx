@@ -8,11 +8,12 @@ import {
 } from '@src/screens/Notifications/components';
 import { ListEmptyComponent, ListLoadingMore } from '@modules/components';
 import { useGetNotificationsApi } from '@modules/core';
+import { TranslationNamespaces } from '@modules/localization';
 import { useFocusNotifyOnChangeProps } from '@modules/utils';
 import styles from './styles';
 
 export default React.memo(() => {
-  const { t: translate } = useTranslation();
+  const { t: translate } = useTranslation(TranslationNamespaces.NOTIFICATIONS);
   const notifyOnChangeProps = useFocusNotifyOnChangeProps();
 
   const {

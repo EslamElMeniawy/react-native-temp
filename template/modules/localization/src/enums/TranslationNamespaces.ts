@@ -1,5 +1,5 @@
 enum TranslationNamespaces {
-  DEFAULT = 'translation',
+  COMMON = 'common',
   NETWORK_LOGS = 'networkLogs',
   LOGIN = 'login',
   HOME = 'home',

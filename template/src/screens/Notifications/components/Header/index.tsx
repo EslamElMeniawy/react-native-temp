@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Appbar } from 'react-native-paper';
 import type { RootStackScreenProps } from '@src/navigation';
+import { TranslationNamespaces } from '@modules/localization';
 
 export default React.memo(() => {
   // #region Logger
@@ -10,7 +11,7 @@ export default React.memo(() => {
     `## Notifications::Header:: ${message}`;
   // #endregion
 
-  const { t: translate } = useTranslation();
+  const { t: translate } = useTranslation(TranslationNamespaces.NOTIFICATIONS);
 
   const navigation =
     useNavigation<RootStackScreenProps<'notifications'>['navigation']>();

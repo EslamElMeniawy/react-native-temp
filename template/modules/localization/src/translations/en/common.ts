@@ -5,6 +5,8 @@ export default {
     'The app ran into a problem and could not continue. We apologize for any inconvenience this has caused! Press the button below to restart the app.',
   restartApp: 'Restart App',
   sessionExpired: 'Your login session has been expired.\nPlease login again.',
+  unknownError: 'An unknown error occurred',
+  networkError: 'Network error occurred',
   ok: 'OK',
   internetLost: 'Internet connection lost!',
   errorProcessingRequest: 'Error while processing your request',

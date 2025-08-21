@@ -45,7 +45,7 @@ export const setI18nConfig = async () => {
     resources: translations,
     lng: defaultLocale,
     ns: Object.values(TranslationNamespaces),
-    defaultNS: TranslationNamespaces.DEFAULT,
+    defaultNS: TranslationNamespaces.COMMON,
     interpolation: { escapeValue: false },
   });
 

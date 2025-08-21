@@ -28,7 +28,7 @@ export default React.memo(() => {
             styles.title,
           ])}
         >
-          {translate?.('error_fallback_title')}
+          {translate?.('errorFallbackTitle')}
         </Text>
         <Text
           style={StyleSheet.flatten([
@@ -37,10 +37,10 @@ export default React.memo(() => {
             styles.message,
           ])}
         >
-          {translate?.('error_fallback_message')}
+          {translate?.('errorFallbackMessage')}
         </Text>
         <Button
-          text={translate?.('restart_app')}
+          text={translate?.('restartApp')}
           onPress={() => RNRestart.Restart()}
           style={StyleSheet.compose(
             { backgroundColor: theme.colors.primary },

@@ -70,7 +70,7 @@ export const useHandleNetworkState = () => {
         if (internetLostToastId.current) {
           Toast.update(
             internetLostToastId.current,
-            translate?.('internet_lost'),
+            translate?.('internetLost'),
             {
               type: 'danger',
               onClose: () => (internetLostToastId.current = undefined),
@@ -78,7 +78,7 @@ export const useHandleNetworkState = () => {
           );
         } else {
           internetLostToastId.current = Toast.show(
-            translate?.('internet_lost'),
+            translate?.('internetLost'),
             {
               type: 'danger',
               onClose: () => (internetLostToastId.current = undefined),

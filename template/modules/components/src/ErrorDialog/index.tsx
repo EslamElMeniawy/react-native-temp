@@ -1,11 +1,12 @@
 import { AlertDialog } from '@eslam-elmeniawy/react-native-common-components';
+import { TranslationNamespaces } from '@modules/localization';
 import { removeUserDataLogout } from '@modules/utils';
 import { useAppDispatch, useAppSelector, removeErrorDialog } from '@src/store';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default React.memo(() => {
-  const { t: translate } = useTranslation();
+  const { t: translate } = useTranslation(TranslationNamespaces.COMMON);
 
   // #region Redux
   const dispatch = useAppDispatch();
@@ -20,7 +21,7 @@ export default React.memo(() => {
     // - Remove user.
     // - Remove notifications count.
     // - Navigate to login screen.
-    if (errorDialogMessage === translate('session_expired')) {
+    if (errorDialogMessage === translate('sessionExpired')) {
       removeUserDataLogout();
     }
 

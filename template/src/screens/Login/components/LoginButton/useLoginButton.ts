@@ -4,6 +4,7 @@ import { Keyboard } from 'react-native';
 import type { FormValues } from '@src/screens/Login/components';
 import { useAppDispatch, setErrorDialogMessage } from '@src/store';
 import { useLoginApi } from '@modules/core';
+import { TranslationNamespaces } from '@modules/localization';
 import { saveUserDataOpenHome } from '@modules/utils';
 
 const useLoginButton = () => {
@@ -12,7 +13,10 @@ const useLoginButton = () => {
     `## Login::Form::LoginButton::useLoginButton:: ${message}`;
   // #endregion
 
-  const { t: translate } = useTranslation();
+  const { t: translate } = useTranslation([
+    TranslationNamespaces.COMMON,
+    TranslationNamespaces.LOGIN,
+  ]);
 
   // #region Redux
   const dispatch = useAppDispatch();
@@ -36,7 +40,9 @@ const useLoginButton = () => {
     } else {
       dispatch(
         setErrorDialogMessage(
-          translate('error_while_action', { action: translate('login') }),
+          translate(`${TranslationNamespaces.COMMON}:errorWhileAction`, {
+            action: translate(`${TranslationNamespaces.LOGIN}:login`),
+          }),
         ),
       );
     }
@@ -49,7 +55,9 @@ const useLoginButton = () => {
       dispatch(
         setErrorDialogMessage(
           error.errorMessage ??
-            translate('error_while_action', { action: translate('login') }),
+            translate(`${TranslationNamespaces.COMMON}:errorWhileAction`, {
+              action: translate(`${TranslationNamespaces.LOGIN}:login`),
+            }),
         ),
       );
     }
