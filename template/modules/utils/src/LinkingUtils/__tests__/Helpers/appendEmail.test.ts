@@ -1,5 +1,5 @@
-import {describe, test, expect} from '@jest/globals';
-import {appendEmail} from '@modules/utils/src/LinkingUtils/Helpers';
+import { describe, test, expect } from '@jest/globals';
+import { appendEmail } from '@modules/utils/src/LinkingUtils/Helpers';
 
 describe('appendEmail HAPPY PATH', () => {
   test('should append email to mailto link when email is provided', () => {

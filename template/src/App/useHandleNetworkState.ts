@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {Toast} from 'react-native-toast-notifications';
+import { Toast } from 'react-native-toast-notifications';
 import {
   useAppDispatch,
   removeIsConnectionExpensive,
   setIsConnectionExpensive,
   setIsInternetAvailable,
 } from '@src/store';
-import {translate} from '@modules/localization';
-import type {NetInfoState} from '@react-native-community/netinfo';
+import { translate } from '@modules/localization';
+import type { NetInfoState } from '@react-native-community/netinfo';
 
 export const useHandleNetworkState = () => {
   // #region Logger

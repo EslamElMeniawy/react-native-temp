@@ -1,16 +1,17 @@
-import {getLanguage, setLanguage} from '@modules/core';
-import {use} from 'i18next';
-import {initReactI18next} from 'react-i18next';
-import {Platform, Settings, I18nManager} from 'react-native';
-import {default as Config} from 'react-native-config';
+import { getLanguage, setLanguage } from '@modules/core';
+import * as i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import { Platform, Settings, I18nManager } from 'react-native';
+import { default as Config } from 'react-native-config';
 import * as RNLocalize from 'react-native-localize';
 import RNRestart from 'react-native-restart';
-import {AppLanguages} from '@modules/localization/src/enums';
-import {ar, en} from '@modules/localization/src/translations';
+import {
+  AppLanguages,
+  TranslationNamespaces,
+} from '@modules/localization/src/enums';
+import { translations } from '@modules/localization/src/translations';
 
 const getLogMessage = (message: string) => `## I18n:: ${message}`;
-
-const resources = {ar: {translation: ar}, en: {translation: en}};
 
 // Get device language.
 const deviceLanguage =
@@ -23,7 +24,7 @@ const defaultLocale: string =
     ? AppLanguages.ARABIC
     : AppLanguages.ENGLISH;
 
-const i18n = use(initReactI18next);
+const i18n = i18next.use(initReactI18next);
 
 const handleRestart = (locale: string) => {
   if (locale === AppLanguages.ARABIC && !I18nManager.isRTL) {
@@ -41,9 +42,11 @@ export const setI18nConfig = async () => {
   await i18n.init({
     debug: Config.ENABLE_LOCAL_LOG === 'true',
     compatibilityJSON: 'v4',
-    resources,
+    resources: translations,
     lng: defaultLocale,
-    interpolation: {escapeValue: false},
+    ns: Object.values(TranslationNamespaces),
+    defaultNS: TranslationNamespaces.DEFAULT,
+    interpolation: { escapeValue: false },
   });
 
   const locales = RNLocalize.getLocales();

@@ -1,10 +1,10 @@
-import {Text} from '@eslam-elmeniawy/react-native-common-components';
+import { Text } from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
-import {View} from 'react-native';
-import {TouchableRipple, Avatar} from 'react-native-paper';
-import {processNotification} from '@modules/utils';
+import { View } from 'react-native';
+import { TouchableRipple, Avatar } from 'react-native-paper';
+import { processNotification } from '@modules/utils';
 import styles from './styles';
-import type {NotificationItemProps} from './types';
+import type { NotificationItemProps } from './types';
 
 export default React.memo((props: NotificationItemProps) => {
   // #region Logger
@@ -12,7 +12,7 @@ export default React.memo((props: NotificationItemProps) => {
     `## Notifications::NotificationItem:: ${message}`;
   // #endregion
 
-  const {item: notification} = props;
+  const { item: notification } = props;
 
   const onNotificationPress = () => {
     console.info(getLogMessage('onNotificationPress'), notification);

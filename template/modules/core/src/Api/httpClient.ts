@@ -1,8 +1,8 @@
-import {translate, getCurrentLocale} from '@modules/localization';
-import {setErrorDialogMessage, store} from '@src/store';
+import { translate, getCurrentLocale } from '@modules/localization';
+import { setErrorDialogMessage, store } from '@src/store';
 import axios from 'axios';
-import {default as Config} from 'react-native-config';
-import type {ServerError, ServerErrorResponse} from '@modules/core';
+import { default as Config } from 'react-native-config';
+import type { ServerError, ServerErrorResponse } from '@modules/core';
 import ConsoleColors from './ConsoleColors';
 import skip401Urls from './skip401Urls';
 import type {

@@ -1,13 +1,18 @@
-import {test, expect, jest} from '@jest/globals';
+import { test, expect, jest } from '@jest/globals';
 import * as LocalStorage from '@modules/core/src/LocalStorage/unreadNotificationsCount';
 import {
   store,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,
 } from '@src/store';
 import * as NotificationUtils from '@modules/utils/src/NotificationUtils';
-import {processUserNotification} from '@modules/utils/src/NotificationUtils/Helpers';
+import { processUserNotification } from '@modules/utils/src/NotificationUtils/Helpers';
 
-const notification = {id: 1, key: '1', title: 'Test', message: 'Test message'};
+const notification = {
+  id: 1,
+  key: '1',
+  title: 'Test',
+  message: 'Test message',
+};
 
 const newNotificationsCount = 5;
 const shouldSkipOpenNotificationsScreen = false;

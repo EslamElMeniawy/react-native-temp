@@ -1,7 +1,7 @@
-import {test, expect, jest, afterEach} from '@jest/globals';
+import { test, expect, jest, afterEach } from '@jest/globals';
 import notifee from '@notifee/react-native';
-import {store} from '@src/store';
-import {processNotification} from '@modules/utils/src/NotificationUtils';
+import { store } from '@src/store';
+import { processNotification } from '@modules/utils/src/NotificationUtils';
 import * as Helpers from '@modules/utils/src/NotificationUtils/Helpers';
 
 const clearNotificationsMock = jest
@@ -32,13 +32,11 @@ const notification = {
 const shouldSkipOpenNotificationsScreen = false;
 
 test('should clear the notification successfully when notification is provided', () => {
-  const storeMock = jest
-    .spyOn(store, 'getState')
-    .mockReturnValue({
-      user: {unreadNotificationsCount: 5, apiToken: 'token'},
-      dialogs: {},
-      networkState: {},
-    });
+  const storeMock = jest.spyOn(store, 'getState').mockReturnValue({
+    user: { unreadNotificationsCount: 5, apiToken: 'token' },
+    dialogs: {},
+    networkState: {},
+  });
 
   processNotification(notification, shouldSkipOpenNotificationsScreen);
   expect(clearNotificationsMock).toHaveBeenCalledWith(notification);

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {useAppDispatch, setApiToken as setStateApiToken} from '@src/store';
+import { useAppDispatch, setApiToken as setStateApiToken } from '@src/store';
 import {
   getApiToken as getLocalStorageApiToken,
   useGetUserDetailsApi,
 } from '@modules/core';
-import {saveUserData} from '@modules/utils';
+import { saveUserData } from '@modules/utils';
 
 export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {
   // #region Logger
@@ -28,7 +28,7 @@ export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {
     data: apiUser,
     isError: isErrorApi,
     isSuccess: isSuccessApi,
-  } = useGetUserDetailsApi({enabled: shouldStartUserLoading});
+  } = useGetUserDetailsApi({ enabled: shouldStartUserLoading });
   // #endregion
 
   const getSavedUserToken = React.useCallback(() => {

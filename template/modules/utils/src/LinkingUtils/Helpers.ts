@@ -1,7 +1,7 @@
-import {translate} from '@modules/localization';
-import {Linking} from 'react-native';
-import {default as Config} from 'react-native-config';
-import {Toast} from 'react-native-toast-notifications';
+import { translate } from '@modules/localization';
+import { Linking } from 'react-native';
+import { default as Config } from 'react-native-config';
+import { Toast } from 'react-native-toast-notifications';
 
 const getLogMessage = (message: string) =>
   `## LinkingUtils::Helpers:: ${message}`;

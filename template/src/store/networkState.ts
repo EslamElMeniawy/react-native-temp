@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
-import type {NetworkStateState} from './networkState.types';
-import type {PayloadAction} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { NetworkStateState } from './networkState.types';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   isInternetAvailable: true,

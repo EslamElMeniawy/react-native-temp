@@ -1,18 +1,18 @@
-import {FlatList} from '@eslam-elmeniawy/react-native-common-components';
+import { FlatList } from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
-import {useTranslation} from 'react-i18next';
-import {ActivityIndicator} from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { ActivityIndicator } from 'react-native-paper';
 import {
   NotificationItem,
   NotificationsListSeparator,
 } from '@src/screens/Notifications/components';
-import {ListEmptyComponent, ListLoadingMore} from '@modules/components';
-import {useGetNotificationsApi} from '@modules/core';
-import {useFocusNotifyOnChangeProps} from '@modules/utils';
+import { ListEmptyComponent, ListLoadingMore } from '@modules/components';
+import { useGetNotificationsApi } from '@modules/core';
+import { useFocusNotifyOnChangeProps } from '@modules/utils';
 import styles from './styles';
 
 export default React.memo(() => {
-  const {t: translate} = useTranslation();
+  const { t: translate } = useTranslation();
   const notifyOnChangeProps = useFocusNotifyOnChangeProps();
 
   const {
@@ -24,10 +24,10 @@ export default React.memo(() => {
     fetchNextPage,
     error,
     isLoadingError,
-  } = useGetNotificationsApi({notifyOnChangeProps: notifyOnChangeProps?.()});
+  } = useGetNotificationsApi({ notifyOnChangeProps: notifyOnChangeProps?.() });
 
   const notificationsList = allPages?.pages
-    ?.map(page => (page.data ? page.data : []))
+    ?.map(page => page.data ?? [])
     ?.flat();
 
   return isLoading ? (

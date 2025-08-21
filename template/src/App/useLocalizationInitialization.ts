@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {setI18nConfig} from '@modules/localization';
+import { setI18nConfig } from '@modules/localization';
 
 export const useLocalizationInitialization = () => {
   // #region State

@@ -1,7 +1,7 @@
-import {focusManager} from '@tanstack/react-query';
+import { focusManager } from '@tanstack/react-query';
 import * as React from 'react';
-import {AppState, Platform} from 'react-native';
-import type {AppStateStatus} from 'react-native';
+import { AppState, Platform } from 'react-native';
+import type { AppStateStatus } from 'react-native';
 
 export const useReactQueryFocusManager = () => {
   function onAppStateChange(status: AppStateStatus) {

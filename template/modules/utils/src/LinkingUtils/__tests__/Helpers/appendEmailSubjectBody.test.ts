@@ -1,5 +1,5 @@
-import {describe, test, expect} from '@jest/globals';
-import {appendEmailSubjectBody} from '@modules/utils/src/LinkingUtils/Helpers';
+import { describe, test, expect } from '@jest/globals';
+import { appendEmailSubjectBody } from '@modules/utils/src/LinkingUtils/Helpers';
 
 describe('appendEmailSubjectBody HAPPY PATH', () => {
   const emailLink = 'mailto:test@email.com';

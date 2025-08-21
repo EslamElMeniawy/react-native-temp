@@ -1,4 +1,4 @@
-import {open, appendEmail, appendEmailSubjectBody} from './Helpers';
+import { open, appendEmail, appendEmailSubjectBody } from './Helpers';
 
 const getLogMessage = (message: string) => `## LinkingUtils:: ${message}`;
 

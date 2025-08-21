@@ -1,8 +1,8 @@
 import * as React from 'react';
 import NetworkLogger from 'react-native-network-logger';
-import {Screen} from '@modules/components';
-import {useAppTheme} from '@modules/theme';
-import {Header} from './components';
+import { Screen } from '@modules/components';
+import { useAppTheme } from '@modules/theme';
+import { Header } from './components';
 
 export default React.memo(() => {
   const theme = useAppTheme();

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Keyboard} from 'react-native';
-import type {FormValues} from '@src/screens/Login/components';
-import {useAppDispatch, setErrorDialogMessage} from '@src/store';
-import {useLoginApi} from '@modules/core';
-import {saveUserDataOpenHome} from '@modules/utils';
+import { useTranslation } from 'react-i18next';
+import { Keyboard } from 'react-native';
+import type { FormValues } from '@src/screens/Login/components';
+import { useAppDispatch, setErrorDialogMessage } from '@src/store';
+import { useLoginApi } from '@modules/core';
+import { saveUserDataOpenHome } from '@modules/utils';
 
 const useLoginButton = () => {
   // #region Logger
@@ -12,7 +12,7 @@ const useLoginButton = () => {
     `## Login::Form::LoginButton::useLoginButton:: ${message}`;
   // #endregion
 
-  const {t: translate} = useTranslation();
+  const { t: translate } = useTranslation();
 
   // #region Redux
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ const useLoginButton = () => {
     } else {
       dispatch(
         setErrorDialogMessage(
-          translate('error_while_action', {action: translate('login')}),
+          translate('error_while_action', { action: translate('login') }),
         ),
       );
     }
@@ -49,7 +49,7 @@ const useLoginButton = () => {
       dispatch(
         setErrorDialogMessage(
           error.errorMessage ??
-            translate('error_while_action', {action: translate('login')}),
+            translate('error_while_action', { action: translate('login') }),
         ),
       );
     }
@@ -63,7 +63,7 @@ const useLoginButton = () => {
       Keyboard.dismiss();
 
       callLoginApi({
-        body: {username: formData.username, password: formData.password},
+        body: { username: formData.username, password: formData.password },
       });
     },
     [callLoginApi],
@@ -82,7 +82,7 @@ const useLoginButton = () => {
   }, [isSuccess, isError, handleSuccess, handleError]);
   // #endregion
 
-  return {isLoggingIn: isPending, onLoginPress};
+  return { isLoggingIn: isPending, onLoginPress };
 };
 
 export default useLoginButton;

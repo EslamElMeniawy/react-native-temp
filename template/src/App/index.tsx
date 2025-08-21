@@ -1,8 +1,11 @@
-import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
 import * as React from 'react';
-import {withErrorBoundary} from 'react-error-boundary';
-import {default as Config} from 'react-native-config';
-import {ErrorFallbackView} from '@modules/components';
+import { withErrorBoundary } from 'react-error-boundary';
+import { default as Config } from 'react-native-config';
+import { ErrorFallbackView } from '@modules/components';
 import App from './App';
 
 export default withErrorBoundary(App, {
@@ -16,7 +19,7 @@ export default withErrorBoundary(App, {
         getCrashlytics(),
         new Error(
           `## ERROR ## Message: ErrorBoundary::onError ## Data: ${JSON.stringify(
-            {error, info},
+            { error, info },
           )}`,
         ),
       );

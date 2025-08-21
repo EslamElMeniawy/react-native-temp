@@ -1,4 +1,4 @@
-import {configureFonts} from 'react-native-paper';
+import { configureFonts } from 'react-native-paper';
 
 /**
  * Custom hook to configure fonts for the app theme.
@@ -13,7 +13,7 @@ const useAppThemeFonts = () => {
     // fontFamily: 'Cairo-Regular',
   } as const;
 
-  const baseVariants = configureFonts({config: baseFont});
+  const baseVariants = configureFonts({ config: baseFont });
 
   const customVariants = {
     // Customize individual base variants.
@@ -39,7 +39,7 @@ const useAppThemeFonts = () => {
     },
   } as const;
 
-  return configureFonts({config: {...baseVariants, ...customVariants}});
+  return configureFonts({ config: { ...baseVariants, ...customVariants } });
 };
 
 export default useAppThemeFonts;
