@@ -1,7 +1,7 @@
 import { translate } from '@modules/localization';
 import { Linking } from 'react-native';
 import { default as Config } from 'react-native-config';
-import { Toast } from 'react-native-toast-notifications';
+import { Toast } from 'toastify-react-native';
 
 const getLogMessage = (message: string) =>
   `## LinkingUtils::Helpers:: ${message}`;
@@ -76,8 +76,9 @@ export const open = async (url: string, errorMessage?: string) => {
       throw new Error(`Failed to open: ${url}`);
     }
 
-    Toast.show(errorMessage ?? translate?.('errorProcessingRequest'), {
-      type: 'danger',
+    Toast.show({
+      type: 'error',
+      text2: errorMessage ?? translate('errorProcessingRequest'),
     });
   }
 };

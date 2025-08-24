@@ -30,7 +30,7 @@ describe('openEmail HAPPY PATH', () => {
 
     expect(mockedOpen).toHaveBeenCalledWith(
       `mailto:${email}`,
-      'error_open_mail',
+      'errorOpenMail',
     );
   });
 
@@ -39,7 +39,7 @@ describe('openEmail HAPPY PATH', () => {
 
     expect(mockedOpen).toHaveBeenCalledWith(
       `mailto:?subject=${encodeURIComponent(subject)}`,
-      'error_open_mail',
+      'errorOpenMail',
     );
   });
 
@@ -48,7 +48,7 @@ describe('openEmail HAPPY PATH', () => {
 
     expect(mockedOpen).toHaveBeenCalledWith(
       `mailto:?body=${encodeURIComponent(body)}`,
-      'error_open_mail',
+      'errorOpenMail',
     );
   });
 });

@@ -16,7 +16,7 @@ describe('openUrl HAPPY PATH', () => {
 
     expect(mockedOpen).toHaveBeenCalledWith(
       'https://www.google.com',
-      'error_open_url',
+      'errorOpenUrl',
     );
   });
 

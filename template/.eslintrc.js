@@ -25,28 +25,28 @@ module.exports = {
   rules: {
     '@typescript-eslint/naming-convention': [
       'error',
-      {selector: 'default', format: ['camelCase']},
-      {selector: 'variable', format: ['camelCase', 'UPPER_CASE']},
+      { selector: 'default', format: ['camelCase'] },
+      { selector: 'variable', format: ['camelCase', 'UPPER_CASE'] },
       {
         selector: 'variable',
         types: ['function'],
         format: ['PascalCase', 'camelCase'],
       },
-      {selector: 'function', format: ['PascalCase', 'camelCase']},
+      { selector: 'function', format: ['PascalCase', 'camelCase'] },
       {
         selector: 'parameter',
         format: ['camelCase'],
         leadingUnderscore: 'allow',
       },
-      {selector: 'enumMember', format: ['UPPER_CASE']},
+      { selector: 'enumMember', format: ['UPPER_CASE'] },
       {
         selector: 'memberLike',
         modifiers: ['private'],
         format: ['camelCase'],
         leadingUnderscore: 'require',
       },
-      {selector: 'typeLike', format: ['PascalCase']},
-      {selector: 'import', format: ['PascalCase', 'camelCase']},
+      { selector: 'typeLike', format: ['PascalCase'] },
+      { selector: 'import', format: ['PascalCase', 'camelCase'] },
       {
         selector: [
           'classProperty',
@@ -64,11 +64,11 @@ module.exports = {
       {
         selector: ['objectLiteralProperty'],
         format: null,
-        filter: {regex: '(screen_name|screen_class)', match: true},
+        filter: { regex: '(firebase)', match: true },
       },
     ],
     'arrow-body-style': ['error', 'as-needed'],
-    'react/self-closing-comp': ['error', {component: true, html: true}],
+    'react/self-closing-comp': ['error', { component: true, html: true }],
     'autofix/no-unused-vars': [
       'error',
       {
@@ -79,7 +79,7 @@ module.exports = {
     ],
     '@typescript-eslint/consistent-type-imports': [
       'error',
-      {prefer: 'type-imports'},
+      { prefer: 'type-imports' },
     ],
     'import/no-unresolved': 'error',
     'react/jsx-uses-react': 'off',
@@ -97,13 +97,13 @@ module.exports = {
           'type',
         ],
         pathGroups: [
-          {pattern: '@src/**/**', group: 'parent', position: 'before'},
-          {pattern: '@modules/**/**', group: 'parent', position: 'before'},
+          { pattern: '@src/**/**', group: 'parent', position: 'before' },
+          { pattern: '@modules/**/**', group: 'parent', position: 'before' },
         ],
-        alphabetize: {order: 'asc'},
+        alphabetize: { order: 'asc' },
       },
     ],
-    'no-restricted-imports': ['error', {patterns: ['../']}],
+    'no-restricted-imports': ['error', { patterns: ['../'] }],
     'react/no-array-index-key': ['error'],
     eqeqeq: [1, 'allow-null'],
     complexity: ['warn', 20],
@@ -111,10 +111,10 @@ module.exports = {
     'max-nested-callbacks': ['warn', 10],
     'max-params': ['warn', 4],
     'max-lines': ['warn', 300],
-    'max-statements': ['warn', 10, {ignoreTopLevelFunctions: true}],
+    'max-statements': ['warn', 10, { ignoreTopLevelFunctions: true }],
     'react-func/max-lines-per-function': ['warn', 50],
     'react-func/max-combined-conditions': ['error', 1],
-    'eslint-comments/no-use': ['error', {allow: []}],
+    'eslint-comments/no-use': ['error', { allow: [] }],
     'react-hooks/exhaustive-deps': 1,
   },
   parserOptions: {
@@ -122,8 +122,8 @@ module.exports = {
     project: './tsconfig.json',
   },
   settings: {
-    'import/parsers': {'@typescript-eslint/parser': ['.ts', '.tsx']},
-    'import/resolver': {typescript: true, node: true},
+    'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
+    'import/resolver': { typescript: true, node: true },
   },
   overrides: [
     {

@@ -24,7 +24,7 @@ export const useNotificationsChannels = () => {
       notifee
         .createChannel({
           id: channelId,
-          name: translate?.('appName') ?? '',
+          name: translate('appName') ?? '',
           sound: 'default',
         })
         .then(createdChannelId => {

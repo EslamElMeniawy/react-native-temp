@@ -38,7 +38,7 @@ describe('openPhone HAPPY PATH', () => {
       phone,
     );
 
-    expect(mockedOpen).toHaveBeenCalledWith(`tel:${phone}`, 'error_open_phone');
+    expect(mockedOpen).toHaveBeenCalledWith(`tel:${phone}`, 'errorOpenPhone');
   });
 });
 
