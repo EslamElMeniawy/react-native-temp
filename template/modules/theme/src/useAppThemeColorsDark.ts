@@ -1,6 +1,6 @@
-import {MD3DarkTheme} from 'react-native-paper';
+import { MD3DarkTheme } from 'react-native-paper';
 import AppColors from './AppColors';
-import type {MD3Colors} from 'react-native-paper/lib/typescript/types';
+import type { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 /**
  * Returns the colors for the dark theme based on the MD3DarkTheme and AppColors.

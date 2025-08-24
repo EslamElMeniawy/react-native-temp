@@ -8,14 +8,14 @@ import {
   store,
   setUnreadNotificationsCount as setStateUnreadNotificationsCount,
 } from '@src/store';
-import {default as Config} from 'react-native-config';
+import { default as Config } from 'react-native-config';
 import type {
   MarkNotificationReadResponse,
   ServerError,
   ApiRequest,
   Notification,
 } from '@modules/core';
-import {openNotificationRelatedScreen, queryClient} from '@modules/utils';
+import { openNotificationRelatedScreen, queryClient } from '@modules/utils';
 
 const getLogMessage = (message: string) =>
   `## NotificationUtils::Helpers:: ${message}`;
@@ -47,11 +47,11 @@ export const clearNotifications = (notification: Notification) => {
               ? fakerNotifications.markNotificationRead(request)
               : queryNotifications.markNotificationRead(request),
           onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['notifications']});
+            queryClient.invalidateQueries({ queryKey: ['notifications'] });
           },
         },
       )
-      .execute({pathVar: notification.id});
+      .execute({ pathVar: notification.id });
   }
 };
 

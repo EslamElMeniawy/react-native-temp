@@ -1,18 +1,19 @@
-import {Button} from '@eslam-elmeniawy/react-native-common-components';
+import { Button } from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
-import {useFormContext} from 'react-hook-form';
-import {useTranslation} from 'react-i18next';
-import {ActivityIndicator} from 'react-native-paper';
-import type {FormValues} from '@src/screens/Login/components';
+import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { ActivityIndicator } from 'react-native-paper';
+import type { FormValues } from '@src/screens/Login/components';
+import { TranslationNamespaces } from '@modules/localization';
 import styles from './styles';
 import useLoginButton from './useLoginButton';
 
 export default React.memo(() => {
-  const {t: translate} = useTranslation();
-  const {isLoggingIn, onLoginPress} = useLoginButton();
+  const { t: translate } = useTranslation(TranslationNamespaces.LOGIN);
+  const { isLoggingIn, onLoginPress } = useLoginButton();
 
   // #region Form
-  const {handleSubmit} = useFormContext<FormValues>();
+  const { handleSubmit } = useFormContext<FormValues>();
   // #endregion
 
   // #region UI

@@ -1,6 +1,6 @@
-import {useFocusEffect} from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import * as React from 'react';
-import type {NotifyOnChangeProps} from '@tanstack/query-core';
+import type { NotifyOnChangeProps } from '@tanstack/query-core';
 
 /**
  * Custom React hook that returns a function to notify changes only when the component is focused.

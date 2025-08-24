@@ -1,5 +1,5 @@
-import {describe, jest, afterEach, test, expect} from '@jest/globals';
-import {openEmail} from '@modules/utils/src/LinkingUtils';
+import { describe, jest, afterEach, test, expect } from '@jest/globals';
+import { openEmail } from '@modules/utils/src/LinkingUtils';
 import * as Helpers from '@modules/utils/src/LinkingUtils/Helpers';
 
 describe('openEmail HAPPY PATH', () => {

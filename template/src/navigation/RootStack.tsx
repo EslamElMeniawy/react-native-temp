@@ -1,8 +1,8 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import {default as Config} from 'react-native-config';
-import type {RootStackParamList} from '@src/navigation';
-import {Splash, NetworkLogs, Login, Home, Notifications} from '@src/screens';
+import { default as Config } from 'react-native-config';
+import type { RootStackParamList } from '@src/navigation';
+import { Splash, NetworkLogs, Login, Home, Notifications } from '@src/screens';
 
 const stack = createNativeStackNavigator<RootStackParamList, 'RootStack'>();
 
@@ -10,7 +10,8 @@ export default React.memo(() => (
   <stack.Navigator
     id="RootStack"
     initialRouteName="splash"
-    screenOptions={{headerShown: false}}>
+    screenOptions={{ headerShown: false }}
+  >
     {/* Screens */}
     <stack.Screen name="splash" component={Splash} />
     {Config.ENABLE_LOCAL_LOG === 'true' ? (
@@ -24,7 +25,7 @@ export default React.memo(() => (
     {/* TODO: Add nested navigators here. */}
 
     {/* Modals */}
-    <stack.Group screenOptions={{presentation: 'transparentModal'}}>
+    <stack.Group screenOptions={{ presentation: 'transparentModal' }}>
       <>{/* TODO: Add modals screens here. */}</>
     </stack.Group>
   </stack.Navigator>

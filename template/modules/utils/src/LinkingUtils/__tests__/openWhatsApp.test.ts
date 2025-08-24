@@ -1,5 +1,5 @@
-import {describe, jest, afterEach, test, expect} from '@jest/globals';
-import {openWhatsApp} from '@modules/utils/src/LinkingUtils';
+import { describe, jest, afterEach, test, expect } from '@jest/globals';
+import { openWhatsApp } from '@modules/utils/src/LinkingUtils';
 import * as Helpers from '@modules/utils/src/LinkingUtils/Helpers';
 
 describe('openWhatsApp HAPPY PATH', () => {

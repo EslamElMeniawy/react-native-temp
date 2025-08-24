@@ -1,4 +1,5 @@
-import {open, appendEmail, appendEmailSubjectBody} from './Helpers';
+import { translate } from '@modules/localization';
+import { open, appendEmail, appendEmailSubjectBody } from './Helpers';
 
 const getLogMessage = (message: string) => `## LinkingUtils:: ${message}`;
 
@@ -6,13 +7,13 @@ const getLogMessage = (message: string) => `## LinkingUtils:: ${message}`;
  * Opens a URL using the Linking module, with an optional error message key.
  *
  * @param url The URL to open.
- * @param errorMessageKey Optional key for error message translation.
+ * @param errorMessage The error message to display in case of failure.
  */
-export const openUrl = (url?: string, errorMessageKey?: string) => {
+export const openUrl = (url?: string, errorMessage?: string) => {
   console.info(getLogMessage('openUrl'), url);
 
   if (url?.length) {
-    open(url, errorMessageKey ?? 'error_open_url');
+    open(url, errorMessage ?? translate?.('errorOpenUrl'));
   }
 };
 
@@ -24,13 +25,13 @@ export const openUrl = (url?: string, errorMessageKey?: string) => {
  * @param email The email address to populate in the email client.
  * @param subject The subject of the email.
  * @param body The body of the email.
- * @param errorMessageKey The key to use for fetching the error message in case of failure.
+ * @param errorMessage The error message to display in case of failure.
  */
 export const openEmail = (
   email?: string | null,
   subject?: string | null,
   body?: string | null,
-  errorMessageKey?: string,
+  errorMessage?: string,
 ) => {
   console.info(getLogMessage('openEmail'), email, subject, body);
 
@@ -39,7 +40,7 @@ export const openEmail = (
     emailLink = appendEmail(emailLink, email);
     emailLink = appendEmailSubjectBody(emailLink, subject, body);
     console.info(getLogMessage('emailLink'), emailLink);
-    open(emailLink, errorMessageKey ?? 'error_open_mail');
+    open(emailLink, errorMessage ?? translate?.('errorOpenMail'));
   }
 };
 
@@ -47,13 +48,13 @@ export const openEmail = (
  * Opens the phone app with the provided phone number.
  *
  * @param phone The phone number to open in the phone app.
- * @param errorMessageKey Optional key for error message translation.
+ * @param errorMessage The error message to display in case of failure.
  */
-export const openPhone = (phone?: string | null, errorMessageKey?: string) => {
+export const openPhone = (phone?: string | null, errorMessage?: string) => {
   console.info(getLogMessage('openPhone'), phone);
 
   if (phone?.length) {
-    open(`tel:${phone}`, errorMessageKey ?? 'error_open_phone');
+    open(`tel:${phone}`, errorMessage ?? translate?.('errorOpenPhone'));
   }
 };
 
@@ -61,18 +62,15 @@ export const openPhone = (phone?: string | null, errorMessageKey?: string) => {
  * Opens WhatsApp with the provided phone number.
  *
  * @param number The phone number to open WhatsApp with.
- * @param errorMessageKey The key for error message in case of failure.
+ * @param errorMessage The error message to display in case of failure.
  */
-export const openWhatsApp = (
-  number?: string | null,
-  errorMessageKey?: string,
-) => {
+export const openWhatsApp = (number?: string | null, errorMessage?: string) => {
   console.info(getLogMessage('openWhatsApp'), number);
 
   if (number?.length) {
     open(
       `whatsapp://send?phone=${number}`,
-      errorMessageKey ?? 'error_open_whats_app',
+      errorMessage ?? translate?.('errorOpenWhatsApp'),
     );
   }
 };

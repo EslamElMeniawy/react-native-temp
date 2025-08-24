@@ -1,6 +1,6 @@
-import {createSlice} from '@reduxjs/toolkit';
-import type {DialogsState} from './dialogs.types';
-import type {PayloadAction} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { DialogsState } from './dialogs.types';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   errorDialogTitle: undefined,
@@ -20,7 +20,7 @@ export const errorDialogSlice = createSlice({
     },
     setErrorDialogTitleMessage(
       state,
-      action: PayloadAction<{title: string; message: string}>,
+      action: PayloadAction<{ title: string; message: string }>,
     ) {
       state.errorDialogTitle = action.payload.title;
       state.errorDialogMessage = action.payload.message;

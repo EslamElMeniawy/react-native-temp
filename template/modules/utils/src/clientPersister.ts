@@ -1,5 +1,5 @@
-import {localStorage} from '@modules/core';
-import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister';
+import { localStorage } from '@modules/core';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 
 const clientStorage = {
   setItem: (key: string, value: string) => {
@@ -14,6 +14,6 @@ const clientStorage = {
   },
 };
 
-export const clientPersister = createSyncStoragePersister({
+export const clientPersister = createAsyncStoragePersister({
   storage: clientStorage,
 });

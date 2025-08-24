@@ -1,5 +1,5 @@
-import {describe, test, expect} from '@jest/globals';
-import {randomIntFromInterval} from '@modules/utils/src/RandomUtils';
+import { describe, test, expect } from '@jest/globals';
+import { randomIntFromInterval } from '@modules/utils/src/RandomUtils';
 
 describe('RandomUtils', () => {
   test('should return an integer within the specified range', () => {
@@ -35,10 +35,10 @@ describe('RandomUtils', () => {
   });
 
   test('should handle negative min and max values correctly', () => {
-    expect(() => randomIntFromInterval(-5, 10)).toThrowError(
+    expect(() => randomIntFromInterval(-5, 10)).toThrow(
       'Minimum value must be positive numbers.',
     );
-    expect(() => randomIntFromInterval(5, -10)).toThrowError(
+    expect(() => randomIntFromInterval(5, -10)).toThrow(
       'Maximum value must be positive numbers.',
     );
   });

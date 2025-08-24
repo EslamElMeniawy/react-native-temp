@@ -1,21 +1,21 @@
-import {TextInput} from '@eslam-elmeniawy/react-native-common-components';
+import { TextInput } from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
-import {Controller, useFormContext, type FieldValues} from 'react-hook-form';
-import type {Props} from './types';
+import { Controller, useFormContext, type FieldValues } from 'react-hook-form';
+import type { Props } from './types';
 
 function HookFormTextInput<T extends FieldValues>(props: Readonly<Props<T>>) {
   // #region Variables
-  const {name, rules, textInputProps} = props;
-  const {errorProps, ...restTextInputProps} = textInputProps ?? {};
+  const { name, rules, textInputProps } = props;
+  const { errorProps, ...restTextInputProps } = textInputProps ?? {};
 
-  const {errorMessage: errorPropsErrorMessage, ...restErrorProps} =
+  const { errorMessage: errorPropsErrorMessage, ...restErrorProps } =
     errorProps ?? {};
   // #endregion
 
   // #region Form
   const {
     control,
-    formState: {errors},
+    formState: { errors },
   } = useFormContext<T>();
 
   const errorMessage = errorPropsErrorMessage ?? errors[name]?.message;
@@ -27,7 +27,7 @@ function HookFormTextInput<T extends FieldValues>(props: Readonly<Props<T>>) {
       name={name}
       control={control}
       rules={rules}
-      render={({field: {onChange, onBlur, value}}) => (
+      render={({ field: { onChange, onBlur, value } }) => (
         <TextInput
           errorProps={{
             errorMessage:

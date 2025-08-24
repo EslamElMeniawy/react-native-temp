@@ -5,7 +5,7 @@ import {
   hasPermission as firebaseHasPermission,
 } from '@react-native-firebase/messaging';
 import * as React from 'react';
-import {PermissionsAndroid, Platform} from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 export const useMessagingPermission = () => {
   // #region Logger

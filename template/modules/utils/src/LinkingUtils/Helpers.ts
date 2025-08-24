@@ -1,7 +1,7 @@
-import {translate} from '@modules/localization';
-import {Linking} from 'react-native';
-import {default as Config} from 'react-native-config';
-import {Toast} from 'react-native-toast-notifications';
+import { translate } from '@modules/localization';
+import { Linking } from 'react-native';
+import { default as Config } from 'react-native-config';
+import { Toast } from 'react-native-toast-notifications';
 
 const getLogMessage = (message: string) =>
   `## LinkingUtils::Helpers:: ${message}`;
@@ -61,10 +61,10 @@ export const appendEmailSubjectBody = (
  * Opens a given URL using Linking.openURL and handles any errors that occur during the process.
  *
  * @param url - The URL to be opened.
- * @param errorMessageKey - An optional key to retrieve an error message for displaying in case of failure.
+ * @param errorMessage The error message to display in case of failure.
  * @returns void
  */
-export const open = async (url: string, errorMessageKey?: string) => {
+export const open = async (url: string, errorMessage?: string) => {
   console.info(getLogMessage('open'), url);
 
   try {
@@ -76,7 +76,7 @@ export const open = async (url: string, errorMessageKey?: string) => {
       throw new Error(`Failed to open: ${url}`);
     }
 
-    Toast.show(translate?.(errorMessageKey ?? 'error_processing_request'), {
+    Toast.show(errorMessage ?? translate?.('errorProcessingRequest'), {
       type: 'danger',
     });
   }

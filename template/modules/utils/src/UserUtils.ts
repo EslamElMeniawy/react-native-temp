@@ -6,8 +6,8 @@ import {
   removeApiToken as removeLocalStorageApiToken,
   removeFcmToken as removeLocalStorageFcmToken,
 } from '@modules/core';
-import {getMessaging, deleteToken} from '@react-native-firebase/messaging';
-import {reset} from '@src/navigation';
+import { getMessaging, deleteToken } from '@react-native-firebase/messaging';
+import { reset } from '@src/navigation';
 import {
   store,
   setUser as setStateUser,
@@ -16,8 +16,8 @@ import {
   removeUnreadNotificationsCount as removeStateUnreadNotificationsCount,
   removeApiToken as removeStateApiToken,
 } from '@src/store';
-import type {User} from '@modules/core';
-import {queryClient} from '@modules/utils';
+import type { User } from '@modules/core';
+import { queryClient } from '@modules/utils';
 
 const getLogMessage = (message: string) => `## UserUtils:: ${message}`;
 

@@ -1,6 +1,6 @@
-import {describe, test, jest, expect, afterEach} from '@jest/globals';
-import {Linking} from 'react-native';
-import {open} from '@modules/utils/src/LinkingUtils/Helpers';
+import { describe, test, jest, expect, afterEach } from '@jest/globals';
+import { Linking } from 'react-native';
+import { open } from '@modules/utils/src/LinkingUtils/Helpers';
 
 describe('open HAPPY PATH', () => {
   test('should successfully open a valid URL', async () => {
@@ -43,7 +43,7 @@ describe('open EDGE CASES', () => {
 
     await expect(async () => {
       await open(url, 'error_invalid_url');
-    }).rejects.toThrowError(`Failed to open: ${url}`);
+    }).rejects.toThrow(`Failed to open: ${url}`);
 
     expect(openURL).toHaveBeenCalledWith(url);
 
@@ -58,7 +58,7 @@ describe('open EDGE CASES', () => {
 
     await expect(async () => {
       await open(url);
-    }).rejects.toThrowError(`Failed to open: ${url}`);
+    }).rejects.toThrow(`Failed to open: ${url}`);
 
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       expect.stringContaining(`Failed to open: ${url}`),

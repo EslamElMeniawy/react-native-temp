@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {Animated, StyleSheet} from 'react-native';
-import type {RootStackScreenProps} from '@src/navigation';
-import {AppImages} from '@modules/assets';
-import {Screen} from '@modules/components';
-import {useAppTheme} from '@modules/theme';
+import { Animated, StyleSheet } from 'react-native';
+import type { RootStackScreenProps } from '@src/navigation';
+import { AppImages } from '@modules/assets';
+import { Screen } from '@modules/components';
+import { useAppTheme } from '@modules/theme';
 import styles from './styles';
-import {useSplash} from './useSplash';
+import { useSplash } from './useSplash';
 
 export default React.memo((props: RootStackScreenProps<'splash'>) => {
   // #region Variables
-  const {navigation} = props;
+  const { navigation } = props;
   const opacity = React.useRef(new Animated.Value(1));
   const translateY = React.useRef(new Animated.Value(0));
   // #endregion
@@ -36,8 +36,9 @@ export default React.memo((props: RootStackScreenProps<'splash'>) => {
           style={[
             StyleSheet.absoluteFill,
             styles.bootSplash,
-            {opacity: opacity.current},
-          ]}>
+            { opacity: opacity.current },
+          ]}
+        >
           <Animated.Image
             source={AppImages.bootSplashImage}
             fadeDuration={0}
@@ -48,7 +49,7 @@ export default React.memo((props: RootStackScreenProps<'splash'>) => {
               styles.logo,
               {
                 tintColor: theme.colors.primary,
-                transform: [{translateY: translateY.current}],
+                transform: [{ translateY: translateY.current }],
               },
             ])}
           />

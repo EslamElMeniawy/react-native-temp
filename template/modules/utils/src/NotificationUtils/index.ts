@@ -1,11 +1,11 @@
-import {AppColors} from '@modules/theme';
+import { AppColors } from '@modules/theme';
 import notifee from '@notifee/react-native';
-import {push} from '@src/navigation';
-import {store} from '@src/store';
-import {getBundleId} from 'react-native-device-info';
-import type {Notification} from '@modules/core';
-import {clearNotifications, processUserNotification} from './Helpers';
-import type {FirebaseMessagingTypes} from '@react-native-firebase/messaging';
+import { push } from '@src/navigation';
+import { store } from '@src/store';
+import { getBundleId } from 'react-native-device-info';
+import type { Notification } from '@modules/core';
+import { clearNotifications, processUserNotification } from './Helpers';
+import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 
 const getLogMessage = (message: string) => `## NotificationUtils:: ${message}`;
 
@@ -33,7 +33,7 @@ export const processNotification = (
   clearNotifications(notification);
 
   // Set new badge.
-  const {unreadNotificationsCount: stateUnreadNotificationsCount, apiToken} =
+  const { unreadNotificationsCount: stateUnreadNotificationsCount, apiToken } =
     store.getState().user;
 
   console.info(
@@ -127,7 +127,7 @@ export const displayLocalNotification = (
         // TODO: Add notifications icon first
         // smallIcon: 'ic_notification',
       },
-      ios: {sound: 'default'},
+      ios: { sound: 'default' },
     });
   }
 };

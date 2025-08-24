@@ -1,6 +1,6 @@
-import {test, expect, jest, afterEach} from '@jest/globals';
+import { test, expect, jest, afterEach } from '@jest/globals';
 import notifee from '@notifee/react-native';
-import {clearNotifications} from '@modules/utils/src/NotificationUtils/Helpers';
+import { clearNotifications } from '@modules/utils/src/NotificationUtils/Helpers';
 
 const mockCancelLocalNotification = jest.spyOn(notifee, 'cancelNotification');
 

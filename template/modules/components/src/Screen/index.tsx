@@ -1,13 +1,13 @@
-import {useAppTheme} from '@modules/theme';
+import { useAppTheme } from '@modules/theme';
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {SystemBars} from '@modules/components';
+import { SystemBars } from '@modules/components';
 import styles from './styles';
-import type {Props} from './types';
+import type { Props } from './types';
 
 export default React.memo((props: Props) => {
   const insets = useSafeAreaInsets();

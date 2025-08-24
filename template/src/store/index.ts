@@ -1,6 +1,6 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {default as Config} from 'react-native-config';
-import {default as logger} from 'redux-logger';
+import { configureStore } from '@reduxjs/toolkit';
+import { default as Config } from 'react-native-config';
+import { default as logger } from 'redux-logger';
 import dialogsReducer from './dialogs';
 import networkStateReducer from './networkState';
 import userReducer from './user';

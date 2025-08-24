@@ -1,11 +1,11 @@
-import {ScrollView} from '@eslam-elmeniawy/react-native-common-components';
+import { ScrollView } from '@eslam-elmeniawy/react-native-common-components';
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import styles from './styles';
-import type {ScrollViewProps} from '@eslam-elmeniawy/react-native-common-components';
+import type { ScrollViewProps } from '@eslam-elmeniawy/react-native-common-components';
 
 export default React.memo((props: ScrollViewProps) => {
-  const {contentContainerStyle, children, ...restProps} = props;
+  const { contentContainerStyle, children, ...restProps } = props;
 
   return (
     <ScrollView
@@ -13,7 +13,8 @@ export default React.memo((props: ScrollViewProps) => {
         styles.contentContainer,
         contentContainerStyle,
       )}
-      {...restProps}>
+      {...restProps}
+    >
       {children}
     </ScrollView>
   );

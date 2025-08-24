@@ -3,9 +3,9 @@ import {
   fetch as netInfoFetch,
 } from '@react-native-community/netinfo';
 import * as React from 'react';
-import {AppState, NativeModules, Platform} from 'react-native';
-import {useHandleNetworkState} from './useHandleNetworkState';
-import type {AppStateStatus} from 'react-native';
+import { AppState, NativeModules, Platform } from 'react-native';
+import { useHandleNetworkState } from './useHandleNetworkState';
+import type { AppStateStatus } from 'react-native';
 
 export const useNetworkListener = () => {
   // #region Logger

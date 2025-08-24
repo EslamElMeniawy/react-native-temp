@@ -17,9 +17,6 @@ project.ext.envConfigFiles = [
 ]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
-// Added for "react-native-vector-icons".
-apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
-
 // Added for "react-native-vector-image".
 apply from: "../../node_modules/react-native-vector-image/strip_svgs.gradle"
 

@@ -1,4 +1,4 @@
-import type {ServerError} from '@modules/core';
+import type { ServerError } from '@modules/core';
 
 export interface Props {
   error?: ServerError | null;

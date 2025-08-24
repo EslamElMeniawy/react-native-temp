@@ -1,10 +1,10 @@
-import {Text} from '@eslam-elmeniawy/react-native-common-components';
-import {useAppTheme} from '@modules/theme';
+import { Text } from '@eslam-elmeniawy/react-native-common-components';
+import { useAppTheme } from '@modules/theme';
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import tinycolor from 'tinycolor2';
 import styles from './styles';
-import type {ToastProps} from 'react-native-toast-notifications/lib/typescript/toast';
+import type { ToastProps } from 'react-native-toast-notifications/lib/typescript/toast';
 
 export default React.memo((toastOptions: ToastProps) => {
   const theme = useAppTheme();
@@ -22,12 +22,14 @@ export default React.memo((toastOptions: ToastProps) => {
         backgroundColor: theme.colors.surface,
         borderColor: borderColor.toHex8String(),
         borderStartColor: indicatorColor.toHex8String(),
-      })}>
+      })}
+    >
       <Text
         style={StyleSheet.compose(
-          {color: theme.colors.onSurface},
+          { color: theme.colors.onSurface },
           styles.text,
-        )}>
+        )}
+      >
         {toastOptions.message}
       </Text>
     </View>

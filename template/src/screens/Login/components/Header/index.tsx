@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {useTranslation} from 'react-i18next';
-import {Appbar} from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { Appbar } from 'react-native-paper';
+import { TranslationNamespaces } from '@modules/localization';
 
 export default React.memo(() => {
-  const {t: translate} = useTranslation();
+  const { t: translate } = useTranslation(TranslationNamespaces.LOGIN);
 
   return (
     <Appbar.Header statusBarHeight={0} mode="center-aligned">

@@ -1,4 +1,4 @@
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type RootStackParamList = {
   splash: undefined;
@@ -11,4 +11,4 @@ type RootStackParamList = {
 type RootStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
 
-export type {RootStackParamList, RootStackScreenProps};
+export type { RootStackParamList, RootStackScreenProps };

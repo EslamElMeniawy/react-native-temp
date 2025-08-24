@@ -1,10 +1,10 @@
-import {getAnalytics, logScreenView} from '@react-native-firebase/analytics';
-import {NavigationContainer} from '@react-navigation/native';
+import { getAnalytics, logScreenView } from '@react-native-firebase/analytics';
+import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
-import {View} from 'react-native';
-import {default as Config} from 'react-native-config';
-import {Gesture, GestureDetector} from 'react-native-gesture-handler';
-import {navigationRef, RootStack, push} from '@src/navigation';
+import { View } from 'react-native';
+import { default as Config } from 'react-native-config';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { navigationRef, RootStack, push } from '@src/navigation';
 import styles from './styles';
 
 export default React.memo(() => {
@@ -38,7 +38,8 @@ export default React.memo(() => {
 
         // Save the current route name for later comparison.
         routeNameRef.current = currentRouteName;
-      }}>
+      }}
+    >
       {Config.ENABLE_LOCAL_LOG === 'true' ? (
         <GestureDetector gesture={twoFingerPress}>
           <View style={styles.container}>

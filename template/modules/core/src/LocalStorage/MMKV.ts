@@ -5,7 +5,7 @@ import {
   useMMKVNumber,
 } from 'react-native-mmkv';
 import uuid from 'react-native-uuid';
-import type {LocalStorageKeys} from '@modules/core';
+import type { LocalStorageKeys } from '@modules/core';
 
 const getLogMessage = (message: string) => `## LocalStorage:: ${message}`;
 
