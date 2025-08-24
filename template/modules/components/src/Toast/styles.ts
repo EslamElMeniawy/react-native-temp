@@ -3,12 +3,21 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
+    width: '90%',
     borderRadius: ResponsiveDimensions.ms(8),
+    padding: ResponsiveDimensions.ms(8),
     borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
-    borderStartWidth: ResponsiveDimensions.ms(8),
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowOffset: { width: 0, height: ResponsiveDimensions.vs(2) },
+    shadowRadius: 3.84,
+    elevation: 5,
+    gap: ResponsiveDimensions.ms(8),
   },
-  text: { margin: ResponsiveDimensions.ms(8) },
+  textContainer: {
+    flex: 1,
+  },
 });
 
 export default styles;

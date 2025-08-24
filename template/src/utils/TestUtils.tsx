@@ -1,14 +1,12 @@
-import { getStatusBarHeight } from '@eslam-elmeniawy/react-native-common-components';
 import { BaseNavigationContainer } from '@react-navigation/native';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { render, renderHook } from '@testing-library/react-native';
 import * as React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { ToastProvider } from 'react-native-toast-notifications';
 import { Provider as ReduxProvider } from 'react-redux';
 import type { AppStore } from '@src/store';
 import { store as reduxStore } from '@src/store';
-import { Toast } from '@modules/components';
+import { ToastManager } from '@modules/components';
 import { useAppTheme } from '@modules/theme';
 import {
   queryClient as appQueryClient,
@@ -58,18 +56,13 @@ function Wrapper({
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={theme ?? appTheme}>
-        <ToastProvider
-          placement="top"
-          offset={getStatusBarHeight()}
-          renderToast={toastOptions => <Toast {...toastOptions} />}
+        <PersistQueryClientProvider
+          client={queryClient}
+          persistOptions={{ persister: clientPersister }}
         >
-          <PersistQueryClientProvider
-            client={queryClient}
-            persistOptions={{ persister: clientPersister }}
-          >
-            <BaseNavigationContainer>{children}</BaseNavigationContainer>
-          </PersistQueryClientProvider>
-        </ToastProvider>
+          <BaseNavigationContainer>{children}</BaseNavigationContainer>
+        </PersistQueryClientProvider>
+        <ToastManager />
       </PaperProvider>
     </ReduxProvider>
   );
