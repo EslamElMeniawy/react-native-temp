@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Toast } from 'react-native-toast-notifications';
+import { Toast } from 'toastify-react-native';
 import {
   useAppDispatch,
   removeIsConnectionExpensive,
@@ -13,10 +13,6 @@ export const useHandleNetworkState = () => {
   // #region Logger
   const getLogMessage = (message: string) =>
     `## App::useHandleNetworkState:: ${message}`;
-  // #endregion
-
-  // #region Variables
-  const internetLostToastId = React.useRef<string | undefined>(undefined);
   // #endregion
 
   // #region Redux
@@ -61,32 +57,10 @@ export const useHandleNetworkState = () => {
     (isInternetAvailable: boolean | null) => {
       console.info(getLogMessage('handleInternetLoastToast'));
 
-      console.info(
-        getLogMessage('internetLostToastId'),
-        internetLostToastId.current,
-      );
-
       if (isInternetAvailable === false) {
-        if (internetLostToastId.current) {
-          Toast.update(
-            internetLostToastId.current,
-            translate?.('internetLost'),
-            {
-              type: 'danger',
-              onClose: () => (internetLostToastId.current = undefined),
-            },
-          );
-        } else {
-          internetLostToastId.current = Toast.show(
-            translate?.('internetLost'),
-            {
-              type: 'danger',
-              onClose: () => (internetLostToastId.current = undefined),
-            },
-          );
-        }
-      } else if (internetLostToastId.current) {
-        Toast.hide(internetLostToastId.current);
+        Toast.show({ type: 'error', text2: translate('internetLost') });
+      } else {
+        Toast.hide();
       }
     },
     [],
