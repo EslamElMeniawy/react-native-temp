@@ -13,7 +13,7 @@ export const openUrl = (url?: string, errorMessage?: string) => {
   console.info(getLogMessage('openUrl'), url);
 
   if (url?.length) {
-    open(url, errorMessage ?? translate?.('errorOpenUrl'));
+    open(url, errorMessage ?? translate('errorOpenUrl'));
   }
 };
 
@@ -40,7 +40,7 @@ export const openEmail = (
     emailLink = appendEmail(emailLink, email);
     emailLink = appendEmailSubjectBody(emailLink, subject, body);
     console.info(getLogMessage('emailLink'), emailLink);
-    open(emailLink, errorMessage ?? translate?.('errorOpenMail'));
+    open(emailLink, errorMessage ?? translate('errorOpenMail'));
   }
 };
 
@@ -54,7 +54,7 @@ export const openPhone = (phone?: string | null, errorMessage?: string) => {
   console.info(getLogMessage('openPhone'), phone);
 
   if (phone?.length) {
-    open(`tel:${phone}`, errorMessage ?? translate?.('errorOpenPhone'));
+    open(`tel:${phone}`, errorMessage ?? translate('errorOpenPhone'));
   }
 };
 
@@ -70,7 +70,7 @@ export const openWhatsApp = (number?: string | null, errorMessage?: string) => {
   if (number?.length) {
     open(
       `whatsapp://send?phone=${number}`,
-      errorMessage ?? translate?.('errorOpenWhatsApp'),
+      errorMessage ?? translate('errorOpenWhatsApp'),
     );
   }
 };

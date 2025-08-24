@@ -18,7 +18,7 @@ describe('openWhatsApp HAPPY PATH', () => {
 
     expect(mockedOpen).toHaveBeenCalledWith(
       `whatsapp://send?phone=${phoneNumber}`,
-      'error_open_whats_app',
+      'errorOpenWhatsApp',
     );
   });
 

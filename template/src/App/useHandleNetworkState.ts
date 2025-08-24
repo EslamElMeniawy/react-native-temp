@@ -58,7 +58,7 @@ export const useHandleNetworkState = () => {
       console.info(getLogMessage('handleInternetLoastToast'));
 
       if (isInternetAvailable === false) {
-        Toast.show({ type: 'error', text2: translate?.('internetLost') });
+        Toast.show({ type: 'error', text2: translate('internetLost') });
       } else {
         Toast.hide();
       }

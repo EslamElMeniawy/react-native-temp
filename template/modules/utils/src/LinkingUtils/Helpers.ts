@@ -78,7 +78,7 @@ export const open = async (url: string, errorMessage?: string) => {
 
     Toast.show({
       type: 'error',
-      text2: errorMessage ?? translate?.('errorProcessingRequest'),
+      text2: errorMessage ?? translate('errorProcessingRequest'),
     });
   }
 };

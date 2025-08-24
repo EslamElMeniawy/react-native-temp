@@ -60,13 +60,11 @@ jest.mock('react-native-bootsplash', () => {
   return {
     hide: jest.fn<() => Promise<void>>().mockResolvedValue(),
     isVisible: jest.fn<() => Promise<boolean>>().mockResolvedValue(false),
-    useHideAnimation: jest
-      .fn()
-      .mockReturnValue({
-        container: {},
-        logo: { source: 0 },
-        brand: { source: 0 },
-      }),
+    useHideAnimation: jest.fn().mockReturnValue({
+      container: {},
+      logo: { source: 0 },
+      brand: { source: 0 },
+    }),
   };
 });
 
@@ -227,3 +225,7 @@ jest.mock('@react-native-firebase/messaging', () => () => ({
 }));
 
 jest.mock('react-native-network-logger', () => ({ default: jest.fn() }));
+
+jest.mock('@modules/localization', () => ({
+  translate: jest.fn((key: string) => key),
+}));
