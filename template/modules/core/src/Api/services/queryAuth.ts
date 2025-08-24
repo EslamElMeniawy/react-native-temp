@@ -4,7 +4,7 @@ import type {
   LoginResponse,
   LogoutResponse,
 } from '@modules/core';
-import {httpClient} from '@modules/core';
+import { httpClient } from '@modules/core';
 
 const queryAuth = {
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.

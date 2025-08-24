@@ -1,6 +1,6 @@
 {
   "name": "@eslam-elmeniawy/react-native-template",
-  "version": "3.13.0",
+  "version": "3.14.0",
   "description": "\"ReactNative\" template with initial setup.",
   "scripts": {
     "test": "exit 0",
@@ -89,15 +89,15 @@
     "access": "public"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
-    "@evilmartians/lefthook": "^1.11.8",
-    "@release-it/conventional-changelog": "^10.0.0",
-    "commitlint": "^19.8.0",
-    "eslint": "^9.24.0",
-    "prettier": "^3.5.3",
-    "release-it": "^18.1.2",
-    "typescript": "5.0.4"
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@evilmartians/lefthook": "^1.12.3",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "commitlint": "^19.8.1",
+    "eslint": "^9.33.0",
+    "prettier": "^3.6.2",
+    "release-it": "^19.0.4",
+    "typescript": "^5.9.2"
   },
   "release-it": {
     "git": {
@@ -112,19 +112,8 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "infile": "CHANGELOG.md",
         "preset": {
-          "name": "conventionalcommits",
-          "types": [
-            {
-              "type": "feat",
-              "section": "Features"
-            },
-            {
-              "type": "fix",
-              "section": "Bug Fixes"
-            }
-          ]
+          "name": "angular"
         }
       }
     }
@@ -134,5 +123,5 @@
       "@commitlint/config-conventional"
     ]
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.9.3"
 }

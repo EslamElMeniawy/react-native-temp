@@ -1,6 +1,6 @@
-import {randomIntFromInterval} from '@modules/utils';
-import type {User, ApiRequest} from '@modules/core';
-import {user} from './data';
+import { randomIntFromInterval } from '@modules/utils';
+import type { User, ApiRequest } from '@modules/core';
+import { user } from './data';
 
 const getLogMessage = (message: string) => `## fakers::fakerUser:: ${message}`;
 

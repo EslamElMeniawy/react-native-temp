@@ -1,11 +1,11 @@
-import {describe, test, expect, jest} from '@jest/globals';
-import {renderHook} from '@testing-library/react-native';
+import { describe, test, expect, jest } from '@jest/globals';
+import { renderHook } from '@testing-library/react-native';
 import AppColors from '@modules/theme/src/AppColors';
 import useAppThemeColors from '@modules/theme/src/useAppThemeColors';
 
 describe('useAppThemeColors HAPPY PATH', () => {
   test('should return defined theme colors object when invoked', () => {
-    const {result} = renderHook(() => useAppThemeColors());
+    const { result } = renderHook(() => useAppThemeColors());
     expect(result.current).toBeDefined();
   });
 
@@ -14,7 +14,7 @@ describe('useAppThemeColors HAPPY PATH', () => {
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue('dark');
 
-    const {result} = renderHook(() => useAppThemeColors());
+    const { result } = renderHook(() => useAppThemeColors());
     expect(result.current.primary).toEqual(AppColors.themeDark.primary);
     expect(result.current.onPrimary).toEqual(AppColors.themeDark.onPrimary);
   });
@@ -24,7 +24,7 @@ describe('useAppThemeColors HAPPY PATH', () => {
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue('light');
 
-    const {result} = renderHook(() => useAppThemeColors());
+    const { result } = renderHook(() => useAppThemeColors());
     expect(result.current.primary).toEqual(AppColors.themeLight.primary);
     expect(result.current.onPrimary).toEqual(AppColors.themeLight.onPrimary);
   });
@@ -36,7 +36,7 @@ describe('useAppThemeColors EDGE CASES', () => {
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue(undefined);
 
-    const {result} = renderHook(() => useAppThemeColors());
+    const { result } = renderHook(() => useAppThemeColors());
     expect(result.current).toBeDefined();
   });
 
@@ -45,7 +45,7 @@ describe('useAppThemeColors EDGE CASES', () => {
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue('invalid');
 
-    const {result} = renderHook(() => useAppThemeColors());
+    const { result } = renderHook(() => useAppThemeColors());
     expect(result.current).toBeDefined();
   });
 });

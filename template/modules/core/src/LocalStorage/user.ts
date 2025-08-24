@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type {User} from '@modules/core';
+import type { User } from '@modules/core';
 import {
   useLocalStorageString,
   getLocalStorageString,

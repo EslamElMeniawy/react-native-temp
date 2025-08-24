@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {Animated, Dimensions} from 'react-native';
-import {hide as rnBootSplashHide} from 'react-native-bootsplash';
-import {useAppSelector} from '@src/store';
-import type {UseHideSplashProps} from './useHideSplash.types';
+import { Animated, Dimensions } from 'react-native';
+import { hide as rnBootSplashHide } from 'react-native-bootsplash';
+import { useAppSelector } from '@src/store';
+import type { UseHideSplashProps } from './useHideSplash.types';
 
 export const useHideSplash = (props: UseHideSplashProps) => {
   // #region Logger
@@ -11,12 +11,12 @@ export const useHideSplash = (props: UseHideSplashProps) => {
   // #endregion
 
   // #region Variables
-  const {opacity, translateY, navigation, isLanguageLoaded, isUserLoaded} =
+  const { opacity, translateY, navigation, isLanguageLoaded, isUserLoaded } =
     props;
   // #endregion
 
   // #region Redux
-  const {user: stateUser} = useAppSelector(state => state.user);
+  const { user: stateUser } = useAppSelector(state => state.user);
   // #endregion
 
   // #region State

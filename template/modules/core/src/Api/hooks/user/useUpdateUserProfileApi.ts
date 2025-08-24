@@ -1,8 +1,8 @@
-import {useQueryClient, useMutation} from '@tanstack/react-query';
-import {default as Config} from 'react-native-config';
-import {fakerUser, queryUser} from '@modules/core';
-import type {User, ServerError, ApiRequest} from '@modules/core';
-import type {UseMutationOptions} from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { default as Config } from 'react-native-config';
+import { fakerUser, queryUser } from '@modules/core';
+import type { User, ServerError, ApiRequest } from '@modules/core';
+import type { UseMutationOptions } from '@tanstack/react-query';
 
 const useUpdateUserProfileApi = (
   options?: Omit<
@@ -11,7 +11,7 @@ const useUpdateUserProfileApi = (
   >,
 ) => {
   const queryClient = useQueryClient();
-  const {onSuccess, ...restOptions} = options ?? {};
+  const { onSuccess, ...restOptions } = options ?? {};
 
   return useMutation<User, ServerError, ApiRequest<FormData, number>>({
     mutationFn: request =>
@@ -19,7 +19,7 @@ const useUpdateUserProfileApi = (
         ? fakerUser.updateUserProfile(request)
         : queryUser.updateUserProfile(request),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({queryKey: ['user']});
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       onSuccess?.(data, variables, context);
     },
     ...restOptions,

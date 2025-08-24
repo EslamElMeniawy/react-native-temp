@@ -1,6 +1,6 @@
-import {describe, test, expect, jest} from '@jest/globals';
-import {renderHookWithProviders} from '@src/utils/TestUtils';
-import {useRefreshOnFocus} from '@modules/utils/src/useRefreshOnFocus';
+import { describe, test, expect, jest } from '@jest/globals';
+import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { useRefreshOnFocus } from '@modules/utils/src/useRefreshOnFocus';
 
 describe('useRefreshOnFocus', () => {
   test('should not trigger refetch on initial render', () => {

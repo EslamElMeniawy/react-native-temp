@@ -6,7 +6,7 @@ module.exports = {
       'module-resolver',
       {
         root: ['./'],
-        extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
         alias: {
           '@src': './src',
           '@packageJson': './package.json',
@@ -14,6 +14,6 @@ module.exports = {
         },
       },
     ],
-    'react-native-reanimated/plugin',
+    'react-native-worklets/plugin',
   ],
 };

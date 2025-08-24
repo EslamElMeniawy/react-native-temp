@@ -1,11 +1,10 @@
-import 'react-native-gesture-handler';
-import {ResponsiveDimensions} from '@eslam-elmeniawy/react-native-common-components';
+import { ResponsiveDimensions } from '@eslam-elmeniawy/react-native-common-components';
 import {
   getMessaging,
   setBackgroundMessageHandler,
 } from '@react-native-firebase/messaging';
 import * as React from 'react';
-import {enableScreens} from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 
 enableScreens();
 
@@ -21,10 +20,10 @@ setBackgroundMessageHandler(getMessaging(), async remoteMessage => {
 // Set base dimensions for responsive components.
 ResponsiveDimensions.setBaseDimensions(
   // TODO: Replace with your app's base dimensions (Figma screen size).
-  {width: 430, height: 932},
+  { width: 430, height: 932 },
 );
 
-function AppEntry({isHeadless}: Readonly<{isHeadless?: boolean}>) {
+function AppEntry({ isHeadless }: Readonly<{ isHeadless?: boolean }>) {
   if (isHeadless) {
     // App has been launched in the background by iOS, ignore.
     return null;

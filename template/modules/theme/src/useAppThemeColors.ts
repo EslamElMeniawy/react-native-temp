@@ -1,7 +1,7 @@
-import {useColorScheme} from 'react-native';
+import { useColorScheme } from 'react-native';
 import useAppThemeColorsDark from './useAppThemeColorsDark';
 import useAppThemeColorsLight from './useAppThemeColorsLight';
-import type {MD3Colors} from 'react-native-paper/lib/typescript/types';
+import type { MD3Colors } from 'react-native-paper/lib/typescript/types';
 
 /**
  * Returns the appropriate theme colors based on the current color scheme.

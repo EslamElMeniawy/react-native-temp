@@ -1,4 +1,4 @@
-import type {SystemBarsProps} from 'react-native-edge-to-edge';
+import type { SystemBarsProps } from 'react-native-edge-to-edge';
 
 export interface Props {
   statusBarProps?: SystemBarsProps;

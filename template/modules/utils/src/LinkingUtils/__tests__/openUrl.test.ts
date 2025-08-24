@@ -1,5 +1,5 @@
-import {describe, jest, afterEach, test, expect} from '@jest/globals';
-import {openUrl} from '@modules/utils/src/LinkingUtils';
+import { describe, jest, afterEach, test, expect } from '@jest/globals';
+import { openUrl } from '@modules/utils/src/LinkingUtils';
 import * as Helpers from '@modules/utils/src/LinkingUtils/Helpers';
 
 describe('openUrl HAPPY PATH', () => {
@@ -53,11 +53,11 @@ describe('openUrl EDGE CASES', () => {
 
   test('should not open when URL is undefined', () => {
     openUrl();
-    expect(mockedOpen).not.toBeCalled();
+    expect(mockedOpen).not.toHaveBeenCalled();
   });
 
   test('should not open when URL is an empty string', () => {
     openUrl('');
-    expect(mockedOpen).not.toBeCalled();
+    expect(mockedOpen).not.toHaveBeenCalled();
   });
 });

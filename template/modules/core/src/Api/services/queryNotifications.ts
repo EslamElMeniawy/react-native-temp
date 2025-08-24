@@ -7,7 +7,7 @@ import type {
   UpdateFcmTokenResponse,
   MarkNotificationReadResponse,
 } from '@modules/core';
-import {httpClient} from '@modules/core';
+import { httpClient } from '@modules/core';
 
 const queryNotifications = {
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
@@ -15,7 +15,7 @@ const queryNotifications = {
     request: ApiRequest,
   ): Promise<PagingResponse<Notification>> =>
     httpClient
-      .get<NotificationsResponse>('/notifications', {params: request.params})
+      .get<NotificationsResponse>('/notifications', { params: request.params })
       .then(response => ({
         currentPage: response.data.meta?.currentPage,
         lastPage: response.data.meta?.totalPages,

@@ -1,13 +1,13 @@
-import {useMutation} from '@tanstack/react-query';
-import {default as Config} from 'react-native-config';
-import {fakerNotifications, queryNotifications} from '@modules/core';
+import { useMutation } from '@tanstack/react-query';
+import { default as Config } from 'react-native-config';
+import { fakerNotifications, queryNotifications } from '@modules/core';
 import type {
   UpdateFcmTokenResponse,
   ServerError,
   ApiRequest,
   UpdateFcmTokenBody,
 } from '@modules/core';
-import type {UseMutationOptions} from '@tanstack/react-query';
+import type { UseMutationOptions } from '@tanstack/react-query';
 
 const useUpdateFcmTokenApi = (
   options?: Omit<

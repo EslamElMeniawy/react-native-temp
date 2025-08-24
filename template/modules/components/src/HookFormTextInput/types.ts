@@ -1,5 +1,5 @@
-import type {TextInputProps} from '@eslam-elmeniawy/react-native-common-components';
-import type {FieldPath, FieldValues, RegisterOptions} from 'react-hook-form';
+import type { TextInputProps } from '@eslam-elmeniawy/react-native-common-components';
+import type { FieldPath, FieldValues, RegisterOptions } from 'react-hook-form';
 
 export interface Props<T extends FieldValues> {
   name: FieldPath<T>;

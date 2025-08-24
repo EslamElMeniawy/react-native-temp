@@ -1,26 +1,26 @@
-import {getStatusBarHeight} from '@eslam-elmeniawy/react-native-common-components';
-import {BaseNavigationContainer} from '@react-navigation/native';
-import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
-import {render, renderHook} from '@testing-library/react-native';
+import { getStatusBarHeight } from '@eslam-elmeniawy/react-native-common-components';
+import { BaseNavigationContainer } from '@react-navigation/native';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
+import { render, renderHook } from '@testing-library/react-native';
 import * as React from 'react';
-import {Provider as PaperProvider} from 'react-native-paper';
-import {ToastProvider} from 'react-native-toast-notifications';
-import {Provider as ReduxProvider} from 'react-redux';
-import type {AppStore} from '@src/store';
-import {store as reduxStore} from '@src/store';
-import {Toast} from '@modules/components';
-import {useAppTheme} from '@modules/theme';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { ToastProvider } from 'react-native-toast-notifications';
+import { Provider as ReduxProvider } from 'react-redux';
+import type { AppStore } from '@src/store';
+import { store as reduxStore } from '@src/store';
+import { Toast } from '@modules/components';
+import { useAppTheme } from '@modules/theme';
 import {
   queryClient as appQueryClient,
   clientPersister as appClientPersister,
 } from '@modules/utils';
-import type {QueryClient} from '@tanstack/react-query';
-import type {Persister} from '@tanstack/react-query-persist-client';
+import type { QueryClient } from '@tanstack/react-query';
+import type { Persister } from '@tanstack/react-query-persist-client';
 import type {
   RenderOptions,
   RenderHookOptions,
 } from '@testing-library/react-native';
-import type {MD3Theme} from 'react-native-paper';
+import type { MD3Theme } from 'react-native-paper';
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -61,10 +61,12 @@ function Wrapper({
         <ToastProvider
           placement="top"
           offset={getStatusBarHeight()}
-          renderToast={toastOptions => <Toast {...toastOptions} />}>
+          renderToast={toastOptions => <Toast {...toastOptions} />}
+        >
           <PersistQueryClientProvider
             client={queryClient}
-            persistOptions={{persister: clientPersister}}>
+            persistOptions={{ persister: clientPersister }}
+          >
             <BaseNavigationContainer>{children}</BaseNavigationContainer>
           </PersistQueryClientProvider>
         </ToastProvider>
@@ -97,7 +99,7 @@ export function renderWithProviders(
     store,
     theme,
     queryClient,
-    ...render(ui, {wrapper: Wrapper, ...renderOptions}),
+    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
 }
 
@@ -125,6 +127,6 @@ export function renderHookWithProviders<Result, Props>(
     store,
     theme,
     queryClient,
-    ...renderHook(renderCallback, {wrapper: Wrapper, ...renderOptions}),
+    ...renderHook(renderCallback, { wrapper: Wrapper, ...renderOptions }),
   };
 }

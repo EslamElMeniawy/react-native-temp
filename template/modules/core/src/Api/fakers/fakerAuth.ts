@@ -1,11 +1,11 @@
-import {randomIntFromInterval} from '@modules/utils';
+import { randomIntFromInterval } from '@modules/utils';
 import type {
   ApiRequest,
   LoginBody,
   LoginResponse,
   LogoutResponse,
 } from '@modules/core';
-import {user} from './data';
+import { user } from './data';
 
 const getLogMessage = (message: string) => `## fakers::fakerAuth:: ${message}`;
 
@@ -16,7 +16,7 @@ const fakerAuth = {
     return new Promise(res =>
       setTimeout(
         () => {
-          res({user, token: 'token'});
+          res({ user, token: 'token' });
         },
         randomIntFromInterval(100, 1000),
       ),
@@ -28,7 +28,7 @@ const fakerAuth = {
     return new Promise(res =>
       setTimeout(
         () => {
-          res({message: 'Logout successfully'});
+          res({ message: 'Logout successfully' });
         },
         randomIntFromInterval(100, 1000),
       ),

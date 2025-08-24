@@ -1,12 +1,12 @@
-import {useQueryClient, useMutation} from '@tanstack/react-query';
-import {default as Config} from 'react-native-config';
-import {fakerNotifications, queryNotifications} from '@modules/core';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { default as Config } from 'react-native-config';
+import { fakerNotifications, queryNotifications } from '@modules/core';
 import type {
   MarkNotificationReadResponse,
   ServerError,
   ApiRequest,
 } from '@modules/core';
-import type {UseMutationOptions} from '@tanstack/react-query';
+import type { UseMutationOptions } from '@tanstack/react-query';
 
 const useMarkNotificationReadApi = (
   options?: Omit<
@@ -19,7 +19,7 @@ const useMarkNotificationReadApi = (
   >,
 ) => {
   const queryClient = useQueryClient();
-  const {onSuccess, ...restOptions} = options ?? {};
+  const { onSuccess, ...restOptions } = options ?? {};
 
   return useMutation<
     MarkNotificationReadResponse,
@@ -31,7 +31,7 @@ const useMarkNotificationReadApi = (
         ? fakerNotifications.markNotificationRead(request)
         : queryNotifications.markNotificationRead(request),
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({queryKey: ['notifications']});
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
       onSuccess?.(data, variables, context);
     },
     ...restOptions,

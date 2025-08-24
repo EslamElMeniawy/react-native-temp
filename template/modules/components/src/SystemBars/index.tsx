@@ -1,8 +1,8 @@
-import {useAppTheme} from '@modules/theme';
+import { useAppTheme } from '@modules/theme';
 import * as React from 'react';
-import {SystemBars} from 'react-native-edge-to-edge';
+import { SystemBars } from 'react-native-edge-to-edge';
 import tinyColor from 'tinycolor2';
-import type {Props} from './types';
+import type { Props } from './types';
 
 export default React.memo((props: Props) => {
   const theme = useAppTheme();
@@ -52,7 +52,10 @@ export default React.memo((props: Props) => {
         statusBar: statusBarStyle ?? defaultStatusBarStyle,
         navigationBar: navigationBarStyle ?? defaultNavigationBarStyle,
       }}
-      hidden={{statusBar: statusBarHidden, navigationBar: navigationBarHidden}}
+      hidden={{
+        statusBar: statusBarHidden,
+        navigationBar: navigationBarHidden,
+      }}
     />
   );
 });
