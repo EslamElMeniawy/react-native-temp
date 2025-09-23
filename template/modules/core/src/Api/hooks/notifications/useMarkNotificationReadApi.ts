@@ -30,9 +30,9 @@ const useMarkNotificationReadApi = (
       Config.USE_FAKE_API === 'true'
         ? fakerNotifications.markNotificationRead(request)
         : queryNotifications.markNotificationRead(request),
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      onSuccess?.(data, variables, context);
+      onSuccess?.(data, variables, onMutateResult, context);
     },
     ...restOptions,
   });
