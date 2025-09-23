@@ -13,6 +13,10 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 // Added for "react-native-orientation-locker".
 import org.wonday.orientation.OrientationActivityLifecycle
 
+// Workaround to disable autolinking for android for `react-native-config`
+// to fix of build issue.
+import com.lugg.RNCConfig.RNCConfigPackage
+
 class MainApplication : MultiDexApplication(), ReactApplication {
     override val reactNativeHost: ReactNativeHost =
         object : DefaultReactNativeHost(this) {
@@ -20,6 +24,10 @@ class MainApplication : MultiDexApplication(), ReactApplication {
               PackageList(this).packages.apply {
                 // Packages that cannot be autolinked yet can be added manually here, for example:
                 // add(MyReactNativePackage())
+
+                // Workaround to disable autolinking for android for `react-native-config`
+                // to fix of build issue.
+                add(RNCConfigPackage())
               }
 
             override fun getJSMainModuleName(): String = "index"

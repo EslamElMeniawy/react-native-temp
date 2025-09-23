@@ -181,4 +181,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    // Workaround to disable autolinking for android for `react-native-config`
+    // to fix of build issue.
+    implementation project(':react-native-config')
 }

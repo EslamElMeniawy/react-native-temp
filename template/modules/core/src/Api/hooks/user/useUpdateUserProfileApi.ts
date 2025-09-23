@@ -18,9 +18,9 @@ const useUpdateUserProfileApi = (
       Config.USE_FAKE_API === 'true'
         ? fakerUser.updateUserProfile(request)
         : queryUser.updateUserProfile(request),
-    onSuccess: (data, variables, context) => {
+    onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      onSuccess?.(data, variables, context);
+      onSuccess?.(data, variables, onMutateResult, context);
     },
     ...restOptions,
   });
