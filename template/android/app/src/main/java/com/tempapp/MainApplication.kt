@@ -5,10 +5,7 @@ import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
-import com.facebook.react.ReactNativeHost
-import com.facebook.react.ReactPackage
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
-import com.facebook.react.defaults.DefaultReactNativeHost
 
 // Added for "react-native-orientation-locker".
 import org.wonday.orientation.OrientationActivityLifecycle
@@ -18,28 +15,20 @@ import org.wonday.orientation.OrientationActivityLifecycle
 import com.lugg.RNCConfig.RNCConfigPackage
 
 class MainApplication : MultiDexApplication(), ReactApplication {
-    override val reactNativeHost: ReactNativeHost =
-        object : DefaultReactNativeHost(this) {
-            override fun getPackages(): List<ReactPackage> =
-              PackageList(this).packages.apply {
-                // Packages that cannot be autolinked yet can be added manually here, for example:
-                // add(MyReactNativePackage())
+    override val reactHost: ReactHost by lazy {
+      getDefaultReactHost(
+        context = applicationContext,
+        packageList =
+          PackageList(this).packages.apply {
+            // Packages that cannot be autolinked yet can be added manually here, for example:
+            // add(MyReactNativePackage())
 
-                // Workaround to disable autolinking for android for `react-native-config`
-                // to fix of build issue.
-                add(RNCConfigPackage())
-              }
-
-            override fun getJSMainModuleName(): String = "index"
-
-            override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
-
-            override val isNewArchEnabled: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
-            override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
-        }
-
-    override val reactHost: ReactHost
-        get() = getDefaultReactHost(applicationContext, reactNativeHost)
+            // Workaround to disable autolinking for android for `react-native-config`
+            // to fix of build issue.
+            add(RNCConfigPackage())
+          },
+      )
+    }
 
     override fun onCreate() {
         super.onCreate()
