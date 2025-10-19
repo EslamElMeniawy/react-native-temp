@@ -4,9 +4,6 @@ import {
   setBackgroundMessageHandler,
 } from '@react-native-firebase/messaging';
 import * as React from 'react';
-import { enableScreens } from 'react-native-screens';
-
-enableScreens();
 
 function getLogMessage(message: string) {
   return `## AppEntry:: ${message}`;
