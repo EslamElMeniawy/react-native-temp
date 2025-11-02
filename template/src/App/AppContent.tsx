@@ -2,8 +2,8 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 import * as React from 'react';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { NavigationContainer } from '@src/navigation';
 import { ToastManager, ErrorDialog, LoadingDialog } from '@modules/components';
+import { NavigationContainer } from '@modules/navigation';
 import { useAppTheme } from '@modules/theme';
 import { clientPersister, queryClient } from '@modules/utils';
 import { useFirebaseMessagingInitialization } from './useFirebaseMessagingInitialization';

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Animated, StyleSheet } from 'react-native';
-import type { RootStackScreenProps } from '@src/navigation';
 import { AppImages } from '@modules/assets';
 import { Screen } from '@modules/components';
+import type { RootStackScreenProps } from '@modules/navigation';
 import { useAppTheme } from '@modules/theme';
 import styles from './styles';
 import { useSplash } from './useSplash';

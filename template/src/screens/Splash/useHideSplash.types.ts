@@ -1,4 +1,4 @@
-import type { RootStackParamList } from '@src/navigation';
+import type { RootStackParamList } from '@modules/navigation';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type * as React from 'react';
 import type { Animated } from 'react-native';

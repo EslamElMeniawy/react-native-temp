@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { getLanguage } from '@modules/core';
-import { updateLanguage } from 'modules/localization';
+import { LanguageLocalStorage } from '@modules/core';
+import { updateLanguage } from '@modules/localization';
 
 export const useSplashLanguageLoader = (isBootSplashLogoLoaded: boolean) => {
   // #region Logger
@@ -22,7 +22,7 @@ export const useSplashLanguageLoader = (isBootSplashLogoLoaded: boolean) => {
      */
     const getSavedLanguage = async () => {
       console.info(getLogMessage('getSavedLanguage'));
-      const language = getLanguage();
+      const language = LanguageLocalStorage.getLanguage();
       console.info(getLogMessage('language'), language);
       await updateLanguage(language);
       setLanguageLoaded(true);

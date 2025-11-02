@@ -1,5 +1,5 @@
 import { translate, getCurrentLocale } from '@modules/localization';
-import { setErrorDialogMessage, store } from '@src/store';
+import { store, DialogsStore } from '@modules/store';
 import axios from 'axios';
 import { default as Config } from 'react-native-config';
 import type { ServerError, ServerErrorResponse } from '@modules/core';
@@ -84,7 +84,9 @@ const handle401Error = (error: AxiosError<ServerErrorResponse>) => {
   console.info(getLogMessage('status'), status);
 
   if (status === 401 && !shouldSkip401(error)) {
-    store.dispatch(setErrorDialogMessage(translate('sessionExpired')));
+    store.dispatch(
+      DialogsStore.setErrorDialogMessage(translate('sessionExpired')),
+    );
   }
 };
 

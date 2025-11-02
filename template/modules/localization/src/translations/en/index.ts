@@ -1,14 +1,14 @@
-import { TranslationNamespaces } from '@modules/localization/src/enums';
+import { authTranslations } from '@modules/features-auth';
+import { debugMenuTranslations } from '@modules/features-debug-menu';
+import { homeTranslations } from '@modules/features-home';
+import { notificationsTranslations } from '@modules/features-notifications';
+import { TranslationNamespaces } from '@modules/localization';
 import common from './common';
-import home from './home';
-import login from './login';
-import networkLogs from './networkLogs';
-import notifications from './notifications';
 
 export default {
   [TranslationNamespaces.COMMON]: common,
-  [TranslationNamespaces.NETWORK_LOGS]: networkLogs,
-  [TranslationNamespaces.LOGIN]: login,
-  [TranslationNamespaces.HOME]: home,
-  [TranslationNamespaces.NOTIFICATIONS]: notifications,
+  [TranslationNamespaces.DEBUG_MENU]: debugMenuTranslations.en,
+  [TranslationNamespaces.AUTH]: authTranslations.en,
+  [TranslationNamespaces.HOME]: homeTranslations.en,
+  [TranslationNamespaces.NOTIFICATIONS]: notificationsTranslations.en,
 };

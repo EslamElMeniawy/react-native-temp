@@ -1,5 +1,5 @@
 import { test, expect, jest, afterEach } from '@jest/globals';
-import * as NavigationUtils from '@src/navigation/NavigationUtils';
+import * as NavigationUtils from '@modules/navigation/src/NavigationUtils';
 import { openNotificationRelatedScreen } from '@modules/utils/src/NotificationUtils';
 
 const pushMock = jest.spyOn(NavigationUtils, 'push');

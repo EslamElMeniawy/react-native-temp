@@ -1,7 +1,7 @@
 enum TranslationNamespaces {
   COMMON = 'common',
-  NETWORK_LOGS = 'networkLogs',
-  LOGIN = 'login',
+  DEBUG_MENU = 'debugMenu',
+  AUTH = 'auth',
   HOME = 'home',
   NOTIFICATIONS = 'notifications',
 }

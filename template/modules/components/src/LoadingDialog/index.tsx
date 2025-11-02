@@ -1,5 +1,5 @@
 import { LoadingDialog } from '@eslam-elmeniawy/react-native-common-components';
-import { useAppSelector } from '@src/store';
+import { useAppSelector } from '@modules/store';
 import * as React from 'react';
 
 export default React.memo(() => {

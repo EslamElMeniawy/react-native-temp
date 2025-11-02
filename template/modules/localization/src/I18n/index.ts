@@ -1,4 +1,4 @@
-import { getLanguage, setLanguage } from '@modules/core';
+import { LanguageLocalStorage } from '@modules/core';
 import * as i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { Platform, Settings, I18nManager } from 'react-native';
@@ -8,8 +8,8 @@ import RNRestart from 'react-native-restart';
 import {
   AppLanguages,
   TranslationNamespaces,
-} from '@modules/localization/src/enums';
-import { translations } from '@modules/localization/src/translations';
+  translations,
+} from '@modules/localization';
 
 const getLogMessage = (message: string) => `## I18n:: ${message}`;
 
@@ -56,7 +56,7 @@ export const setI18nConfig = async () => {
   }
 
   // Get user language.
-  const userLanguage = getLanguage();
+  const userLanguage = LanguageLocalStorage.getLanguage();
 
   // Set the locale.
   await updateLanguage(userLanguage);
@@ -68,7 +68,7 @@ export const updateLanguage = async (language?: AppLanguages | null) => {
 
   // Save user language.
   if (language) {
-    setLanguage(language);
+    LanguageLocalStorage.setLanguage(language);
   }
 
   // Set the locale.
