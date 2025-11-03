@@ -1,2 +1,5 @@
-export * as FcmTokenLocalStorage from './fcmToken';
-export * as UnreadNotificationsCountLocalStorage from './unreadNotificationsCount';
+import * as FcmTokenLocalStorage from './fcmToken';
+import * as UnreadNotificationsCountLocalStorage from './unreadNotificationsCount';
+
+export { FcmTokenLocalStorage };
+export { UnreadNotificationsCountLocalStorage };

@@ -1,3 +1,5 @@
+import * as LanguageLocalStorage from './language';
+
 export { default as LocalStorageKeys } from './keys';
-export * as LanguageLocalStorage from './language';
+export { LanguageLocalStorage };
 export * from './MMKV';
