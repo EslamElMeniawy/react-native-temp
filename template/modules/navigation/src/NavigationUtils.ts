@@ -64,7 +64,7 @@ export const replace = (
   screenName: RouteName,
   params?: RootStackParamList[RouteName],
 ) => {
-  console.info(getLogMessage('push'), screenName, params);
+  console.info(getLogMessage('replace'), screenName, params);
 
   if (navigationRef.isReady()) {
     navigationRef.dispatch(StackActions.replace(screenName, params));
