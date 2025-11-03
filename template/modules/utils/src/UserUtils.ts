@@ -85,9 +85,15 @@ export const removeReduxUserData = () => {
 export const removeUserData = async (onFinish?: () => void): Promise<void> => {
   console.info(getLogMessage('removeUserData'));
   removeLocalStorageUserData();
-  await deleteToken(getMessaging());
   removeReduxUserData();
-  onFinish?.();
+
+  try {
+    await deleteToken(getMessaging());
+  } catch (error) {
+    console.error(getLogMessage('removeUserData::deleteToken Error'), error);
+  } finally {
+    onFinish?.();
+  }
 };
 
 /**
