@@ -8,8 +8,8 @@ import RNRestart from 'react-native-restart';
 import {
   AppLanguages,
   TranslationNamespaces,
-  translations,
-} from '@modules/localization';
+} from '@modules/localization/src/enums';
+import { translations } from '@modules/localization/src/translations';
 
 const getLogMessage = (message: string) => `## I18n:: ${message}`;
 
