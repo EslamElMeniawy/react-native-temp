@@ -34,7 +34,8 @@ export const useMessagingPermission = () => {
 
     const enabled =
       authStatus === AuthorizationStatus.AUTHORIZED ||
-      authStatus === AuthorizationStatus.PROVISIONAL;
+      authStatus === AuthorizationStatus.PROVISIONAL ||
+      authStatus === AuthorizationStatus.EPHEMERAL;
 
     console.info(getLogMessage('enabled'), enabled);
 
@@ -55,7 +56,13 @@ export const useMessagingPermission = () => {
 
       try {
         await checkAndroidPermissions();
-        const hasPermission = await firebaseHasPermission(messaging);
+        const authStatus = await firebaseHasPermission(messaging);
+
+        const hasPermission =
+          authStatus === AuthorizationStatus.AUTHORIZED ||
+          authStatus === AuthorizationStatus.PROVISIONAL ||
+          authStatus === AuthorizationStatus.EPHEMERAL;
+
         console.info(getLogMessage('hasPermission'), hasPermission);
 
         if (!hasPermission) {

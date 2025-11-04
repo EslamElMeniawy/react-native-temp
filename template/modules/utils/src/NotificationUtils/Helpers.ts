@@ -1,20 +1,14 @@
 import {
   fakerNotifications,
   queryNotifications,
-  setUnreadNotificationsCount as setLocalStorageUnreadNotificationsCount,
-} from '@modules/core';
+  UnreadNotificationsCountLocalStorage,
+} from '@modules/features-notifications';
+import { UserStore } from '@modules/features-profile';
+import { store } from '@modules/store';
 import notifee from '@notifee/react-native';
-import {
-  store,
-  setUnreadNotificationsCount as setStateUnreadNotificationsCount,
-} from '@src/store';
 import { default as Config } from 'react-native-config';
-import type {
-  MarkNotificationReadResponse,
-  ServerError,
-  ApiRequest,
-  Notification,
-} from '@modules/core';
+import type { ServerError, ApiRequest, Notification } from '@modules/core';
+import type { MarkNotificationReadResponse } from '@modules/features-notifications';
 import { openNotificationRelatedScreen, queryClient } from '@modules/utils';
 
 const getLogMessage = (message: string) =>
@@ -78,10 +72,12 @@ export const processUserNotification = (
   );
 
   // Set new notifications count to local storage.
-  setLocalStorageUnreadNotificationsCount(newNotificationsCount);
+  UnreadNotificationsCountLocalStorage.setUnreadNotificationsCount(
+    newNotificationsCount,
+  );
 
   // Set new notifications count to redux state.
-  store.dispatch(setStateUnreadNotificationsCount(newNotificationsCount));
+  store.dispatch(UserStore.setUnreadNotificationsCount(newNotificationsCount));
 
   // Open notification related screen.
   openNotificationRelatedScreen(

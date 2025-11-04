@@ -10,7 +10,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: ResponsiveDimensions.vs(16),
   },
-  message: { marginTop: ResponsiveDimensions.vs(8), textAlign: 'center' },
+  message: {
+    marginTop: ResponsiveDimensions.vs(8),
+    textAlign: 'center',
+  },
 });
 
 export default styles;

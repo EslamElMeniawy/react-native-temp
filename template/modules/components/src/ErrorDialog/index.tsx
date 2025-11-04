@@ -1,7 +1,7 @@
 import { AlertDialog } from '@eslam-elmeniawy/react-native-common-components';
 import { TranslationNamespaces } from '@modules/localization';
+import { useAppDispatch, useAppSelector, DialogsStore } from '@modules/store';
 import { removeUserDataLogout } from '@modules/utils';
-import { useAppDispatch, useAppSelector, removeErrorDialog } from '@src/store';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -25,7 +25,7 @@ export default React.memo(() => {
       removeUserDataLogout();
     }
 
-    dispatch(removeErrorDialog());
+    dispatch(DialogsStore.removeErrorDialog());
   };
 
   return (

@@ -1,15 +1,10 @@
 import notifee, { EventType } from '@notifee/react-native';
 import { getMessaging, onMessage } from '@react-native-firebase/messaging';
 import * as React from 'react';
-import {
-  useAppDispatch,
-  setUnreadNotificationsCount as setStateUnreadNotificationsCount,
-} from '@src/store';
-import {
-  getApiToken,
-  getUnreadNotificationsCount,
-  setUnreadNotificationsCount as setLocalStorageUnreadNotificationsCount,
-} from '@modules/core';
+import { ApiTokenLocalStorage } from '@modules/features-auth';
+import { UnreadNotificationsCountLocalStorage } from '@modules/features-notifications';
+import { UserStore } from '@modules/features-profile';
+import { useAppDispatch } from '@modules/store';
 import { displayLocalNotification, processNotification } from '@modules/utils';
 
 export const useForegroundMessagesListener = () => {
@@ -25,14 +20,15 @@ export const useForegroundMessagesListener = () => {
   React.useEffect(() => {
     const unsubscribe = onMessage(getMessaging(), remoteMessage => {
       console.info(getLogMessage('onMessage'), remoteMessage);
-      const apiToken = getApiToken();
+      const apiToken = ApiTokenLocalStorage.getApiToken();
 
       if (apiToken) {
         console.info(getLogMessage('User Available'));
 
         // Increase notifications count.
         const unreadNotificationsCount =
-          (getUnreadNotificationsCount() ?? 0) + 1;
+          (UnreadNotificationsCountLocalStorage.getUnreadNotificationsCount() ??
+            0) + 1;
 
         console.info(
           getLogMessage('unreadNotificationsCount'),
@@ -40,8 +36,13 @@ export const useForegroundMessagesListener = () => {
         );
 
         // Set unread notifications count to local storage and redux.
-        setLocalStorageUnreadNotificationsCount(unreadNotificationsCount);
-        dispatch(setStateUnreadNotificationsCount(unreadNotificationsCount));
+        UnreadNotificationsCountLocalStorage.setUnreadNotificationsCount(
+          unreadNotificationsCount,
+        );
+
+        dispatch(
+          UserStore.setUnreadNotificationsCount(unreadNotificationsCount),
+        );
 
         // Show local notification.
         displayLocalNotification(remoteMessage);

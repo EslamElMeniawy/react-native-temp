@@ -10,7 +10,7 @@ const clientStorage = {
     return value ?? null;
   },
   removeItem: (key: string) => {
-    localStorage.delete(key);
+    localStorage.remove(key);
   },
 };
 

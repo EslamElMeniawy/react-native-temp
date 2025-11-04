@@ -1,9 +1,7 @@
 import { test, expect, jest } from '@jest/globals';
-import * as LocalStorage from '@modules/core/src/LocalStorage/unreadNotificationsCount';
-import {
-  store,
-  setUnreadNotificationsCount as setStateUnreadNotificationsCount,
-} from '@src/store';
+import * as LocalStorage from '@modules/features-notifications/src/storage/unreadNotificationsCount';
+import { UserStore } from '@modules/features-profile';
+import { store } from '@modules/store';
 import * as NotificationUtils from '@modules/utils/src/NotificationUtils';
 import { processUserNotification } from '@modules/utils/src/NotificationUtils/Helpers';
 
@@ -41,7 +39,7 @@ test('should update unread notifications count in redux state when invoked', () 
   );
 
   expect(store.dispatch).toHaveBeenCalledWith(
-    setStateUnreadNotificationsCount(newNotificationsCount),
+    UserStore.setUnreadNotificationsCount(newNotificationsCount),
   );
 });
 

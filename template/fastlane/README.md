@@ -1,5 +1,4 @@
-fastlane documentation
-----
+## fastlane documentation
 
 # Installation
 
@@ -39,8 +38,7 @@ Build and upload iOS release to App Store
 
 Deploy to Firebase App Distribution (for internal testing)
 
-----
-
+---
 
 ## Android
 
@@ -68,7 +66,7 @@ Build and upload Android release to Google Play Store
 
 Deploy to Firebase App Distribution (for internal testing)
 
-----
+---
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 

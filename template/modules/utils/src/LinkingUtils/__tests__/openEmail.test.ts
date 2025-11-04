@@ -28,10 +28,7 @@ describe('openEmail HAPPY PATH', () => {
   test('should open email client with only email provided', () => {
     openEmail(email);
 
-    expect(mockedOpen).toHaveBeenCalledWith(
-      `mailto:${email}`,
-      'errorOpenMail',
-    );
+    expect(mockedOpen).toHaveBeenCalledWith(`mailto:${email}`, 'errorOpenMail');
   });
 
   test('should open email client with only subject provided', () => {

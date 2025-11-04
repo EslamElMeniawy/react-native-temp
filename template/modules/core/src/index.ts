@@ -1,2 +1,2 @@
-export * from './Api';
-export * from './LocalStorage';
+export * from './api';
+export * from './storage';

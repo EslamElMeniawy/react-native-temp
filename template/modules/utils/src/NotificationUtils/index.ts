@@ -1,7 +1,7 @@
+import { push } from '@modules/navigation';
+import { store } from '@modules/store';
 import { AppColors } from '@modules/theme';
 import notifee from '@notifee/react-native';
-import { push } from '@src/navigation';
-import { store } from '@src/store';
 import { getBundleId } from 'react-native-device-info';
 import type { Notification } from '@modules/core';
 import { clearNotifications, processUserNotification } from './Helpers';

@@ -1,21 +1,12 @@
+import { ApiTokenLocalStorage } from '@modules/features-auth';
 import {
-  setUser as setLocalStorageUser,
-  setApiToken as setLocalStorageApiToken,
-  removeUser as removeLocalStorageUser,
-  removeUnreadNotificationsCount as removeLocalStorageUnreadNotificationsCount,
-  removeApiToken as removeLocalStorageApiToken,
-  removeFcmToken as removeLocalStorageFcmToken,
-} from '@modules/core';
+  UnreadNotificationsCountLocalStorage,
+  FcmTokenLocalStorage,
+} from '@modules/features-notifications';
+import { UserLocalStorage, UserStore } from '@modules/features-profile';
+import { reset } from '@modules/navigation';
+import { store } from '@modules/store';
 import { getMessaging, deleteToken } from '@react-native-firebase/messaging';
-import { reset } from '@src/navigation';
-import {
-  store,
-  setUser as setStateUser,
-  setApiToken as setStateApiToken,
-  removeUser as removeStateUser,
-  removeUnreadNotificationsCount as removeStateUnreadNotificationsCount,
-  removeApiToken as removeStateApiToken,
-} from '@src/store';
 import type { User } from '@modules/core';
 import { queryClient } from '@modules/utils';
 
@@ -28,8 +19,8 @@ const getLogMessage = (message: string) => `## UserUtils:: ${message}`;
  */
 export const saveUserData = (user: User) => {
   console.info(getLogMessage('saveUserData'), user);
-  setLocalStorageUser(user);
-  store.dispatch(setStateUser(user));
+  UserLocalStorage.setUser(user);
+  store.dispatch(UserStore.setUser(user));
 };
 
 /**
@@ -39,8 +30,8 @@ export const saveUserData = (user: User) => {
  */
 export const saveApiToken = (apiToken: string) => {
   console.info(getLogMessage('saveApiToken'), apiToken);
-  setLocalStorageApiToken(apiToken);
-  store.dispatch(setStateApiToken(apiToken));
+  ApiTokenLocalStorage.setApiToken(apiToken);
+  store.dispatch(UserStore.setApiToken(apiToken));
 };
 
 /**
@@ -63,10 +54,10 @@ export const saveUserDataOpenHome = (user: User, apiToken: string) => {
  */
 export const removeLocalStorageUserData = () => {
   console.info(getLogMessage('removeLocalStorageUserData'));
-  removeLocalStorageUser();
-  removeLocalStorageUnreadNotificationsCount();
-  removeLocalStorageApiToken();
-  removeLocalStorageFcmToken();
+  UserLocalStorage.removeUser();
+  UnreadNotificationsCountLocalStorage.removeUnreadNotificationsCount();
+  ApiTokenLocalStorage.removeApiToken();
+  FcmTokenLocalStorage.removeFcmToken();
 };
 
 /**
@@ -75,9 +66,9 @@ export const removeLocalStorageUserData = () => {
  */
 export const removeReduxUserData = () => {
   console.info(getLogMessage('removeReduxUserData'));
-  store.dispatch(removeStateUser());
-  store.dispatch(removeStateUnreadNotificationsCount());
-  store.dispatch(removeStateApiToken());
+  store.dispatch(UserStore.removeUser());
+  store.dispatch(UserStore.removeUnreadNotificationsCount());
+  store.dispatch(UserStore.removeApiToken());
 };
 
 /**
@@ -94,9 +85,15 @@ export const removeReduxUserData = () => {
 export const removeUserData = async (onFinish?: () => void): Promise<void> => {
   console.info(getLogMessage('removeUserData'));
   removeLocalStorageUserData();
-  await deleteToken(getMessaging());
   removeReduxUserData();
-  onFinish?.();
+
+  try {
+    await deleteToken(getMessaging());
+  } catch (error) {
+    console.error(getLogMessage('removeUserData::deleteToken Error'), error);
+  } finally {
+    onFinish?.();
+  }
 };
 
 /**
@@ -109,8 +106,17 @@ export const removeUserData = async (onFinish?: () => void): Promise<void> => {
 export const removeUserDataLogout = async (): Promise<void> => {
   console.info(getLogMessage('removeUserDataLogout'));
 
-  await removeUserData(() => {
-    reset('login');
-    queryClient.resetQueries();
+  await removeUserData(async () => {
+    try {
+      await queryClient.cancelQueries();
+    } catch (error) {
+      console.error(
+        getLogMessage('removeUserDataLogout::cancelQueries Error'),
+        error,
+      );
+    } finally {
+      queryClient.clear();
+      reset('login');
+    }
   });
 };

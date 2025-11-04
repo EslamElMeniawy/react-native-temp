@@ -1,5 +1,8 @@
-import type BaseUser from './BaseUser';
-
-interface User extends BaseUser {}
+interface User {
+  id?: number;
+  name?: string;
+  email?: string;
+  phone?: string;
+}
 
 export default User;
