@@ -106,8 +106,17 @@ export const removeUserData = async (onFinish?: () => void): Promise<void> => {
 export const removeUserDataLogout = async (): Promise<void> => {
   console.info(getLogMessage('removeUserDataLogout'));
 
-  await removeUserData(() => {
-    reset('login');
-    queryClient.resetQueries();
+  await removeUserData(async () => {
+    try {
+      await queryClient.cancelQueries();
+    } catch (error) {
+      console.error(
+        getLogMessage('removeUserDataLogout::cancelQueries Error'),
+        error,
+      );
+    } finally {
+      queryClient.clear();
+      reset('login');
+    }
   });
 };
