@@ -175,12 +175,6 @@ jest.mock('react-native', () => {
 });
 
 jest.mock('@notifee/react-native', () => {
-  /**
-   * Devido a vários problemas ao importar o mock oferecido pela notifee, resolvi
-   * criar manualmente o mock apenas das funcionalidades que utilizamos no app.
-   * https://github.com/invertase/notifee/issues/739
-   */
-
   const notifee = {
     getInitialNotification: jest
       .fn<() => Promise<null>>()
@@ -228,4 +222,24 @@ jest.mock('react-native-network-logger', () => ({ default: jest.fn() }));
 
 jest.mock('@modules/localization', () => ({
   translate: jest.fn((key: string) => key),
+}));
+
+jest.mock('@eslam-elmeniawy/react-native-common-components', () => ({
+  multiply: jest.fn((a: number, b: number) => a * b),
+  ResponsiveDimensions: {
+    setBaseDimensions: jest.fn(),
+    scale: jest.fn((x: number) => x),
+    s: jest.fn((x: number) => x),
+    verticalScale: jest.fn((x: number) => x),
+    vs: jest.fn((x: number) => x),
+    moderateScale: jest.fn((x: number) => x),
+    ms: jest.fn((x: number) => x),
+    moderateVerticalScale: jest.fn((x: number) => x),
+    mvs: jest.fn((x: number) => x),
+    percentWidth: jest.fn((x: number) => x),
+    pw: jest.fn((x: number) => x),
+    percentHeight: jest.fn((x: number) => x),
+    ph: jest.fn((x: number) => x),
+  },
+  getStatusBarHeight: jest.fn((_skipAndroid?: boolean) => 0),
 }));
