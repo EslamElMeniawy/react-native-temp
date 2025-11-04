@@ -1,5 +1,5 @@
 import {
-  MMKV,
+  createMMKV,
   useMMKVString,
   useMMKVBoolean,
   useMMKVNumber,
@@ -9,7 +9,7 @@ import type { LocalStorageKeys } from '@modules/core';
 
 const getLogMessage = (message: string) => `## LocalStorage:: ${message}`;
 
-export const localStorage = new MMKV({
+export const localStorage = createMMKV({
   id: 'TempAppStorage',
   encryptionKey: uuid.v5('TempApp', 'TempApp').toString(),
 });
@@ -55,7 +55,7 @@ export const useLocalStorageNumber = useMMKVNumber;
 
 export const deleteLocalStorageItem = (key: LocalStorageKeys) => {
   console.info(getLogMessage('deleteLocalStorageItem'), key);
-  localStorage.delete(key);
+  localStorage.remove(key);
 };
 
 export const clearLocalStorage = () => {
