@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Toast } from 'toastify-react-native';
-import {
-  useAppDispatch,
-  removeIsConnectionExpensive,
-  setIsConnectionExpensive,
-  setIsInternetAvailable,
-} from '@src/store';
 import { translate } from '@modules/localization';
+import { useAppDispatch, NetworkStateStore } from '@modules/store';
 import type { NetInfoState } from '@react-native-community/netinfo';
 
 export const useHandleNetworkState = () => {
@@ -28,7 +23,10 @@ export const useHandleNetworkState = () => {
         state.isConnected && state.isInternetReachable;
 
       console.info(getLogMessage('isInternetAvailable'), isInternetAvailable);
-      dispatch(setIsInternetAvailable(isInternetAvailable ?? true));
+
+      dispatch(
+        NetworkStateStore.setIsInternetAvailable(isInternetAvailable ?? true),
+      );
       return isInternetAvailable;
     },
     [dispatch],
@@ -39,23 +37,26 @@ export const useHandleNetworkState = () => {
       console.info(getLogMessage('checkConnectionExpensiveState'));
       console.info(getLogMessage('state'), state);
       const isConnectionExpensive = state.details?.isConnectionExpensive;
+
       console.info(
         getLogMessage('isConnectionExpensive'),
         isConnectionExpensive,
       );
 
       if (isConnectionExpensive === undefined) {
-        dispatch(removeIsConnectionExpensive());
+        dispatch(NetworkStateStore.removeIsConnectionExpensive());
       } else {
-        dispatch(setIsConnectionExpensive(isConnectionExpensive));
+        dispatch(
+          NetworkStateStore.setIsConnectionExpensive(isConnectionExpensive),
+        );
       }
     },
     [dispatch],
   );
 
-  const handleInternetLoastToast = React.useCallback(
+  const handleInternetLostToast = React.useCallback(
     (isInternetAvailable: boolean | null) => {
-      console.info(getLogMessage('handleInternetLoastToast'));
+      console.info(getLogMessage('handleInternetLostToast'));
 
       if (isInternetAvailable === false) {
         Toast.show({ type: 'error', text2: translate('internetLost') });
@@ -86,12 +87,12 @@ export const useHandleNetworkState = () => {
       checkConnectionExpensiveState(state);
 
       // Show internet lost toast if no Internet connection available.
-      handleInternetLoastToast(isInternetAvailable);
+      handleInternetLostToast(isInternetAvailable);
     },
     [
       checkConnectionExpensiveState,
       checkInternetAvailableState,
-      handleInternetLoastToast,
+      handleInternetLostToast,
     ],
   );
 

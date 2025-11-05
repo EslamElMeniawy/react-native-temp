@@ -1,6 +1,6 @@
 import { test, expect, jest, afterEach } from '@jest/globals';
+import { store } from '@modules/store';
 import notifee from '@notifee/react-native';
-import { store } from '@src/store';
 import { processNotification } from '@modules/utils/src/NotificationUtils';
 import * as Helpers from '@modules/utils/src/NotificationUtils/Helpers';
 

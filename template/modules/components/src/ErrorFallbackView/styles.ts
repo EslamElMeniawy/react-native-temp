@@ -6,7 +6,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: ResponsiveDimensions.vs(16),
   },
-  text: { textAlign: 'center', width: '90%', alignSelf: 'center' },
+  text: {
+    textAlign: 'center',
+    width: '90%',
+    alignSelf: 'center',
+  },
   title: {
     // TODO: Add font family relative to app font.
     // fontFamily: 'Cairo-Bold',

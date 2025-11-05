@@ -4,9 +4,9 @@ import { render, renderHook } from '@testing-library/react-native';
 import * as React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as ReduxProvider } from 'react-redux';
-import type { AppStore } from '@src/store';
-import { store as reduxStore } from '@src/store';
 import { ToastManager } from '@modules/components';
+import type { AppStore } from '@modules/store';
+import { store as reduxStore } from '@modules/store';
 import { useAppTheme } from '@modules/theme';
 import {
   queryClient as appQueryClient,

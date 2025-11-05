@@ -9,8 +9,8 @@ import {
   QueryClientManager,
   reactotronReactQuery,
 } from 'reactotron-react-query';
-import { getCurrentRouteName, push } from '@src/navigation';
 import { localStorage } from '@modules/core';
+import { getCurrentRouteName, push } from '@modules/navigation';
 import { queryClient } from '@modules/utils';
 import type { ReactotronReactNative } from 'reactotron-react-native';
 
@@ -18,7 +18,6 @@ export const useLogInitialization = () => {
   React.useEffect(() => {
     const appName = getApplicationName();
     const isLocalLogEnable = Config.ENABLE_LOCAL_LOG === 'true';
-
     const queryClientManager = new QueryClientManager({ queryClient });
 
     configureLog?.({
@@ -45,8 +44,11 @@ export const useLogInitialization = () => {
 
     const shakeSubscription = isLocalLogEnable
       ? Shake.addListener(() => {
-          if (getCurrentRouteName() !== 'networkLogs') {
-            push('networkLogs');
+          if (
+            getCurrentRouteName() !== 'debugMenu' &&
+            getCurrentRouteName() !== 'networkLogs'
+          ) {
+            push('debugMenuStack', { screen: 'debugMenu' });
           }
         })
       : undefined;

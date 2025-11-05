@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Animated, Dimensions } from 'react-native';
 import { hide as rnBootSplashHide } from 'react-native-bootsplash';
-import { useAppSelector } from '@src/store';
+import { useAppSelector } from '@modules/store';
 import type { UseHideSplashProps } from './useHideSplash.types';
 
 export const useHideSplash = (props: UseHideSplashProps) => {

@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { useAppDispatch, setApiToken as setStateApiToken } from '@src/store';
-import {
-  getApiToken as getLocalStorageApiToken,
-  useGetUserDetailsApi,
-} from '@modules/core';
+import { ApiTokenLocalStorage } from '@modules/features-auth';
+import { useGetUserDetailsApi, UserStore } from '@modules/features-profile';
+import { useAppDispatch } from '@modules/store';
 import { saveUserData } from '@modules/utils';
 
 export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {
@@ -33,11 +31,11 @@ export const useSplashUserLoader = (isBootSplashLogoLoaded: boolean) => {
 
   const getSavedUserToken = React.useCallback(() => {
     console.info(getLogMessage('getSavedUserToken'));
-    const apiToken = getLocalStorageApiToken();
+    const apiToken = ApiTokenLocalStorage.getApiToken();
     console.info(getLogMessage('apiToken'), apiToken);
 
     if (apiToken) {
-      dispatch(setStateApiToken(apiToken));
+      dispatch(UserStore.setApiToken(apiToken));
       setShouldStartUserLoading(true);
     } else {
       setUserLoaded(true);
