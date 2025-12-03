@@ -3,7 +3,6 @@ import { ApiTokenLocalStorage } from '@modules/features-auth';
 import { UserLocalStorage, UserStore } from '@modules/features-profile';
 import { reset } from '@modules/navigation';
 import { store } from '@modules/store';
-
 import type { User } from '@modules/core';
 import {
   saveUserData,

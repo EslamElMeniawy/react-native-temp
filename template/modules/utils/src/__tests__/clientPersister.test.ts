@@ -26,7 +26,7 @@ describe('clientPersister - persistClient', () => {
       timestamp: Date.now(),
     });
 
-    expect(localStorage.set).toHaveBeenCalled();
+    expect(localStorage?.set).toHaveBeenCalled();
   });
 
   test('should handle persisting multiple times', async () => {
@@ -44,7 +44,7 @@ describe('clientPersister - persistClient', () => {
       timestamp: Date.now(),
     });
 
-    expect(localStorage.set).toHaveBeenCalledTimes(2);
+    expect(localStorage?.set).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -58,16 +58,16 @@ describe('clientPersister - restoreClient', () => {
     const buster = 'test-buster';
     const timestamp = Date.now();
     const storedValue = JSON.stringify({ clientState, buster, timestamp });
-    (localStorage.getString as jest.Mock).mockReturnValue(storedValue);
+    (localStorage?.getString as jest.Mock).mockReturnValue(storedValue);
 
     const result = await clientPersister.restoreClient();
 
-    expect(localStorage.getString).toHaveBeenCalled();
+    expect(localStorage?.getString).toHaveBeenCalled();
     expect(result).toEqual({ clientState, buster, timestamp });
   });
 
   test('should return undefined when stored value is undefined', async () => {
-    (localStorage.getString as jest.Mock).mockReturnValue(undefined);
+    (localStorage?.getString as jest.Mock).mockReturnValue(undefined);
 
     const result = await clientPersister.restoreClient();
 
@@ -75,7 +75,7 @@ describe('clientPersister - restoreClient', () => {
   });
 
   test('should return undefined when stored value is null', async () => {
-    (localStorage.getString as jest.Mock).mockReturnValue(null);
+    (localStorage?.getString as jest.Mock).mockReturnValue(null);
 
     const result = await clientPersister.restoreClient();
 
@@ -91,7 +91,7 @@ describe('clientPersister - removeClient', () => {
   test('should call localStorage.remove', async () => {
     await clientPersister.removeClient();
 
-    expect(localStorage.remove).toHaveBeenCalled();
+    expect(localStorage?.remove).toHaveBeenCalled();
   });
 
   test('should handle removing multiple times', async () => {
@@ -99,7 +99,7 @@ describe('clientPersister - removeClient', () => {
     await clientPersister.removeClient();
     await clientPersister.removeClient();
 
-    expect(localStorage.remove).toHaveBeenCalledTimes(3);
+    expect(localStorage?.remove).toHaveBeenCalledTimes(3);
   });
 });
 
