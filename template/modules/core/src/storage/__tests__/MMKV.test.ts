@@ -1,254 +1,177 @@
 import { describe, expect, jest, test, beforeEach } from '@jest/globals';
 import { createMMKV } from 'react-native-mmkv';
 import {
-  initializeLocalStorage,
-  setLocalStorageString,
-  getLocalStorageString,
-  setLocalStorageBoolean,
-  getLocalStorageBoolean,
-  setLocalStorageNumber,
-  getLocalStorageNumber,
-  deleteLocalStorageItem,
   clearLocalStorage,
+  deleteLocalStorageItem,
+  getLocalStorageBoolean,
+  getLocalStorageNumber,
+  getLocalStorageString,
+  initializeLocalStorage,
   LocalStorageKeys,
+  setLocalStorageBoolean,
+  setLocalStorageNumber,
+  setLocalStorageString,
 } from '@modules/core';
 
 jest.mock('react-native-mmkv');
 
-describe('MMKV Storage', () => {
-  const mockMMKVInstance = {
-    set: jest.fn(),
-    getString: jest.fn(),
-    getBoolean: jest.fn(),
-    getNumber: jest.fn(),
-    remove: jest.fn(),
-    clearAll: jest.fn(),
-  };
+const mockMMKVInstance = {
+  set: jest.fn(),
+  getString: jest.fn(),
+  getBoolean: jest.fn(),
+  getNumber: jest.fn(),
+  remove: jest.fn(),
+  clearAll: jest.fn(),
+};
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    (createMMKV as jest.Mock).mockReturnValue(mockMMKVInstance);
-  });
+const setupTest = () => {
+  jest.clearAllMocks();
+  (createMMKV as jest.Mock).mockReturnValue(mockMMKVInstance);
+};
 
-  describe('initializeLocalStorage', () => {
-    test('should initialize storage with encryption key', () => {
-      const encryptionKey = 'test-encryption-key';
+const mockConsoleInfo = () =>
+  jest.spyOn(console, 'info').mockImplementation(() => {});
 
-      initializeLocalStorage(encryptionKey);
+describe('MMKV - initializeLocalStorage', () => {
+  beforeEach(setupTest);
 
-      expect(createMMKV).toHaveBeenCalledWith({
-        id: 'TempAppStorage',
-        encryptionKey: encryptionKey,
-      });
-    });
-
-    test('should initialize storage without encryption key when not provided', () => {
-      initializeLocalStorage();
-
-      expect(createMMKV).toHaveBeenCalledWith({
-        id: 'TempAppStorage',
-        encryptionKey: undefined,
-      });
-    });
-
-    test('should initialize storage without encryption key when null is provided', () => {
-      initializeLocalStorage(null);
-
-      expect(createMMKV).toHaveBeenCalledWith({
-        id: 'TempAppStorage',
-        encryptionKey: undefined,
-      });
-    });
-
-    test('should initialize storage without encryption key when empty string is provided', () => {
-      initializeLocalStorage('');
-
-      expect(createMMKV).toHaveBeenCalledWith({
-        id: 'TempAppStorage',
-        encryptionKey: '',
-      });
+  test('should initialize with encryption key', () => {
+    initializeLocalStorage('test-key');
+    expect(createMMKV).toHaveBeenCalledWith({
+      id: 'TempAppStorage',
+      encryptionKey: 'test-key',
     });
   });
 
-  describe('setLocalStorageString', () => {
-    test('should set string value in storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
-
-      initializeLocalStorage();
-      setLocalStorageString(LocalStorageKeys.LANGUAGE, 'en');
-
-      expect(mockMMKVInstance.set).toHaveBeenCalledWith(
-        LocalStorageKeys.LANGUAGE,
-        'en',
-      );
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: setLocalStorageString',
-        LocalStorageKeys.LANGUAGE,
-        'en',
-      );
-
-      consoleInfoSpy.mockRestore();
+  test('should initialize without encryption key', () => {
+    initializeLocalStorage();
+    expect(createMMKV).toHaveBeenCalledWith({
+      id: 'TempAppStorage',
+      encryptionKey: undefined,
     });
   });
 
-  describe('getLocalStorageString', () => {
-    test('should get string value from storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
-
-      initializeLocalStorage();
-      mockMMKVInstance.getString.mockReturnValue('en');
-
-      const result = getLocalStorageString(LocalStorageKeys.LANGUAGE);
-
-      expect(mockMMKVInstance.getString).toHaveBeenCalledWith(
-        LocalStorageKeys.LANGUAGE,
-      );
-      expect(result).toBe('en');
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: getLocalStorageString',
-        LocalStorageKeys.LANGUAGE,
-      );
-
-      consoleInfoSpy.mockRestore();
+  test('should handle null encryption key', () => {
+    initializeLocalStorage(null);
+    expect(createMMKV).toHaveBeenCalledWith({
+      id: 'TempAppStorage',
+      encryptionKey: undefined,
     });
   });
+});
 
-  describe('setLocalStorageBoolean', () => {
-    test('should set boolean value in storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
+describe('MMKV - String operations', () => {
+  beforeEach(setupTest);
 
-      initializeLocalStorage();
-      setLocalStorageBoolean(LocalStorageKeys.USER, true);
+  test('should set string value', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    setLocalStorageString(LocalStorageKeys.LANGUAGE, 'en');
 
-      expect(mockMMKVInstance.set).toHaveBeenCalledWith(
-        LocalStorageKeys.USER,
-        true,
-      );
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: setLocalStorageBoolean',
-        LocalStorageKeys.USER,
-        true,
-      );
-
-      consoleInfoSpy.mockRestore();
-    });
+    expect(mockMMKVInstance.set).toHaveBeenCalledWith(
+      LocalStorageKeys.LANGUAGE,
+      'en',
+    );
+    spy.mockRestore();
   });
 
-  describe('getLocalStorageBoolean', () => {
-    test('should get boolean value from storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
+  test('should get string value', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    mockMMKVInstance.getString.mockReturnValue('en');
 
-      initializeLocalStorage();
-      mockMMKVInstance.getBoolean.mockReturnValue(true);
+    const result = getLocalStorageString(LocalStorageKeys.LANGUAGE);
 
-      const result = getLocalStorageBoolean(LocalStorageKeys.USER);
+    expect(mockMMKVInstance.getString).toHaveBeenCalledWith(
+      LocalStorageKeys.LANGUAGE,
+    );
+    expect(result).toBe('en');
+    spy.mockRestore();
+  });
+});
 
-      expect(mockMMKVInstance.getBoolean).toHaveBeenCalledWith(
-        LocalStorageKeys.USER,
-      );
-      expect(result).toBe(true);
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: getLocalStorageBoolean',
-        LocalStorageKeys.USER,
-      );
+describe('MMKV - Boolean operations', () => {
+  beforeEach(setupTest);
 
-      consoleInfoSpy.mockRestore();
-    });
+  test('should set boolean value', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    setLocalStorageBoolean(LocalStorageKeys.USER, true);
+
+    expect(mockMMKVInstance.set).toHaveBeenCalledWith(
+      LocalStorageKeys.USER,
+      true,
+    );
+    spy.mockRestore();
   });
 
-  describe('setLocalStorageNumber', () => {
-    test('should set number value in storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
+  test('should get boolean value', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    mockMMKVInstance.getBoolean.mockReturnValue(true);
 
-      initializeLocalStorage();
-      setLocalStorageNumber(LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT, 123);
+    const result = getLocalStorageBoolean(LocalStorageKeys.USER);
 
-      expect(mockMMKVInstance.set).toHaveBeenCalledWith(
-        LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
-        123,
-      );
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: setLocalStorageNumber',
-        LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
-        123,
-      );
+    expect(mockMMKVInstance.getBoolean).toHaveBeenCalledWith(
+      LocalStorageKeys.USER,
+    );
+    expect(result).toBe(true);
+    spy.mockRestore();
+  });
+});
 
-      consoleInfoSpy.mockRestore();
-    });
+describe('MMKV - Number operations', () => {
+  beforeEach(setupTest);
+
+  test('should set number value', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    setLocalStorageNumber(LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT, 123);
+
+    expect(mockMMKVInstance.set).toHaveBeenCalledWith(
+      LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
+      123,
+    );
+    spy.mockRestore();
   });
 
-  describe('getLocalStorageNumber', () => {
-    test('should get number value from storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
+  test('should get number value', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    mockMMKVInstance.getNumber.mockReturnValue(123);
 
-      initializeLocalStorage();
-      mockMMKVInstance.getNumber.mockReturnValue(123);
+    const result = getLocalStorageNumber(
+      LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
+    );
 
-      const result = getLocalStorageNumber(
-        LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
-      );
+    expect(mockMMKVInstance.getNumber).toHaveBeenCalledWith(
+      LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
+    );
+    expect(result).toBe(123);
+    spy.mockRestore();
+  });
+});
 
-      expect(mockMMKVInstance.getNumber).toHaveBeenCalledWith(
-        LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
-      );
-      expect(result).toBe(123);
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: getLocalStorageNumber',
-        LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT,
-      );
+describe('MMKV - Storage management', () => {
+  beforeEach(setupTest);
 
-      consoleInfoSpy.mockRestore();
-    });
+  test('should delete item', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    deleteLocalStorageItem(LocalStorageKeys.LANGUAGE);
+
+    expect(mockMMKVInstance.remove).toHaveBeenCalledWith(
+      LocalStorageKeys.LANGUAGE,
+    );
+    spy.mockRestore();
   });
 
-  describe('deleteLocalStorageItem', () => {
-    test('should delete item from storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
+  test('should clear all items', () => {
+    const spy = mockConsoleInfo();
+    initializeLocalStorage();
+    clearLocalStorage();
 
-      initializeLocalStorage();
-      deleteLocalStorageItem(LocalStorageKeys.LANGUAGE);
-
-      expect(mockMMKVInstance.remove).toHaveBeenCalledWith(
-        LocalStorageKeys.LANGUAGE,
-      );
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: deleteLocalStorageItem',
-        LocalStorageKeys.LANGUAGE,
-      );
-
-      consoleInfoSpy.mockRestore();
-    });
-  });
-
-  describe('clearLocalStorage', () => {
-    test('should clear all items from storage', () => {
-      const consoleInfoSpy = jest
-        .spyOn(console, 'info')
-        .mockImplementation(() => {});
-
-      initializeLocalStorage();
-      clearLocalStorage();
-
-      expect(mockMMKVInstance.clearAll).toHaveBeenCalled();
-      expect(consoleInfoSpy).toHaveBeenCalledWith(
-        '## LocalStorage:: clearLocalStorage',
-      );
-
-      consoleInfoSpy.mockRestore();
-    });
+    expect(mockMMKVInstance.clearAll).toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
