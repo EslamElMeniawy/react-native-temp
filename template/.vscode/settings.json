@@ -19,5 +19,6 @@
 
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
