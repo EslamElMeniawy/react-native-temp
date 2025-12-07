@@ -6,9 +6,11 @@ import { store } from '@modules/store';
 import { useAppTheme } from '@modules/theme';
 import AppContent from './AppContent';
 import styles from './styles';
+import { useLocalStorageInitialization } from './useLocalStorageInitiation';
 
 export default React.memo(() => {
   const theme = useAppTheme();
+  const storageInitialized = useLocalStorageInitialization();
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -18,7 +20,7 @@ export default React.memo(() => {
         })}
       >
         <ReduxProvider store={store}>
-          <AppContent />
+          {storageInitialized && <AppContent />}
         </ReduxProvider>
       </View>
     </GestureHandlerRootView>

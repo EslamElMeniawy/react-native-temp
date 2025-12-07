@@ -14,11 +14,11 @@
   },
 
   "files.associations": {
-    "**/.vscode/*.json": "jsonc",
-    "**/src/translations/*.json": "jsonc"
+    "**/.vscode/*.json": "jsonc"
   },
 
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

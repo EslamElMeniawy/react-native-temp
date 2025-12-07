@@ -5,8 +5,8 @@ import * as React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ToastManager } from '@modules/components';
-import type { AppStore } from '@modules/store';
 import { store as reduxStore } from '@modules/store';
+import type { AppStore } from '@modules/store';
 import { useAppTheme } from '@modules/theme';
 import {
   queryClient as appQueryClient,
@@ -30,8 +30,10 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 
 // This type interface extends the default options for renderHook from RTL, as well
 // as allows the user to specify other things such as initialState, store.
-interface ExtendedRenderHookOptions<Props>
-  extends Omit<RenderHookOptions<Props>, 'queries'> {
+interface ExtendedRenderHookOptions<Props> extends Omit<
+  RenderHookOptions<Props>,
+  'queries'
+> {
   store?: AppStore;
   theme?: MD3Theme;
   queryClient?: QueryClient;

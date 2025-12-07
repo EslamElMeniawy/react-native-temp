@@ -14,11 +14,34 @@ import { getCurrentRouteName, push } from '@modules/navigation';
 import { queryClient } from '@modules/utils';
 import type { ReactotronReactNative } from 'reactotron-react-native';
 
+const createPlugins = (queryClientManager: QueryClientManager) => {
+  const pluginCreators = [reactotronReactQuery(queryClientManager)];
+
+  if (localStorage) {
+    pluginCreators.push(
+      mmkvPlugin<ReactotronReactNative>({ storage: localStorage }),
+    );
+  }
+
+  return pluginCreators;
+};
+
+const setupShakeListener = () =>
+  Shake.addListener(() => {
+    if (
+      getCurrentRouteName() !== 'debugMenu' &&
+      getCurrentRouteName() !== 'networkLogs'
+    ) {
+      push('debugMenuStack', { screen: 'debugMenu' });
+    }
+  });
+
 export const useLogInitialization = () => {
   React.useEffect(() => {
     const appName = getApplicationName();
     const isLocalLogEnable = Config.ENABLE_LOCAL_LOG === 'true';
     const queryClientManager = new QueryClientManager({ queryClient });
+    const pluginCreators = createPlugins(queryClientManager);
 
     configureLog?.({
       appName: appName,
@@ -27,10 +50,7 @@ export const useLogInitialization = () => {
           ? ['LOG', 'WARN', 'ERROR']
           : undefined,
       isLocalLogEnable: isLocalLogEnable,
-      pluginCreators: [
-        mmkvPlugin<ReactotronReactNative>({ storage: localStorage }),
-        reactotronReactQuery(queryClientManager),
-      ],
+      pluginCreators,
       clientOptions: {
         onDisconnect: () => {
           queryClientManager.unsubscribe();
@@ -43,14 +63,7 @@ export const useLogInitialization = () => {
     }
 
     const shakeSubscription = isLocalLogEnable
-      ? Shake.addListener(() => {
-          if (
-            getCurrentRouteName() !== 'debugMenu' &&
-            getCurrentRouteName() !== 'networkLogs'
-          ) {
-            push('debugMenuStack', { screen: 'debugMenu' });
-          }
-        })
+      ? setupShakeListener()
       : undefined;
 
     return () => {
