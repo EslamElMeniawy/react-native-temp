@@ -1,6 +1,6 @@
 {
   "name": "@eslam-elmeniawy/react-native-template",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "\"ReactNative\" template with initial setup.",
   "scripts": {
     "test": "exit 0",
