@@ -3,14 +3,14 @@ import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persi
 
 const clientStorage = {
   setItem: (key: string, value: string) => {
-    localStorage.set(key, value);
+    localStorage?.set(key, value);
   },
   getItem: (key: string) => {
-    const value = localStorage.getString(key);
+    const value = localStorage?.getString(key);
     return value ?? null;
   },
   removeItem: (key: string) => {
-    localStorage.remove(key);
+    localStorage?.remove(key);
   },
 };
 

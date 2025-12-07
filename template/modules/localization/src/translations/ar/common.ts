@@ -1,4 +1,6 @@
-export default {
+import type common from '@modules/localization/src/translations/en/common';
+
+const ar: typeof common = {
   appName: 'TempApp',
   errorFallbackTitle: 'عفوًا، هناك خطأ ما',
   errorFallbackMessage:
@@ -20,3 +22,5 @@ export default {
   noDataAvailable: 'لا توجد {{data}} متاحة',
   errorLoadData: 'خطأ اثناء تحميل {{data}}',
 };
+
+export default ar;

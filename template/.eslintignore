@@ -12,3 +12,5 @@ coverage/
 __mocks__/
 *.d.ts
 *.snap
+
+vendor/

@@ -7,6 +7,7 @@ import { withErrorBoundary } from 'react-error-boundary';
 import { default as Config } from 'react-native-config';
 import { ErrorFallbackView } from '@modules/components';
 import App from './App';
+import 'react-native-get-random-values';
 
 export default withErrorBoundary(App, {
   fallback: <ErrorFallbackView />,
