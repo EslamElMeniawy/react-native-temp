@@ -44,6 +44,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "jest",
+    "validate": "yarn lint && yarn typecheck && yarn test",
     "prepare": "lefthook install && bundle _2.7.2_ install",
     "postinstall": "yarn pods && yarn link-assets && yarn android-clean",
     "ver:test": "yarn version ${0:-prerelease} && react-native-version --never-increment-build",
