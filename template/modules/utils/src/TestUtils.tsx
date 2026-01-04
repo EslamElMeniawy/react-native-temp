@@ -1,13 +1,13 @@
+import { ToastManager } from '@modules/components';
+import { store as reduxStore } from '@modules/store';
+import { useAppTheme } from '@modules/theme';
 import { BaseNavigationContainer } from '@react-navigation/native';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { render, renderHook } from '@testing-library/react-native';
 import * as React from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ToastManager } from '@modules/components';
-import { store as reduxStore } from '@modules/store';
 import type { AppStore } from '@modules/store';
-import { useAppTheme } from '@modules/theme';
 import { clientPersister as appClientPersister } from './clientPersister';
 import { queryClient as appQueryClient } from './queryClient';
 import type { QueryClient } from '@tanstack/react-query';

@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from '@jest/globals';
 import { useFocusEffect } from '@react-navigation/native';
-import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { renderHookWithProviders } from '@modules/utils';
 import { useRefreshOnFocus } from '@modules/utils/src/useRefreshOnFocus';
 
 // Mock useFocusEffect

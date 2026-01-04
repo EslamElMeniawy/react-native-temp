@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from '@jest/globals';
 import { useFocusEffect } from '@react-navigation/native';
-import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { renderHookWithProviders } from '@modules/utils';
 import { useFocusNotifyOnChangeProps } from '@modules/utils/src/useFocusNotifyOnChangeProps';
 import type { NotifyOnChangeProps } from '@tanstack/query-core';
 

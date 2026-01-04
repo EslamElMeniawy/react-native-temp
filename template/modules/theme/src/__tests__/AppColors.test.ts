@@ -2,7 +2,7 @@ import { describe, expect, it } from '@jest/globals';
 
 import { AppColors } from '@modules/theme';
 
-describe('AppColors', () => {
+const testHelperColors = () => {
   describe('helper colors', () => {
     it('should define transparent color', () => {
       expect(AppColors.transparent).toBe('transparent');
@@ -12,7 +12,9 @@ describe('AppColors', () => {
       expect(AppColors.seed).toBe('#6750A4');
     });
   });
+};
 
+const testLightThemeColors = () => {
   describe('light theme colors', () => {
     it('should define primary colors', () => {
       expect(AppColors.themeLight.primary).toBe('#6750A4');
@@ -39,7 +41,9 @@ describe('AppColors', () => {
       expect(AppColors.themeLight.backdrop).toBe('rgba(50, 47, 56, 0.4)');
     });
   });
+};
 
+const testDarkThemeColors = () => {
   describe('dark theme colors', () => {
     it('should define primary colors', () => {
       expect(AppColors.themeDark.primary).toBe('#D0BCFF');
@@ -66,4 +70,10 @@ describe('AppColors', () => {
       expect(AppColors.themeDark.backdrop).toBe('rgba(50, 47, 56, 0.4)');
     });
   });
+};
+
+describe('AppColors', () => {
+  testHelperColors();
+  testLightThemeColors();
+  testDarkThemeColors();
 });
