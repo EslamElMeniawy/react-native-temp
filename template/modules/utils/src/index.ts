@@ -1,3 +1,4 @@
+export * from './axiosMockFactory';
 export * from './LinkingUtils';
 export * from './NotificationUtils';
 export * from './clientPersister';
