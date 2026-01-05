@@ -39,13 +39,18 @@ jest.mock('@modules/localization', () => {
   return moduleMock;
 });
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: jest.fn(
-      (key: string, params?: { data?: string }) => `${key}:${params?.data}`,
-    ),
-  }),
-}));
+jest.mock('react-i18next', () => {
+  const moduleMock: Record<string, any> = {};
+  const tMock = jest.fn(
+    (key: string, params?: { data?: string }) => `${key}:${params?.data}`,
+  );
+
+  moduleMock.useTranslation = () => ({ t: tMock });
+  moduleMock.tMock = tMock;
+  Object.defineProperty(moduleMock, '__esModule', { value: true });
+
+  return moduleMock;
+});
 
 describe('ListEmptyComponent', () => {
   it('shows error icon and message when loading error with custom error message', () => {
@@ -75,5 +80,26 @@ describe('ListEmptyComponent', () => {
       expect.objectContaining({ size: 64, source: 'database-remove-outline' }),
     );
     expect(screen.getByText('noDataAvailable:users')).toBeTruthy();
+  });
+
+  it('falls back to translated error when custom error is missing', () => {
+    const { tMock } = jest.requireMock('react-i18next') as jest.Mocked<
+      Record<string, any>
+    >;
+
+    render(
+      React.createElement(ListEmptyComponent, {
+        isLoadingError: true,
+        data: 'orders',
+      }),
+    );
+
+    expect(mockIcon).toHaveBeenCalledWith(
+      expect.objectContaining({ size: 64, source: 'alert-circle-outline' }),
+    );
+    expect(tMock).toHaveBeenCalledWith('errorLoadData', {
+      data: 'orders',
+    });
+    expect(screen.getByText('errorLoadData:orders')).toBeTruthy();
   });
 });
