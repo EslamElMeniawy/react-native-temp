@@ -85,16 +85,29 @@ const getIconProps = (element: React.ReactElement) => {
   const { toJSON } = render(element);
   return (toJSON() as any)?.props;
 };
+const getCloseIconColor = (closeIcon?: React.ReactElement) => {
+  if (!closeIcon) {
+    return undefined;
+  }
 
-const assertBaseToastCall = (expected: Partial<any>, hasCloseIcon: boolean) => {
+  const { toJSON } = render(closeIcon);
+  return (toJSON() as any)?.props?.color;
+};
+
+const assertBaseToastCall = (
+  expected: Partial<any>,
+  expectedCloseIconColor?: string,
+) => {
   expect(mockBaseToast).toHaveBeenCalledTimes(1);
   const props = mockCapturedBaseProps;
   expect(props).toMatchObject(expected);
-  if (hasCloseIcon) {
-    expect(React.isValidElement(props.closeIcon)).toBe(true);
-  } else {
-    expect(props.closeIcon).toBeUndefined();
+
+  if (expectedCloseIconColor) {
+    expect(getCloseIconColor(props.closeIcon)).toBe(expectedCloseIconColor);
+    return;
   }
+
+  expect(props.closeIcon).toBeUndefined();
 };
 
 describe('Toast icons', () => {
@@ -177,8 +190,9 @@ describe('Toast variants', () => {
       {
         iconColor: '#0055ff',
         progressBarColor: '#0055ff',
+        type: 'success',
       },
-      true,
+      '#001122',
     );
   });
 
@@ -189,8 +203,9 @@ describe('Toast variants', () => {
       {
         iconColor: '#ff0000',
         progressBarColor: '#ff0000',
+        type: 'error',
       },
-      true,
+      '#330000',
     );
   });
 
@@ -201,8 +216,9 @@ describe('Toast variants', () => {
       {
         iconColor: '#ffaa00',
         progressBarColor: '#ffaa00',
+        type: 'warn',
       },
-      true,
+      '#332200',
     );
   });
 
@@ -214,7 +230,22 @@ describe('Toast variants', () => {
         iconColor: '#111111',
         progressBarColor: '#111111',
       },
-      false,
+      undefined,
+    );
+  });
+
+  it('InfoToast forwards provided text props', () => {
+    render(<InfoToast type="info" text1="Hello" text2="World" />);
+
+    assertBaseToastCall(
+      {
+        iconColor: '#111111',
+        progressBarColor: '#111111',
+        text1: 'Hello',
+        text2: 'World',
+        type: 'info',
+      },
+      undefined,
     );
   });
 });
