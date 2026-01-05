@@ -22,7 +22,7 @@ module.exports = {
       statements: 70, // Current: 74.47% - TODO: Increase to 80% when completing the app
       branches: 65, // Current: 65.98% - TODO: Increase to 75% when completing the app
       functions: 65, // Current: 67.66% - TODO: Increase to 75% when completing the app
-      lines: 75, // Current: 75.02% - TODO: Increase to 75% when completing the app
+      lines: 75,
     },
   },
 };
