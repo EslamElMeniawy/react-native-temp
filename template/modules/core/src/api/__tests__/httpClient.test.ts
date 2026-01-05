@@ -8,7 +8,9 @@ const mockSetErrorDialogMessage = jest.fn((message: string) => ({
   type: 'setErrorDialogMessage',
   payload: message,
 })) as jest.Mock;
-const mockTranslate = jest.fn((key: string) => `translated:${key}`) as jest.Mock;
+const mockTranslate = jest.fn(
+  (key: string) => `translated:${key}`,
+) as jest.Mock;
 const mockGetCurrentLocale = jest.fn(() => 'en');
 
 const mockIsAxiosError = jest.fn();
@@ -51,7 +53,8 @@ const localization = jest.requireMock('@modules/localization') as any;
 
 const assignMocks = () => {
   (localization.translate as unknown as jest.Mock) = mockTranslate;
-  (localization.getCurrentLocale as unknown as jest.Mock) = mockGetCurrentLocale;
+  (localization.getCurrentLocale as unknown as jest.Mock) =
+    mockGetCurrentLocale;
   (store.getState as jest.Mock) = mockGetState;
   (store.dispatch as jest.Mock) = mockDispatch;
   (dialogsStore.setErrorDialogMessage as unknown as jest.Mock) =
@@ -91,7 +94,7 @@ const buildAxiosError = (overrides: Partial<AxiosError> = {}) =>
     },
     message: 'error',
     ...overrides,
-  } as unknown as AxiosError);
+  }) as unknown as AxiosError;
 
 const clearAllMocks = () => {
   [
