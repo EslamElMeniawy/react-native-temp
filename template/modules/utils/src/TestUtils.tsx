@@ -2,6 +2,7 @@ import { ToastManager } from '@modules/components';
 import { store as reduxStore } from '@modules/store';
 import { useAppTheme } from '@modules/theme';
 import { BaseNavigationContainer } from '@react-navigation/native';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { render, renderHook } from '@testing-library/react-native';
 import * as React from 'react';
@@ -41,7 +42,9 @@ function Wrapper({
   store = reduxStore,
   theme,
   queryClient = appQueryClient,
-  clientPersister = appClientPersister,
+  clientPersister = process.env.NODE_ENV === 'test'
+    ? undefined
+    : appClientPersister,
   children,
 }: Readonly<
   React.PropsWithChildren<{
@@ -53,15 +56,25 @@ function Wrapper({
 >) {
   const appTheme = useAppTheme();
 
+  const navigationContainer = (
+    <BaseNavigationContainer>{children}</BaseNavigationContainer>
+  );
+
   return (
     <ReduxProvider store={store}>
       <PaperProvider theme={theme ?? appTheme}>
-        <PersistQueryClientProvider
-          client={queryClient}
-          persistOptions={{ persister: clientPersister }}
-        >
-          <BaseNavigationContainer>{children}</BaseNavigationContainer>
-        </PersistQueryClientProvider>
+        {clientPersister ? (
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{ persister: clientPersister }}
+          >
+            {navigationContainer}
+          </PersistQueryClientProvider>
+        ) : (
+          <QueryClientProvider client={queryClient}>
+            {navigationContainer}
+          </QueryClientProvider>
+        )}
         <ToastManager />
       </PaperProvider>
     </ReduxProvider>
