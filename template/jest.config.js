@@ -17,11 +17,34 @@ module.exports = {
   ],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}', 'modules/*/src/**/*.{ts,tsx}'],
+  coveragePathIgnorePatterns: [
+    // Test files and test helpers
+    '__tests__/',
+    '.*\\.test\\.[jt]sx?$',
+    '.*\\.spec\\.[jt]sx?$',
+    'testWrapper\\.[jt]sx?$',
+    '/tests/',
+    // Type definitions, enums, and constants that don't need coverage
+    '.*\\.?types\\.ts$',
+    '.*\\.d\\.ts$',
+    '/enums?/',
+    '.*Enum\\.ts$',
+    // Index files (re-exports only)
+    '/index\\.tsx?$',
+    // Entity, model, DTO, and response files (pure data structures)
+    '/entities?/',
+    '/models?/',
+    '/dto/',
+    '/responses?/',
+    // Translation and configuration files
+    '/translations?/',
+  ],
+  coverageReporters: ['text', 'lcov', 'clover', 'json-summary'],
   coverageThreshold: {
     global: {
-      statements: 70, // Current: 74.47% - TODO: Increase to 80% when completing the app
-      branches: 65, // Current: 65.98% - TODO: Increase to 75% when completing the app
-      functions: 65, // Current: 67.66% - TODO: Increase to 75% when completing the app
+      statements: 75, // Current: 75.21% - TODO: Increase to 80% when completing the app
+      branches: 65, // Current: 59.4% - TODO: Increase to 75% when completing the app
+      functions: 65, // Current: 67.09% - TODO: Increase to 75% when completing the app
       lines: 75,
     },
   },
