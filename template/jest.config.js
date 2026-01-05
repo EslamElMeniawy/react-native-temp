@@ -19,10 +19,10 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{ts,tsx}', 'modules/*/src/**/*.{ts,tsx}'],
   coverageThreshold: {
     global: {
-      statements: 35, // Current: 35.11% - TODO: Increase to 50% when completing the app
-      branches: 25, // Current: 25.21% - TODO: Increase to 45% when completing the app
-      lines: 35, // Current: 35.14% - TODO: Increase to 50% when completing the app
-      functions: 25, // Current: 25.77% - TODO: Increase to 50% when completing the app
+      statements: 60, // Current: 66.84% - TODO: Increase to 80% when completing the app
+      branches: 55, // Current: 55.89% - TODO: Increase to 75% when completing the app
+      functions: 55, // Current: 57.89% - TODO: Increase to 75% when completing the app
+      lines: 55, // Current: 67.24% - TODO: Increase to 75% when completing the app
     },
   },
 };
