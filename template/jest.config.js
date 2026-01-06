@@ -17,11 +17,16 @@ module.exports = {
   ],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}', 'modules/*/src/**/*.{ts,tsx}'],
+  testMatch: [
+    '**/__tests__/**/*.(test|spec).[jt]s?(x)',
+    '**/?(*.)+(spec|test).[jt]s?(x)',
+  ],
   coveragePathIgnorePatterns: [
     // Test files and test helpers
     '__tests__/',
     '.*\\.test\\.[jt]sx?$',
     '.*\\.spec\\.[jt]sx?$',
+    '__tests__/.*\\.helpers\\.[jt]sx?$',
     'testWrapper\\.[jt]sx?$',
     '/tests/',
     // Type definitions, enums, and constants that don't need coverage
@@ -42,10 +47,10 @@ module.exports = {
   coverageReporters: ['text', 'lcov', 'clover', 'json-summary'],
   coverageThreshold: {
     global: {
-      statements: 80, // Current: 96.63%
-      branches: 75, // Current: 83.02%
-      functions: 75, // Current: 92.2%
-      lines: 75, // Current: 97.21%
+      statements: 80,
+      branches: 75,
+      functions: 75,
+      lines: 75,
     },
   },
 };
