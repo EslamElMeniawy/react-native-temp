@@ -15,7 +15,7 @@ import { useHideSplash } from '@src/screens/Splash/useHideSplash';
 import { useSplash } from '@src/screens/Splash/useSplash';
 import { useSplashLanguageLoader } from '@src/screens/Splash/useSplashLanguageLoader';
 import { useSplashUserLoader } from '@src/screens/Splash/useSplashUserLoader';
-import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { renderHookWithProviders } from '@modules/utils';
 
 describe('useSplash', () => {
   const mockProps = {

@@ -1,7 +1,7 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
 import Orientation from 'react-native-orientation-locker';
 import { useOrientationLocker } from '@src/App/useOrientationLocker';
-import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { renderHookWithProviders } from '@modules/utils';
 
 // Mock react-native-orientation-locker
 jest.mock('react-native-orientation-locker', () => ({
