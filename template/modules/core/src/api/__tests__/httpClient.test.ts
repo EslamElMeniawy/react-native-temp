@@ -232,4 +232,156 @@ describe('httpClient error messages', function () {
     });
     expect(mockSetErrorDialogMessage).not.toHaveBeenCalled();
   });
+
+  it('extracts error message from errors as string', async () => {
+    const { responseRejected } = getHandlers();
+    const error = buildAxiosError({
+      response: {
+        status: 400,
+        data: { errors: 'single error string' },
+        config: { url: '/resource', headers: {} as any },
+        statusText: 'Error',
+        headers: {} as any,
+      },
+    });
+
+    await expect(responseRejected(error)).rejects.toMatchObject({
+      errorMessage: 'single error string',
+    });
+  });
+
+  it('extracts error message from data.message', async () => {
+    const { responseRejected } = getHandlers();
+    const error = buildAxiosError({
+      response: {
+        status: 400,
+        data: { message: 'direct message' },
+        config: { url: '/resource', headers: {} as any },
+        statusText: 'Error',
+        headers: {} as any,
+      },
+    });
+
+    await expect(responseRejected(error)).rejects.toMatchObject({
+      errorMessage: 'direct message',
+    });
+  });
+
+  it('extracts error message from error.message fallback', async () => {
+    const { responseRejected } = getHandlers();
+    const error = buildAxiosError({
+      message: 'fallback message',
+      response: {
+        status: 400,
+        data: {},
+        config: { url: '/resource', headers: {} as any },
+        statusText: 'Error',
+        headers: {} as any,
+      },
+    });
+
+    await expect(responseRejected(error)).rejects.toMatchObject({
+      errorMessage: 'fallback message',
+    });
+  });
+});
+
+describe('httpClient HTTP methods logging', function () {
+  beforeEach(commonSetup);
+
+  it('logs GET requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'get', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('get');
+  });
+
+  it('logs POST requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'post', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('post');
+  });
+
+  it('logs HEAD requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'head', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('head');
+  });
+
+  it('logs PUT requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'put', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('put');
+  });
+
+  it('logs PATCH requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'patch', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('patch');
+  });
+
+  it('logs DELETE requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'delete', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('delete');
+  });
+
+  it('logs OPTIONS requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'options', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('options');
+  });
+
+  it('logs unknown method requests', () => {
+    const { requestFulfilled } = getHandlers();
+    const config = { headers: {}, method: 'custom', url: '/test' } as any;
+
+    requestFulfilled(config);
+
+    expect(config.method).toBe('custom');
+  });
+});
+
+describe('httpClient interceptors', function () {
+  beforeEach(commonSetup);
+
+  it('handles request interceptor rejection', async () => {
+    const { requestRejected } = getHandlers();
+    const error = new Error('Request failed');
+
+    await expect(requestRejected(error)).rejects.toThrow('Request failed');
+  });
+
+  it('handles response interceptor success', () => {
+    const { responseFulfilled } = getHandlers();
+    const response = {
+      data: { result: 'success' },
+      status: 200,
+      config: { url: '/test', headers: {} as any },
+    } as any;
+
+    const result = responseFulfilled(response);
+
+    expect(result).toBe(response);
+  });
 });

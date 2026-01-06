@@ -242,6 +242,14 @@ const testErrorStatusText = function () {
 
     expect(error.response?.statusText).toBe('Unknown');
   });
+
+  it('handles additional common status codes', function () {
+    const codes = [403, 404, 502, 503, 999];
+    codes.forEach(code => {
+      const error = createAxiosError(code, {});
+      expect(error.response?.status).toBe(code);
+    });
+  });
 };
 
 const testErrorConfig = function () {
