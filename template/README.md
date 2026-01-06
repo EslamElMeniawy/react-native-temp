@@ -8,55 +8,45 @@ The project follows a modular architecture to ensure scalability and maintainabi
 
 ### `modules/`
 
-This directory contains the core building blocks of the application. Each module is self-contained and focuses on a specific domain or functionality.
+This directory contains the core building blocks of the application. Each package is linked locally (see `package.json` dependencies).
 
-- **`assets/`**: Static assets like images and fonts.
+- **`assets/`**: Images, fonts, and other static assets.
 - **`components/`**: Reusable UI components.
 - **`core/`**: Core utilities and base configurations.
-- **`features/`**: Feature-specific modules (e.g., `auth`, `home`, `profile`).
-- **`localization/`**: Internationalization and localization files.
+- **`features/`**: Feature modules (e.g., `auth`, `home`, `profile`, `debug-menu`, `notifications`).
+- **`localization/`**: Internationalization setup.
 - **`navigation/`**: Navigation configuration and navigators.
-- **`store/`**: State management configuration (Redux/Zustand).
+- **`store/`**: State management setup.
 - **`theme/`**: Theming and styling constants.
-- **`utils/`**: General utility functions.
+- **`utils/`**: Shared utilities.
 
 ### `src/`
 
 This directory contains application-specific code that ties the modules together.
 
-- **`App/`**: Main application entry point and setup.
-- **`screens/`**: Screen components that compose features.
-- **`utils/`**: App-specific utilities.
+- **`App/`**: Application bootstrap and providers.
+- **`screens/`**: Screen components composing features.
+- **`__tests__/`**: App-level tests.
+- **`AppEntry.tsx`**: Entry file consumed by native platforms.
+
+### Native & tooling
+
+- **`android/`** and **`ios/`**: Native projects and build artifacts.
+- **`fastlane/`**: iOS and Android lanes for build/distribution.
 
 ## Scripts
 
-The `package.json` file includes various scripts for development, testing, and building.
+All commands are in `package.json`. Common groups:
 
-### Development
-
-- **`yarn start`**: Start the Metro bundler.
-- **`yarn start-reset`**: Start the Metro bundler with cache reset.
-- **`yarn android:dev`**: Run the Android app in development mode (Debug).
-- **`yarn ios:dev`**: Run the iOS app in development mode (Debug).
-
-### Staging & Production
-
-- **`yarn android:staging`**: Run the Android app in staging mode.
-- **`yarn android:prod`**: Run the Android app in production mode.
-- **`yarn ios:staging`**: Run the iOS app in staging mode.
-- **`yarn ios:prod`**: Run the iOS app in production mode.
-
-### Release Builds
-
-Scripts ending in `-release` (e.g., `android:dev-release`, `ios:prod-release`) run the app in release mode for the specified environment.
-
-### Utility
-
-- **`yarn lint`**: Run ESLint to check for code quality issues.
-- **`yarn typecheck`**: Run TypeScript compiler to check for type errors.
-- **`yarn test`**: Run Jest tests.
-- **`yarn fresh-install`**: completely clean and reinstall dependencies (node_modules, pods, etc.).
-- **`yarn pods`**: Install iOS pods (macOS only).
+- **Dev servers**: `yarn start`, `yarn start-reset`, `yarn reverse` (ADB reverse for Metro/Reactotron).
+- **Assets & pods**: `yarn link-assets`, `yarn pods` (macOS) with fallback notice, `yarn postinstall` runs pods → link-assets → android-clean.
+- **Android run/clean**: `yarn android:dev|staging|prod`, `*-release` variants, `yarn android-clean` (gradle clean), `yarn reverse`.
+- **Android builds**: `yarn apk:dev|staging|prod`, `yarn bundle:dev|staging|prod`.
+- **iOS run/clean**: `yarn ios:dev|staging|prod` plus device-size variants (`-large`, `-small`, `-ipad`), release configs (`ios:* -release`), `yarn ios-clean` (macOS only).
+- **Quality**: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn validate` (runs all).
+- **Versioning**: `yarn ver` (sets version and resets build), `yarn ver:test` (prerelease without build bump).
+- **Dependencies**: `yarn check-dependencies`, `yarn fix-dependencies` (rnx-align-deps).
+- **Utilities**: `yarn svg` (vector image generation), `yarn reset` (clean project), `yarn fresh-install`/`yarn fresh-start`, `yarn prepare` (hooks + Bundler), `yarn fastlane` (run lanes).
 
 ## Linting & Formatting
 
@@ -64,23 +54,31 @@ The project uses **ESLint** and **Prettier** to enforce code quality and consist
 
 ### Key Rules
 
-- **Naming Conventions**:
-  - Variables and functions: `camelCase`
-  - Components, Classes, and Types: `PascalCase`
-  - Constants and Enum Members: `UPPER_CASE`
-- **Import Ordering**: Imports are automatically sorted and grouped:
-  1. Built-in modules
-  2. External dependencies
-  3. Parent directories (`@src`, `@modules`)
-  4. Sibling directories
-  5. Index files
-  6. Object imports
-  7. Type imports
-- **No Parent Imports**: Importing from parent directories using `../` is strictly forbidden to maintain modularity. Use absolute aliases (e.g., `@modules/...`) instead.
-- **Type Imports**: Prefer `import type` for type-only imports.
+- **Imports**: Enforced order with `@src/**` and `@modules/**` before siblings; `../` is blocked.
+- **Naming**: camelCase by default; PascalCase for types/components; UPPER_CASE for enums/constants.
+- **Size/complexity guards**: Warnings for high complexity, nesting, params, lines per file/function, and combined conditions in components.
+- **Type imports**: Prefer `import type`.
+- **Prettier**: single quotes, trailing commas, avoid parens on single-arg arrows.
 
 ### Configuration Files
 
 - `.eslintrc.js`: Main ESLint configuration.
 - `.prettierrc.js`: Prettier configuration.
 - `tsconfig.json`: TypeScript configuration.
+
+## Hooks & commits
+
+- **Lefthook**: Pre-commit runs Prettier (src), ESLint --fix, and `tsc --noEmit` on staged files. Commit-msg runs commitlint.
+- **Commitlint**: Conventional commits enforced.
+
+## Testing
+
+- **Jest**: React Native preset with `jest.setup.ts` mocks (NetInfo, DeviceInfo, localization, bootsplash, keyboard controller, Notifee, Firebase, MMKV, etc.).
+- **Coverage**: Enabled for `src/**/*` and `modules/*/src/**/*` with thresholds (statements 80, branches 75, functions 75, lines 75).
+- **Testing Library**: Applied to test files via ESLint override.
+
+## Tooling & environment
+
+- **TypeScript paths**: `@src/*`, `@packageJson`, `@appJson` via `tsconfig.json`.
+- **Yarn**: Yarn 4.10.2 (classic linker, `node_modules`), `yarnPath` under `.yarn/releases`.
+- **Fastlane**: iOS and Android lanes for badge, build, beta/release, and Firebase distribution.
