@@ -4,7 +4,7 @@ import { useFirebaseMessagingInitialization } from '@src/App/useFirebaseMessagin
 import { useMessagingAutoInitialize } from '@src/App/useMessagingAutoInitialize';
 import { useMessagingPermission } from '@src/App/useMessagingPermission';
 import { useNotificationsChannels } from '@src/App/useNotificationsChannels';
-import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { renderHookWithProviders } from '@modules/utils';
 
 jest.mock('@src/App/useMessagingAutoInitialize');
 jest.mock('@src/App/useMessagingPermission');

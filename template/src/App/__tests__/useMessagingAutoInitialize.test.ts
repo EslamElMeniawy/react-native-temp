@@ -13,7 +13,7 @@ jest.mock('@react-native-firebase/messaging', () => ({
 }));
 
 import { useMessagingAutoInitialize } from '@src/App/useMessagingAutoInitialize';
-import { renderHookWithProviders } from '@src/utils/TestUtils';
+import { renderHookWithProviders } from '@modules/utils';
 
 describe('useMessagingAutoInitialize', () => {
   const mockMessaging = {};

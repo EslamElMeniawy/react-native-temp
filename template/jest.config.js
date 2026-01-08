@@ -17,12 +17,40 @@ module.exports = {
   ],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}', 'modules/*/src/**/*.{ts,tsx}'],
+  testMatch: [
+    '**/__tests__/**/*.(test|spec).[jt]s?(x)',
+    '**/?(*.)+(spec|test).[jt]s?(x)',
+  ],
+  coveragePathIgnorePatterns: [
+    // Test files and test helpers
+    '__tests__/',
+    '.*\\.test\\.[jt]sx?$',
+    '.*\\.spec\\.[jt]sx?$',
+    '__tests__/.*\\.helpers\\.[jt]sx?$',
+    'testWrapper\\.[jt]sx?$',
+    '/tests/',
+    // Type definitions, enums, and constants that don't need coverage
+    '.*\\.?types\\.ts$',
+    '.*\\.d\\.ts$',
+    '/enums?/',
+    '.*Enum\\.ts$',
+    // Index files (re-exports only)
+    '/index\\.tsx?$',
+    // Entity, model, DTO, and response files (pure data structures)
+    '/entities?/',
+    '/models?/',
+    '/dto/',
+    '/responses?/',
+    // Translation and configuration files
+    '/translations?/',
+  ],
+  coverageReporters: ['text', 'lcov', 'clover', 'json-summary'],
   coverageThreshold: {
     global: {
-      statements: 35, // Current: 35.11% - TODO: Increase to 50% when completing the app
-      branches: 25, // Current: 25.21% - TODO: Increase to 45% when completing the app
-      lines: 35, // Current: 35.14% - TODO: Increase to 50% when completing the app
-      functions: 25, // Current: 25.77% - TODO: Increase to 50% when completing the app
+      statements: 80,
+      branches: 75,
+      functions: 75,
+      lines: 75,
     },
   },
 };
