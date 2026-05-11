@@ -107,8 +107,8 @@ describe('ErrorFallbackView', () => {
     jest.clearAllMocks();
   });
 
-  it('hides bootsplash and renders translated texts', () => {
-    render(<ErrorFallbackView />);
+  it('hides bootsplash and renders translated texts', async () => {
+    await render(<ErrorFallbackView />);
 
     expect(bootSplashMock.hide).toHaveBeenCalledTimes(1);
     expect(localizationMock.translate).toHaveBeenCalledWith(
@@ -124,8 +124,8 @@ describe('ErrorFallbackView', () => {
     expect(screen.getByText('restartApp')).toBeTruthy();
   });
 
-  it('restarts the app when the button is pressed', () => {
-    render(<ErrorFallbackView />);
+  it('restarts the app when the button is pressed', async () => {
+    await render(<ErrorFallbackView />);
 
     fireEvent.press(screen.getByTestId('restart-button'));
 

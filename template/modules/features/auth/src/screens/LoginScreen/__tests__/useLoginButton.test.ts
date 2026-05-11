@@ -7,7 +7,8 @@ import {
   jest,
 } from '@jest/globals';
 import { DialogsStore, useAppDispatch } from '@modules/store';
-import { renderHookWithProviders, saveUserDataOpenHome } from '@modules/utils';
+import { saveUserDataOpenHome } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import { act, waitFor } from '@testing-library/react-native';
 import { useTranslation } from 'react-i18next';
 import { Keyboard } from 'react-native';
@@ -95,20 +96,19 @@ afterEach(() => {
 });
 
 describe('useLoginButton loading state', () => {
-  it('exposes pending flag from login api', () => {
+  it('exposes pending flag from login api', async () => {
     mockUseLoginApiReturn.isPending = true;
-
-    const { result } = renderHookWithProviders(() => useLoginButton());
+    const { result } = await renderHookWithProviders(() => useLoginButton());
 
     expect(result.current.isLoggingIn).toBe(true);
   });
 });
 
 describe('useLoginButton press handler', () => {
-  it('dismisses keyboard and triggers login with form data', () => {
+  it('dismisses keyboard and triggers login with form data', async () => {
     const formData = { username: 'john', password: 'secret' } as const;
 
-    const { result } = renderHookWithProviders(() => useLoginButton());
+    const { result } = await renderHookWithProviders(() => useLoginButton());
 
     act(() => result.current.onLoginPress(formData));
 
@@ -131,7 +131,7 @@ describe('useLoginButton success handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
     await waitFor(() =>
       expect(typedSaveUserDataOpenHome).toHaveBeenCalledWith(user, token),
@@ -146,7 +146,7 @@ describe('useLoginButton success handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
     await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
     expect(mockDispatch).toHaveBeenCalledWith({
@@ -168,7 +168,7 @@ describe('useLoginButton error handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
     await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
     expect(mockDispatch).toHaveBeenCalledWith({
@@ -185,7 +185,7 @@ describe('useLoginButton error handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
     await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
     expect(mockDispatch).toHaveBeenCalledWith({

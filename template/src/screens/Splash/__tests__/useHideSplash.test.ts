@@ -1,5 +1,6 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { act, renderHook } from '@testing-library/react-native';
+
 import { Animated } from 'react-native';
 import { hide as rnBootSplashHide } from 'react-native-bootsplash';
 import { useHideSplash } from '@src/screens/Splash/useHideSplash';
@@ -59,7 +60,7 @@ describe('useHideSplash', () => {
     (useAppSelector as jest.Mock).mockReturnValue({ user: undefined });
     const navigation = { replace: jest.fn() } as any;
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHideSplash(buildProps(navigation, true, true) as any),
     );
 
@@ -76,7 +77,7 @@ describe('useHideSplash', () => {
     (useAppSelector as jest.Mock).mockReturnValue({ user: { id: '1' } });
     const navigation = { replace: jest.fn() } as any;
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHideSplash(buildProps(navigation, true, true) as any),
     );
 

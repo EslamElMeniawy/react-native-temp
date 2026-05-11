@@ -78,15 +78,15 @@ describe('useHandleNetworkState', () => {
     (translate as any as jest.Mock).mockReturnValue('internetLost');
   });
 
-  it('stores connectivity and hides toast when online', () => {
-    const { result } = renderHook(() => useHandleNetworkState());
+  it('stores connectivity and hides toast when online', async () => {
+    const { result } = await renderHook(() => useHandleNetworkState());
     const state = testOnlineState();
     result.current(state);
     verifyOnlineStateDispatch(mockDispatch);
   });
 
-  it('stores expensive flag and shows toast when offline', () => {
-    const { result } = renderHook(() => useHandleNetworkState());
+  it('stores expensive flag and shows toast when offline', async () => {
+    const { result } = await renderHook(() => useHandleNetworkState());
     const state = testOfflineState();
     result.current(state);
     verifyOfflineStateDispatch();

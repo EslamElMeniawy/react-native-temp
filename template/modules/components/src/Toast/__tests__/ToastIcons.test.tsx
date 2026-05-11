@@ -81,20 +81,20 @@ jest.mock('@react-native-vector-icons/material-design-icons', () => {
   return moduleMock;
 });
 
-const getIconProps = (element: React.ReactElement) => {
-  const { toJSON } = render(element);
+const getIconProps = async (element: React.ReactElement) => {
+  const { toJSON } = await render(element);
   return (toJSON() as any)?.props;
 };
-const getCloseIconColor = (closeIcon?: React.ReactElement) => {
+const getCloseIconColor = async (closeIcon?: React.ReactElement) => {
   if (!closeIcon) {
     return undefined;
   }
 
-  const { toJSON } = render(closeIcon);
+  const { toJSON } = await render(closeIcon);
   return (toJSON() as any)?.props?.color;
 };
 
-const assertBaseToastCall = (
+const assertBaseToastCall = async (
   expected: Partial<any>,
   expectedCloseIconColor?: string,
 ) => {
@@ -103,7 +103,9 @@ const assertBaseToastCall = (
   expect(props).toMatchObject(expected);
 
   if (expectedCloseIconColor) {
-    expect(getCloseIconColor(props.closeIcon)).toBe(expectedCloseIconColor);
+    expect(await getCloseIconColor(props.closeIcon)).toBe(
+      expectedCloseIconColor,
+    );
     return;
   }
 
@@ -116,8 +118,8 @@ describe('Toast icons', () => {
     mockCapturedBaseProps = undefined;
   });
 
-  it('renders CloseIcon with provided color and size', () => {
-    const props = getIconProps(<CloseIcon color="#abcdef" />);
+  it('renders CloseIcon with provided color and size', async () => {
+    const props = await getIconProps(<CloseIcon color="#abcdef" />);
 
     expect(props).toMatchObject({
       name: 'close',
@@ -126,8 +128,8 @@ describe('Toast icons', () => {
     });
   });
 
-  it('defaults CloseIcon color to theme', () => {
-    const props = getIconProps(<CloseIcon />);
+  it('defaults CloseIcon color to theme', async () => {
+    const props = await getIconProps(<CloseIcon />);
 
     expect(props).toMatchObject({
       name: 'close',
@@ -136,8 +138,8 @@ describe('Toast icons', () => {
     });
   });
 
-  it('renders SuccessIcon with theme primary color', () => {
-    const props = getIconProps(<SuccessIcon />);
+  it('renders SuccessIcon with theme primary color', async () => {
+    const props = await getIconProps(<SuccessIcon />);
 
     expect(props).toMatchObject({
       name: 'check-circle',
@@ -146,8 +148,8 @@ describe('Toast icons', () => {
     });
   });
 
-  it('renders ErrorIcon with theme error color', () => {
-    const props = getIconProps(<ErrorIcon />);
+  it('renders ErrorIcon with theme error color', async () => {
+    const props = await getIconProps(<ErrorIcon />);
 
     expect(props).toMatchObject({
       name: 'alert-circle',
@@ -156,8 +158,8 @@ describe('Toast icons', () => {
     });
   });
 
-  it('renders InfoIcon with theme onSurface color', () => {
-    const props = getIconProps(<InfoIcon />);
+  it('renders InfoIcon with theme onSurface color', async () => {
+    const props = await getIconProps(<InfoIcon />);
 
     expect(props).toMatchObject({
       name: 'information-variant-circle',
@@ -166,8 +168,8 @@ describe('Toast icons', () => {
     });
   });
 
-  it('renders WarnIcon with theme tertiary color', () => {
-    const props = getIconProps(<WarnIcon />);
+  it('renders WarnIcon with theme tertiary color', async () => {
+    const props = await getIconProps(<WarnIcon />);
 
     expect(props).toMatchObject({
       name: 'alert',
@@ -183,10 +185,10 @@ describe('Toast variants', () => {
     mockCapturedBaseProps = undefined;
   });
 
-  it('SuccessToast passes primary colors and close icon', () => {
-    render(<SuccessToast type="success" />);
+  it('SuccessToast passes primary colors and close icon', async () => {
+    await render(<SuccessToast type="success" />);
 
-    assertBaseToastCall(
+    await assertBaseToastCall(
       {
         iconColor: '#0055ff',
         progressBarColor: '#0055ff',
@@ -196,10 +198,10 @@ describe('Toast variants', () => {
     );
   });
 
-  it('ErrorToast passes error colors and close icon', () => {
-    render(<ErrorToast type="error" />);
+  it('ErrorToast passes error colors and close icon', async () => {
+    await render(<ErrorToast type="error" />);
 
-    assertBaseToastCall(
+    await assertBaseToastCall(
       {
         iconColor: '#ff0000',
         progressBarColor: '#ff0000',
@@ -209,10 +211,10 @@ describe('Toast variants', () => {
     );
   });
 
-  it('WarnToast passes tertiary colors and close icon', () => {
-    render(<WarnToast type="warn" />);
+  it('WarnToast passes tertiary colors and close icon', async () => {
+    await render(<WarnToast type="warn" />);
 
-    assertBaseToastCall(
+    await assertBaseToastCall(
       {
         iconColor: '#ffaa00',
         progressBarColor: '#ffaa00',
@@ -222,10 +224,10 @@ describe('Toast variants', () => {
     );
   });
 
-  it('InfoToast passes onSurface colors and no close icon', () => {
-    render(<InfoToast type="info" />);
+  it('InfoToast passes onSurface colors and no close icon', async () => {
+    await render(<InfoToast type="info" />);
 
-    assertBaseToastCall(
+    await assertBaseToastCall(
       {
         iconColor: '#111111',
         progressBarColor: '#111111',
@@ -234,10 +236,10 @@ describe('Toast variants', () => {
     );
   });
 
-  it('InfoToast forwards provided text props', () => {
-    render(<InfoToast type="info" text1="Hello" text2="World" />);
+  it('InfoToast forwards provided text props', async () => {
+    await render(<InfoToast type="info" text1="Hello" text2="World" />);
 
-    assertBaseToastCall(
+    await assertBaseToastCall(
       {
         iconColor: '#111111',
         progressBarColor: '#111111',

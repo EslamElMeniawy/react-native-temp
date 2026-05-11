@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { render } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import * as React from 'react';
 import ListLoadingMore from 'modules/components/src/ListLoadingMore';
 
@@ -22,9 +22,9 @@ describe('ListLoadingMore', () => {
     jest.clearAllMocks();
   });
 
-  it('renders indicator when fetching next page', () => {
+  it('renders indicator when fetching next page', async () => {
     const customStyle = { marginTop: 8 };
-    const { toJSON } = render(
+    const { toJSON } = await renderWithProviders(
       <ListLoadingMore isFetchingNextPage style={customStyle} />,
     );
 
@@ -41,8 +41,10 @@ describe('ListLoadingMore', () => {
     expect(toJSON()).toBeTruthy();
   });
 
-  it('renders nothing when not fetching', () => {
-    const { toJSON } = render(<ListLoadingMore isFetchingNextPage={false} />);
+  it('renders nothing when not fetching', async () => {
+    const { toJSON } = await renderWithProviders(
+      <ListLoadingMore isFetchingNextPage={false} />,
+    );
 
     expect(mockActivityIndicator).not.toHaveBeenCalled();
     expect(toJSON()).toBeNull();

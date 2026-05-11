@@ -3,8 +3,9 @@ import {
   AuthorizationStatus,
   getMessaging,
 } from '@react-native-firebase/messaging';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useMessagingPermission } from '@src/App/useMessagingPermission';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 const mockRequestPermission = jest.fn();
 const mockHasPermission = jest.fn();
@@ -51,7 +52,7 @@ describe('useMessagingPermission', () => {
       AuthorizationStatus.AUTHORIZED,
     );
 
-    renderHook(() => useMessagingPermission());
+    renderHookWithProviders(() => useMessagingPermission());
 
     await act(async () => {
       await flushPromises();
@@ -68,7 +69,7 @@ describe('useMessagingPermission', () => {
       AuthorizationStatus.DENIED,
     );
 
-    renderHook(() => useMessagingPermission());
+    renderHookWithProviders(() => useMessagingPermission());
 
     await act(async () => {
       await flushPromises();

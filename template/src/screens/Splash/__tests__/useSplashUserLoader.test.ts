@@ -1,10 +1,14 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { renderHook, waitFor } from '@testing-library/react-native';
+import { waitFor } from '@testing-library/react-native';
 import { useSplashUserLoader } from '@src/screens/Splash/useSplashUserLoader';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
 import { useGetUserDetailsApi, UserStore } from '@modules/features-profile';
 import { useAppDispatch } from '@modules/store';
 import { saveUserData } from '@modules/utils';
+import {
+  renderHook,
+  renderHookWithProviders,
+} from '@modules/utils/src/__tests__/TestUtils';
 
 const mockDispatch = jest.fn();
 
@@ -43,14 +47,16 @@ describe('useSplashUserLoader', () => {
       isSuccess: false,
     });
 
-    const { result } = renderHook(() => useSplashUserLoader(true));
+    const { result } = await renderHookWithProviders(() =>
+      useSplashUserLoader(true),
+    );
 
     await waitFor(() => expect(result.current).toBe(true));
     expect(mockDispatch).not.toHaveBeenCalled();
   });
 
   it('dispatches token and saves user when present', async () => {
-    const apiUser = { id: 'user-1' };
+    const apiUser = { id: 'user-1' } as any;
     (ApiTokenLocalStorage.getApiToken as jest.Mock).mockReturnValue('token');
     (useGetUserDetailsApi as jest.Mock).mockReturnValue({
       data: apiUser,
@@ -58,7 +64,7 @@ describe('useSplashUserLoader', () => {
       isSuccess: true,
     });
 
-    const { result } = renderHook(() => useSplashUserLoader(true));
+    const { result } = await renderHook(() => useSplashUserLoader(true));
 
     await waitFor(() => expect(result.current).toBe(true));
 

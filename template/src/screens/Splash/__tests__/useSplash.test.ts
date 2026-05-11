@@ -15,7 +15,7 @@ import { useHideSplash } from '@src/screens/Splash/useHideSplash';
 import { useSplash } from '@src/screens/Splash/useSplash';
 import { useSplashLanguageLoader } from '@src/screens/Splash/useSplashLanguageLoader';
 import { useSplashUserLoader } from '@src/screens/Splash/useSplashUserLoader';
-import { renderHookWithProviders } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 describe('useSplash', () => {
   const mockProps = {
@@ -32,8 +32,8 @@ describe('useSplash', () => {
     (useHideSplash as jest.Mock).mockReturnValue(false);
   });
 
-  test('should call all splash hooks with correct arguments', () => {
-    renderHookWithProviders(() => useSplash(mockProps));
+  test('should call all splash hooks with correct arguments', async () => {
+    await renderHookWithProviders(() => useSplash(mockProps));
 
     expect(useSplashLanguageLoader).toHaveBeenCalledWith(true);
     expect(useSplashUserLoader).toHaveBeenCalledWith(true);
@@ -46,21 +46,23 @@ describe('useSplash', () => {
     });
   });
 
-  test('should return value from useHideSplash', () => {
+  test('should return value from useHideSplash', async () => {
     (useHideSplash as jest.Mock).mockReturnValue(true);
 
-    const { result } = renderHookWithProviders(() => useSplash(mockProps));
+    const { result } = await renderHookWithProviders(() =>
+      useSplash(mockProps),
+    );
 
     expect(result.current).toBe(true);
   });
 
-  test('should pass isBootSplashLogoLoaded to loader hooks', () => {
+  test('should pass isBootSplashLogoLoaded to loader hooks', async () => {
     const propsWithLogoNotLoaded = {
       ...mockProps,
       isBootSplashLogoLoaded: false,
     };
 
-    renderHookWithProviders(() => useSplash(propsWithLogoNotLoaded));
+    await renderHookWithProviders(() => useSplash(propsWithLogoNotLoaded));
 
     expect(useSplashLanguageLoader).toHaveBeenCalledWith(false);
     expect(useSplashUserLoader).toHaveBeenCalledWith(false);

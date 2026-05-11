@@ -69,26 +69,26 @@ describe('HomeScreen', () => {
     (useRefreshOnFocus as jest.Mock).mockImplementation(() => {});
   });
 
-  it('should render correctly', () => {
-    render(<HomeScreen />);
+  it('should render correctly', async () => {
+    await render(<HomeScreen />);
 
     expect(screen.getByTestId('home-header')).toBeTruthy();
   });
 
-  it('should call useGetUserDetailsApi with notifyOnChangeProps', () => {
-    render(<HomeScreen />);
+  it('should call useGetUserDetailsApi with notifyOnChangeProps', async () => {
+    await render(<HomeScreen />);
 
     expect(useGetUserDetailsApi).toHaveBeenCalled();
     expect(useFocusNotifyOnChangeProps).toHaveBeenCalled();
   });
 
-  it('should call useRefreshOnFocus with refetch function', () => {
-    render(<HomeScreen />);
+  it('should call useRefreshOnFocus with refetch function', async () => {
+    await render(<HomeScreen />);
 
     expect(useRefreshOnFocus).toHaveBeenCalled();
   });
 
-  it('should display user data when available', () => {
+  it('should display user data when available', async () => {
     const testData = { id: 123, name: 'John Doe', email: 'john@example.com' };
     (useGetUserDetailsApi as jest.Mock).mockReturnValue({
       data: testData,
@@ -96,19 +96,19 @@ describe('HomeScreen', () => {
       refetch: jest.fn(),
     });
 
-    render(<HomeScreen />);
+    await render(<HomeScreen />);
 
     expect(screen.getByText(/UserData/)).toBeTruthy();
   });
 
-  it('should handle null user data gracefully', () => {
+  it('should handle null user data gracefully', async () => {
     (useGetUserDetailsApi as jest.Mock).mockReturnValue({
       data: null,
       dataUpdatedAt: 0,
       refetch: jest.fn(),
     });
 
-    render(<HomeScreen />);
+    await render(<HomeScreen />);
 
     expect(screen.getByText(/UserData/)).toBeTruthy();
   });

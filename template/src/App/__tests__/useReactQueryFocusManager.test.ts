@@ -1,7 +1,8 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { focusManager } from '@tanstack/react-query';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useReactQueryFocusManager } from '@src/App/useReactQueryFocusManager';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import type { AppStateStatus } from 'react-native';
 
 let appStateHandler: ((status: AppStateStatus) => void) | undefined;
@@ -31,8 +32,10 @@ describe('useReactQueryFocusManager', () => {
     jest.clearAllMocks();
   });
 
-  it('updates focus manager on app state changes', () => {
-    const { unmount } = renderHook(() => useReactQueryFocusManager());
+  it('updates focus manager on app state changes', async () => {
+    const { unmount } = await renderHookWithProviders(() =>
+      useReactQueryFocusManager(),
+    );
 
     act(() => {
       appStateHandler?.('active');

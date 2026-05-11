@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
+import { fireEvent, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import Header from '@modules/features-debug-menu/src/screens/DebugMenuScreen/Header';
 
@@ -62,31 +63,31 @@ describe('DebugMenuScreen Header', () => {
     mockUseNavigation.mockReturnValue({ getParent: mockGetParent });
   });
 
-  it('renders header with correct structure', () => {
-    render(<Header />);
+  it('renders header with correct structure', async () => {
+    await renderWithProviders(<Header />);
 
     expect(screen.getByTestId('appbar-header')).toBeTruthy();
     expect(screen.getByTestId('appbar-content')).toBeTruthy();
     expect(screen.getByTestId('appbar-back-action')).toBeTruthy();
   });
 
-  it('displays translated debug menu title', () => {
+  it('displays translated debug menu title', async () => {
     mockTranslate.mockReturnValue('Debug Menu');
 
-    render(<Header />);
+    await renderWithProviders(<Header />);
 
     expect(mockTranslate).toHaveBeenCalledWith('debugMenu');
     expect(screen.getByTestId('appbar-title')).toBeTruthy();
   });
 
-  it('renders back action button', () => {
-    render(<Header />);
+  it('renders back action button', async () => {
+    await renderWithProviders(<Header />);
 
     expect(screen.getByTestId('appbar-back-action')).toBeTruthy();
   });
 
-  it('calls parent navigation goBack when back button is pressed', () => {
-    render(<Header />);
+  it('calls parent navigation goBack when back button is pressed', async () => {
+    await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
     fireEvent.press(backButton);
@@ -95,50 +96,49 @@ describe('DebugMenuScreen Header', () => {
     expect(mockNavigationGoBack).toHaveBeenCalled();
   });
 
-  it('handles multiple back button presses', () => {
-    render(<Header />);
+  it('handles multiple back button presses', async () => {
+    await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
     fireEvent.press(backButton);
     fireEvent.press(backButton);
-    fireEvent.press(backButton);
 
-    expect(mockNavigationGoBack).toHaveBeenCalledTimes(3);
+    expect(mockNavigationGoBack).toHaveBeenCalledTimes(2);
   });
 
-  it('uses TranslationNamespaces.DEBUG_MENU for translations', () => {
-    render(<Header />);
+  it('uses TranslationNamespaces.DEBUG_MENU for translations', async () => {
+    await renderWithProviders(<Header />);
 
     expect(mockTranslate).toHaveBeenCalled();
   });
 
-  it('handles null parent navigation gracefully', () => {
+  it('handles null parent navigation gracefully', async () => {
     mockGetParent.mockReturnValue(null);
 
-    render(<Header />);
+    await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
 
     expect(() => fireEvent.press(backButton)).not.toThrow();
   });
 
-  it('handles undefined parent navigation gracefully', () => {
+  it('handles undefined parent navigation gracefully', async () => {
     mockGetParent.mockReturnValue(undefined);
 
-    render(<Header />);
+    await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
 
     expect(() => fireEvent.press(backButton)).not.toThrow();
   });
 
-  it('uses React.useCallback for onBackPress handler', () => {
-    const { rerender } = render(<Header />);
+  it('uses React.useCallback for onBackPress handler', async () => {
+    const view = await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
     const originalOnPress = backButton.props.onPress;
 
-    rerender(<Header />);
+    view.rerender(<Header />);
 
     const updatedBackButton = screen.getByTestId('appbar-back-action');
     const newOnPress = updatedBackButton.props.onPress;

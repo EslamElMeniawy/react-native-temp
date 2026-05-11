@@ -75,33 +75,34 @@ describe('LoginButton', () => {
     mockLoginButton.onLoginPress = jest.fn();
   });
 
-  it('should render button when not logging in', () => {
+  it('should render button when not logging in', async () => {
     mockLoginButton.isLoggingIn = false;
 
-    render(<LoginButton />);
+    await render(<LoginButton />);
 
     expect(screen.getByTestId('login-button-pressable')).toBeTruthy();
     expect(screen.getByTestId('login-button-text')).toBeTruthy();
   });
 
-  it('should render loading indicator when logging in', () => {
+  it('should render loading indicator when logging in', async () => {
     mockLoginButton.isLoggingIn = true;
 
-    render(<LoginButton />);
+    await render(<LoginButton />);
 
     expect(screen.getByTestId('loading-indicator')).toBeTruthy();
   });
 
-  it('should translate login button text', () => {
-    render(<LoginButton />);
+  it('should translate login button text', async () => {
+    await render(<LoginButton />);
 
+    expect(screen.getByTestId('login-button-text')).toBeTruthy();
     expect(mockTranslate).toHaveBeenCalledWith('login');
   });
 
-  it('should call handleSubmit on button press', () => {
+  it('should call handleSubmit on button press', async () => {
     mockLoginButton.isLoggingIn = false;
 
-    render(<LoginButton />);
+    await render(<LoginButton />);
     const button = screen.getByTestId('login-button-pressable');
 
     expect(button).toBeTruthy();

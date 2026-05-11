@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
+import { render, fireEvent, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import Header from '@modules/features-home/src/screens/HomeScreen/Header';
 
@@ -67,36 +68,36 @@ describe('HomeScreen Header', () => {
     mockTranslate.mockImplementation((key: string) => key);
   });
 
-  it('renders header with correct structure', () => {
-    render(<Header />);
+  it('renders header with correct structure', async () => {
+    await renderWithProviders(<Header />);
 
     expect(screen.getByTestId('appbar-header')).toBeTruthy();
     expect(screen.getByTestId('appbar-content')).toBeTruthy();
   });
 
-  it('displays translated home title', () => {
+  it('displays translated home title', async () => {
     mockTranslate.mockReturnValue('Home Screen');
 
-    render(<Header />);
+    await renderWithProviders(<Header />);
 
     expect(mockTranslate).toHaveBeenCalledWith('home');
     expect(screen.getByTestId('appbar-title')).toBeTruthy();
   });
 
-  it('renders notifications bell icon', () => {
-    render(<Header />);
+  it('renders notifications bell icon', async () => {
+    await render(<Header />);
 
     expect(screen.getByTestId('appbar-action-bell')).toBeTruthy();
   });
 
-  it('renders logout icon', () => {
-    render(<Header />);
+  it('renders logout icon', async () => {
+    await render(<Header />);
 
     expect(screen.getByTestId('appbar-action-logout')).toBeTruthy();
   });
 
-  it('navigates to notifications screen when bell icon is pressed', () => {
-    render(<Header />);
+  it('navigates to notifications screen when bell icon is pressed', async () => {
+    await render(<Header />);
 
     const bellButton = screen.getByTestId('appbar-action-bell');
     fireEvent.press(bellButton);
@@ -104,8 +105,8 @@ describe('HomeScreen Header', () => {
     expect(mockNavigationPush).toHaveBeenCalledWith('notifications');
   });
 
-  it('calls removeUserDataLogout when logout icon is pressed', () => {
-    render(<Header />);
+  it('calls removeUserDataLogout when logout icon is pressed', async () => {
+    await render(<Header />);
 
     const logoutButton = screen.getByTestId('appbar-action-logout');
     fireEvent.press(logoutButton);
@@ -113,8 +114,8 @@ describe('HomeScreen Header', () => {
     expect(mockRemoveUserDataLogout).toHaveBeenCalled();
   });
 
-  it('handles multiple bell icon presses', () => {
-    render(<Header />);
+  it('handles multiple bell icon presses', async () => {
+    await render(<Header />);
 
     const bellButton = screen.getByTestId('appbar-action-bell');
     fireEvent.press(bellButton);
@@ -125,8 +126,8 @@ describe('HomeScreen Header', () => {
     expect(mockNavigationPush).toHaveBeenCalledWith('notifications');
   });
 
-  it('handles multiple logout presses', () => {
-    render(<Header />);
+  it('handles multiple logout presses', async () => {
+    await render(<Header />);
 
     const logoutButton = screen.getByTestId('appbar-action-logout');
     fireEvent.press(logoutButton);
@@ -135,8 +136,8 @@ describe('HomeScreen Header', () => {
     expect(mockRemoveUserDataLogout).toHaveBeenCalledTimes(2);
   });
 
-  it('uses TranslationNamespaces.HOME for translations', () => {
-    render(<Header />);
+  it('uses TranslationNamespaces.HOME for translations', async () => {
+    await render(<Header />);
 
     expect(mockTranslate).toHaveBeenCalled();
   });

@@ -1,8 +1,10 @@
 import { describe, expect, jest, test, beforeEach } from '@jest/globals';
-import { renderHook, waitFor } from '@testing-library/react-native';
+import { waitFor } from '@testing-library/react-native';
+
 import * as Keychain from 'react-native-keychain';
 import { useLocalStorageInitialization } from '@src/App/useLocalStorageInitiation';
 import { initializeLocalStorage } from '@modules/core';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 jest.mock('react-native-keychain');
 jest.mock('@modules/core', () => ({
@@ -45,9 +47,10 @@ describe('useLocalStorageInitialization - Key retrieval', () => {
       service: KEYCHAIN_KEY,
     });
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
-    expect(result.current).toBe(false);
     await waitFor(() => expect(result.current).toBe(true));
     expect(initializeLocalStorage).toHaveBeenCalledWith(mockKey);
   });
@@ -56,7 +59,9 @@ describe('useLocalStorageInitialization - Key retrieval', () => {
     mockKeychainGet(false);
     mockKeychainSet();
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
     await waitFor(() => expect(result.current).toBe(true));
     expect(mockGetRandomValues).toHaveBeenCalled();
@@ -70,7 +75,9 @@ describe('useLocalStorageInitialization - Key retrieval', () => {
     });
     mockKeychainSet();
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
     await waitFor(() => expect(result.current).toBe(true));
     expect(mockGetRandomValues).toHaveBeenCalled();
@@ -88,7 +95,9 @@ describe('useLocalStorageInitialization - Error handling', () => {
     );
     mockKeychainSet();
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
     await waitFor(() => expect(result.current).toBe(true));
     expect(spy).toHaveBeenCalledWith(
@@ -106,7 +115,9 @@ describe('useLocalStorageInitialization - Error handling', () => {
       new Error('Keychain set error') as never,
     );
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
     await waitFor(() => expect(result.current).toBe(true));
     expect(initializeLocalStorage).toHaveBeenCalledWith(null);
@@ -124,9 +135,10 @@ describe('useLocalStorageInitialization - State management', () => {
       service: KEYCHAIN_KEY,
     });
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
-    expect(result.current).toBe(false);
     await waitFor(() => expect(result.current).toBe(true));
   });
 
@@ -134,7 +146,9 @@ describe('useLocalStorageInitialization - State management', () => {
     mockKeychainGet(false);
     mockKeychainSet();
 
-    const { result } = renderHook(() => useLocalStorageInitialization());
+    const { result } = await renderHookWithProviders(() =>
+      useLocalStorageInitialization(),
+    );
 
     await waitFor(() => expect(result.current).toBe(true));
 

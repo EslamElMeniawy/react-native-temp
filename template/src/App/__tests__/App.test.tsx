@@ -1,7 +1,8 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import * as React from 'react';
 import App from '@src/App/App';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 const mockUseLocalStorageInitialization = jest.fn();
 
@@ -39,8 +40,7 @@ jest.mock('../useLocalStorageInitiation', () => ({
 jest.mock('../AppContent', () => {
   const rn = require('react-native');
   const react = require('react');
-  return () =>
-    react.createElement(rn.View, { testID: 'app-content' }, 'AppContent');
+  return () => react.createElement(rn.View, { testID: 'app-content' });
 });
 
 describe('App', () => {
@@ -48,18 +48,18 @@ describe('App', () => {
     jest.clearAllMocks();
   });
 
-  it('does not render content when storage is not initialized', () => {
+  it('does not render content when storage is not initialized', async () => {
     mockUseLocalStorageInitialization.mockReturnValue(false);
 
-    render(<App />);
+    await renderWithProviders(<App />);
 
     expect(screen.queryByTestId('app-content')).toBeNull();
   });
 
-  it('renders content when storage is initialized', () => {
+  it('renders content when storage is initialized', async () => {
     mockUseLocalStorageInitialization.mockReturnValue(true);
 
-    render(<App />);
+    await renderWithProviders(<App />);
 
     expect(screen.getByTestId('app-content')).toBeTruthy();
   });

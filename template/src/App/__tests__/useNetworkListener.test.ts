@@ -1,6 +1,10 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useNetworkListener } from '@src/App/useNetworkListener';
+import {
+  renderHook,
+  renderHookWithProviders,
+} from '@modules/utils/src/__tests__/TestUtils';
 import type { AppStateStatus } from 'react-native';
 
 let appStateListener: ((status: AppStateStatus) => void) | undefined;
@@ -56,7 +60,9 @@ describe('useNetworkListener', () => {
   const flushPromises = () => new Promise(resolve => setImmediate(resolve));
 
   it('handles app resume on iOS and fetches latest state', async () => {
-    const { unmount } = renderHook(() => useNetworkListener());
+    const { unmount } = await renderHookWithProviders(() =>
+      useNetworkListener(),
+    );
 
     await act(async () => {
       appStateListener?.('active');
@@ -73,8 +79,8 @@ describe('useNetworkListener', () => {
     expect(mockAppStateRemove).toHaveBeenCalled();
   });
 
-  it('subscribes to network changes', () => {
-    const { unmount } = renderHook(() => useNetworkListener());
+  it('subscribes to network changes', async () => {
+    const { unmount } = await renderHook(() => useNetworkListener());
 
     const netInfoState = { isConnected: false, isInternetReachable: false };
     act(() => {

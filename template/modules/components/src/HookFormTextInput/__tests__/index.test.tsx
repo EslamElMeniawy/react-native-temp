@@ -59,12 +59,12 @@ jest.mock('@eslam-elmeniawy/react-native-common-components', () => ({
 }));
 
 const hookFormTextInput = require('../').default;
-const renderComponent = (props: any) =>
+const renderComponent = async (props: any) =>
   render(React.createElement(hookFormTextInput, props));
 
 const registerBasicRenderTests = () => {
-  it('should render TextInput with form control', () => {
-    renderComponent({
+  it('should render TextInput with form control', async () => {
+    await renderComponent({
       name: 'testField',
     });
 
@@ -72,8 +72,8 @@ const registerBasicRenderTests = () => {
     expect(input).toBeTruthy();
   });
 
-  it('should pass textInputProps to TextInput', () => {
-    renderComponent({
+  it('should pass textInputProps to TextInput', async () => {
+    await renderComponent({
       name: 'email',
       textInputProps: {
         placeholder: 'Enter email',
@@ -86,12 +86,12 @@ const registerBasicRenderTests = () => {
 };
 
 const registerErrorHandlingTests = () => {
-  it('should display error message from form errors', () => {
+  it('should display error message from form errors', async () => {
     mockFormContext.formState.errors = {
       username: { message: 'Username is required' },
     };
 
-    renderComponent({
+    await renderComponent({
       name: 'username',
     });
 
@@ -99,12 +99,12 @@ const registerErrorHandlingTests = () => {
     expect(input).toBeTruthy();
   });
 
-  it('should prefer errorProps errorMessage over form errors', () => {
+  it('should prefer errorProps errorMessage over form errors', async () => {
     mockFormContext.formState.errors = {
       password: { message: 'Password is required' },
     };
 
-    renderComponent({
+    await renderComponent({
       name: 'password',
       textInputProps: {
         errorProps: {
@@ -119,8 +119,8 @@ const registerErrorHandlingTests = () => {
 };
 
 const registerValidationTests = () => {
-  it('should pass validation rules to Controller', () => {
-    renderComponent({
+  it('should pass validation rules to Controller', async () => {
+    await renderComponent({
       name: 'age',
       rules: { required: true },
     });

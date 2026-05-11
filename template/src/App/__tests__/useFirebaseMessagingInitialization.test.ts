@@ -4,7 +4,7 @@ import { useFirebaseMessagingInitialization } from '@src/App/useFirebaseMessagin
 import { useMessagingAutoInitialize } from '@src/App/useMessagingAutoInitialize';
 import { useMessagingPermission } from '@src/App/useMessagingPermission';
 import { useNotificationsChannels } from '@src/App/useNotificationsChannels';
-import { renderHookWithProviders } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 jest.mock('@src/App/useMessagingAutoInitialize');
 jest.mock('@src/App/useMessagingPermission');
@@ -15,8 +15,8 @@ describe('useFirebaseMessagingInitialization', () => {
     jest.clearAllMocks();
   });
 
-  test('should call all messaging initialization hooks', () => {
-    renderHookWithProviders(() => useFirebaseMessagingInitialization());
+  test('should call all messaging initialization hooks', async () => {
+    await renderHookWithProviders(() => useFirebaseMessagingInitialization());
 
     expect(useMessagingAutoInitialize).toHaveBeenCalledTimes(1);
     expect(useMessagingPermission).toHaveBeenCalledTimes(1);

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
+import { fireEvent, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import HookFormTextInput from 'modules/components/src/HookFormTextInput';
@@ -27,8 +28,8 @@ describe('HookFormTextInput', () => {
     return <FormProvider {...methods}>{children}</FormProvider>;
   }
 
-  it('renders value and updates form state on change', () => {
-    render(
+  it('renders value and updates form state on change', async () => {
+    await renderWithProviders(
       <Wrapper>
         <HookFormTextInput
           name="name"
@@ -50,8 +51,8 @@ describe('HookFormTextInput', () => {
     );
   });
 
-  it('prefers provided error message over form error', () => {
-    render(
+  it('prefers provided error message over form error', async () => {
+    await renderWithProviders(
       <Wrapper>
         <HookFormTextInput
           name="name"
@@ -63,14 +64,16 @@ describe('HookFormTextInput', () => {
       </Wrapper>,
     );
 
-    const textInputProps = mockTextInput.mock.calls[0][0];
+    expect(mockTextInput).toHaveBeenCalled();
+    const textInputProps =
+      mockTextInput.mock.calls[mockTextInput.mock.calls.length - 1][0];
 
     expect(textInputProps.errorProps).toEqual(
       expect.objectContaining({ errorMessage: 'custom-error' }),
     );
   });
 
-  it('falls back to form error message when provided', () => {
+  it('falls back to form error message when provided', async () => {
     const FormWithError = () => {
       const methods = useForm<{ name: string }>({
         defaultValues: { name: '' },
@@ -91,9 +94,11 @@ describe('HookFormTextInput', () => {
       );
     };
 
-    render(<FormWithError />);
+    await renderWithProviders(<FormWithError />);
 
-    const textInputProps = mockTextInput.mock.calls[1][0];
+    expect(mockTextInput).toHaveBeenCalled();
+    const textInputProps =
+      mockTextInput.mock.calls[mockTextInput.mock.calls.length - 1][0];
 
     expect(textInputProps.errorProps).toEqual(
       expect.objectContaining({ errorMessage: 'form-error' }),

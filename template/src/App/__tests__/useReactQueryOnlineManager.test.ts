@@ -1,7 +1,8 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { onlineManager } from '@tanstack/react-query';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useReactQueryOnlineManager } from '@src/App/useReactQueryOnlineManager';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 let netInfoHandler:
   | ((state: { isConnected?: boolean; isInternetReachable?: boolean }) => void)
@@ -31,8 +32,10 @@ describe('useReactQueryOnlineManager', () => {
     jest.clearAllMocks();
   });
 
-  it('subscribes to netinfo and updates online state', () => {
-    const { unmount } = renderHook(() => useReactQueryOnlineManager());
+  it('subscribes to netinfo and updates online state', async () => {
+    const { unmount } = await renderHookWithProviders(() =>
+      useReactQueryOnlineManager(),
+    );
 
     act(() => {
       netInfoHandler?.({ isConnected: true, isInternetReachable: true });

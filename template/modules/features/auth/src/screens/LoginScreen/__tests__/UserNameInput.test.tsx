@@ -1,5 +1,6 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
+import { screen } from '@testing-library/react-native';
 import * as React from 'react';
 import UserNameInput from '@modules/features-auth/src/screens/LoginScreen/UserNameInput';
 
@@ -41,29 +42,29 @@ describe('UserNameInput', () => {
     jest.clearAllMocks();
   });
 
-  it('should render input with correct name', () => {
-    render(<UserNameInput />);
+  it('should render input with correct name', async () => {
+    await renderWithProviders(<UserNameInput />);
 
     expect(screen.getByTestId('input-username')).toBeTruthy();
   });
 
-  it('should set keyboard type to email-address', () => {
-    render(<UserNameInput />);
+  it('should set keyboard type to email-address', async () => {
+    await renderWithProviders(<UserNameInput />);
 
     const input = screen.getByTestId('input-username');
     expect(input.props.keyboardType).toBe('email-address');
   });
 
-  it('should translate username label', () => {
-    render(<UserNameInput />);
+  it('should translate username label', async () => {
+    await renderWithProviders(<UserNameInput />);
 
     expect(mockTranslate).toHaveBeenCalledWith(
       expect.stringContaining('auth:username'),
     );
   });
 
-  it('should have required validation rule', () => {
-    render(<UserNameInput />);
+  it('should have required validation rule', async () => {
+    await renderWithProviders(<UserNameInput />);
 
     expect(mockTranslate).toHaveBeenCalledWith(
       expect.stringContaining('fieldRequired'),

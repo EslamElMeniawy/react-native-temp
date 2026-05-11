@@ -24,31 +24,33 @@ jest.mock('react-native-edge-to-edge', () => {
   };
 });
 
-jest.mock('tinycolor2', () => jest.fn((color: string) => ({
-  isLight: () => color === '#FFFFFF',
-})));
+jest.mock('tinycolor2', () =>
+  jest.fn((color: string) => ({
+    isLight: () => color === '#FFFFFF',
+  })),
+);
 
 const systemBars = require('../').default;
-const renderComponent = (props: any) =>
+const renderComponent = async (props: any) =>
   render(React.createElement(systemBars, props));
 
 const registerBasicTests = () => {
-  it('should render SystemBars component', () => {
-    renderComponent({});
+  it('should render SystemBars component', async () => {
+    await renderComponent({});
 
     const systemBarsView = screen.getByTestId('system-bars');
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should use theme background color by default', () => {
-    renderComponent({});
+  it('should use theme background color by default', async () => {
+    await renderComponent({});
 
     const systemBarsView = screen.getByTestId('system-bars');
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should apply custom statusBarColor', () => {
-    renderComponent({
+  it('should apply custom statusBarColor', async () => {
+    await renderComponent({
       statusBarColor: '#000000',
     });
 
@@ -56,8 +58,8 @@ const registerBasicTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should apply custom navigationBarColor', () => {
-    renderComponent({
+  it('should apply custom navigationBarColor', async () => {
+    await renderComponent({
       navigationBarColor: '#000000',
     });
 
@@ -67,8 +69,8 @@ const registerBasicTests = () => {
 };
 
 const registerStatusBarTests = () => {
-  it('should handle statusBarProps with string style', () => {
-    renderComponent({
+  it('should handle statusBarProps with string style', async () => {
+    await renderComponent({
       statusBarProps: { style: 'dark' },
     });
 
@@ -76,8 +78,8 @@ const registerStatusBarTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should handle statusBarProps with object style', () => {
-    renderComponent({
+  it('should handle statusBarProps with object style', async () => {
+    await renderComponent({
       statusBarProps: { style: { statusBar: 'light' } },
     });
 
@@ -85,8 +87,8 @@ const registerStatusBarTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should handle statusBarProps with boolean hidden', () => {
-    renderComponent({
+  it('should handle statusBarProps with boolean hidden', async () => {
+    await renderComponent({
       statusBarProps: { hidden: true },
     });
 
@@ -94,8 +96,8 @@ const registerStatusBarTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should handle statusBarProps with object hidden', () => {
-    renderComponent({
+  it('should handle statusBarProps with object hidden', async () => {
+    await renderComponent({
       statusBarProps: { hidden: { statusBar: false } },
     });
 
@@ -105,8 +107,8 @@ const registerStatusBarTests = () => {
 };
 
 const registerNavigationBarTests = () => {
-  it('should handle navigationBarProps with string style', () => {
-    renderComponent({
+  it('should handle navigationBarProps with string style', async () => {
+    await renderComponent({
       navigationBarProps: { style: 'light' },
     });
 
@@ -114,8 +116,8 @@ const registerNavigationBarTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should handle navigationBarProps with object style', () => {
-    renderComponent({
+  it('should handle navigationBarProps with object style', async () => {
+    await renderComponent({
       navigationBarProps: { style: { navigationBar: 'dark' } },
     });
 
@@ -123,8 +125,8 @@ const registerNavigationBarTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should handle navigationBarProps with boolean hidden', () => {
-    renderComponent({
+  it('should handle navigationBarProps with boolean hidden', async () => {
+    await renderComponent({
       navigationBarProps: { hidden: false },
     });
 
@@ -132,8 +134,8 @@ const registerNavigationBarTests = () => {
     expect(systemBarsView).toBeTruthy();
   });
 
-  it('should handle navigationBarProps with object hidden', () => {
-    renderComponent({
+  it('should handle navigationBarProps with object hidden', async () => {
+    await renderComponent({
       navigationBarProps: { hidden: { navigationBar: true } },
     });
 

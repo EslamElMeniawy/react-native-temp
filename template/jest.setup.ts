@@ -218,10 +218,143 @@ jest.mock('@react-native-firebase/messaging', () => () => ({
   getToken: jest.fn(() => Promise.resolve('myMockToken')),
 }));
 
+jest.mock('@react-navigation/native', () => {
+  const React = require('react');
+  const ReactNative = require('react-native');
+  return {
+    BaseNavigationContainer: ({ children }: any) =>
+      React.createElement(ReactNative.View, { children }),
+    NavigationContainer: ({ children }: any) =>
+      React.createElement(ReactNative.View, { children }),
+    useFocusEffect: jest.fn(callback => {
+      React.useEffect(callback, []);
+    }),
+    useRoute: jest.fn(() => ({ params: {} })),
+    useNavigation: jest.fn(() => ({
+      navigate: jest.fn(),
+      goBack: jest.fn(),
+      setParams: jest.fn(),
+      dispatch: jest.fn(),
+      reset: jest.fn(),
+      isFocused: jest.fn(() => true),
+      push: jest.fn(),
+    })),
+    createNavigationContainerRef: jest.fn(() => ({
+      navigate: jest.fn(),
+      goBack: jest.fn(),
+      setParams: jest.fn(),
+      dispatch: jest.fn(),
+      reset: jest.fn(),
+      isFocused: jest.fn(() => true),
+      isReady: jest.fn(() => true),
+      getCurrentRoute: jest.fn(() => ({ name: 'Home' })),
+      push: jest.fn(),
+    })),
+    StackActions: {
+      push: jest.fn((name: string, params?: any) => ({
+        type: 'PUSH',
+        payload: { name, params },
+      })),
+      replace: jest.fn((name: string, params?: any) => ({
+        type: 'REPLACE',
+        payload: { name, params },
+      })),
+      popToTop: jest.fn(() => ({
+        type: 'POP_TO_TOP',
+      })),
+      pop: jest.fn((count?: number) => ({
+        type: 'POP',
+        payload: { count },
+      })),
+    },
+    CommonActions: {
+      navigate: jest.fn((name: string, params?: any) => ({
+        type: 'NAVIGATE',
+        payload: { name, params },
+      })),
+      goBack: jest.fn(() => ({
+        type: 'GO_BACK',
+      })),
+      reset: jest.fn((state: any) => ({
+        type: 'RESET',
+        payload: state,
+      })),
+    },
+  };
+});
+
+jest.mock('@react-navigation/native-stack', () => {
+  const React = require('react');
+  const ReactNative = require('react-native');
+  return {
+    createNativeStackNavigator: jest.fn(() => ({
+      Navigator: ({ children }: any) =>
+        React.createElement(ReactNative.View, { children }),
+      Screen: ({ name, component }: any) =>
+        React.createElement(component || ReactNative.View, { testID: name }),
+    })),
+  };
+});
+
 jest.mock('react-native-network-logger', () => ({ default: jest.fn() }));
+
+jest.mock('axios', () => {
+  const createMockClient = () => {
+    const mockClient = {
+      interceptors: {
+        request: {
+          use: jest.fn(
+            (success: any) => {},
+            (error: any) => {},
+          ),
+        },
+        response: {
+          use: jest.fn(
+            (success: any) => {},
+            (error: any) => {},
+          ),
+        },
+      },
+      defaults: { timeoutErrorMessage: 'Network Timeout' },
+      request: jest.fn(() => Promise.resolve({ data: {} })),
+      get: jest.fn(() => Promise.resolve({ data: {} })),
+      delete: jest.fn(() => Promise.resolve({ data: {} })),
+      head: jest.fn(() => Promise.resolve({ data: {} })),
+      options: jest.fn(() => Promise.resolve({ data: {} })),
+      post: jest.fn(() => Promise.resolve({ data: {} })),
+      put: jest.fn(() => Promise.resolve({ data: {} })),
+      patch: jest.fn(() => Promise.resolve({ data: {} })),
+      putForm: jest.fn(() => Promise.resolve({ data: {} })),
+    };
+    return mockClient;
+  };
+
+  return {
+    create: jest.fn(createMockClient),
+    default: {
+      create: jest.fn(createMockClient),
+    },
+    isAxiosError: jest.fn(
+      (error: any) => error && error.response !== undefined,
+    ),
+  };
+});
+
+jest.mock('toastify-react-native', () => {
+  const mockToast = {
+    show: jest.fn(),
+    hideAll: jest.fn(),
+    get: jest.fn(() => mockToast),
+  };
+  return {
+    Toast: mockToast,
+    default: jest.fn(),
+  };
+});
 
 jest.mock('@modules/localization', () => ({
   translate: jest.fn((key: string) => key),
+  getCurrentLocale: jest.fn(() => 'en-US'),
 }));
 
 jest.mock('@eslam-elmeniawy/react-native-common-components', () => ({
@@ -331,5 +464,228 @@ jest.mock('react-native-mmkv', () => {
     __esModule: true,
     MMKV: MockMMKV,
     createMMKV: jest.fn(() => new MockMMKV()),
+  };
+});
+
+jest.mock('react-native-paper', () => {
+  const ReactNative = require('react-native');
+  const React = require('react');
+
+  const mockTheme = {
+    colors: {
+      primary: '#1976D2',
+      onPrimary: '#FFFFFF',
+      primaryContainer: '#BBDEFB',
+      onPrimaryContainer: '#0D47A1',
+      secondary: '#424242',
+      onSecondary: '#FFFFFF',
+      secondaryContainer: '#BDBDBD',
+      onSecondaryContainer: '#212121',
+      tertiary: '#FBC02D',
+      onTertiary: '#000000',
+      tertiaryContainer: '#FFF59D',
+      onTertiaryContainer: '#F57F17',
+      error: '#B00020',
+      onError: '#FFFFFF',
+      errorContainer: '#FFEBEE',
+      onErrorContainer: '#B71C1C',
+      background: '#FFFFFF',
+      onBackground: '#212121',
+      surface: '#FFFFFF',
+      onSurface: '#212121',
+      surfaceVariant: '#E0E0E0',
+      onSurfaceVariant: '#616161',
+      outline: '#424242',
+      outlineVariant: '#BDBDBD',
+      shadow: '#000000',
+      scrim: '#000000',
+      inverseSurface: '#212121',
+      inverseOnSurface: '#F5F5F5',
+      inversePrimary: '#BBDEFB',
+      elevation: {
+        level0: 'transparent',
+        level1: '#F3E5F5',
+        level2: '#EDE7F6',
+        level3: '#E8E0F6',
+        level4: '#E6DDF7',
+        level5: '#E1D9F7',
+      },
+    },
+    fonts: {
+      displayLarge: {
+        fontFamily: 'Roboto',
+        fontSize: 57,
+        fontWeight: '400',
+        lineHeight: 64,
+        letterSpacing: 0,
+      },
+      displayMedium: {
+        fontFamily: 'Roboto',
+        fontSize: 45,
+        fontWeight: '400',
+        lineHeight: 52,
+        letterSpacing: 0,
+      },
+      displaySmall: {
+        fontFamily: 'Roboto',
+        fontSize: 36,
+        fontWeight: '400',
+        lineHeight: 44,
+        letterSpacing: 0,
+      },
+      headlineLarge: {
+        fontFamily: 'Roboto',
+        fontSize: 32,
+        fontWeight: '400',
+        lineHeight: 40,
+        letterSpacing: 0,
+      },
+      headlineMedium: {
+        fontFamily: 'Roboto',
+        fontSize: 28,
+        fontWeight: '400',
+        lineHeight: 36,
+        letterSpacing: 0,
+      },
+      headlineSmall: {
+        fontFamily: 'Roboto',
+        fontSize: 24,
+        fontWeight: '400',
+        lineHeight: 32,
+        letterSpacing: 0,
+      },
+      titleLarge: {
+        fontFamily: 'Roboto',
+        fontSize: 22,
+        fontWeight: '500',
+        lineHeight: 28,
+        letterSpacing: 0,
+      },
+      titleMedium: {
+        fontFamily: 'Roboto',
+        fontSize: 16,
+        fontWeight: '500',
+        lineHeight: 24,
+        letterSpacing: 0.15,
+      },
+      titleSmall: {
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        fontWeight: '500',
+        lineHeight: 20,
+        letterSpacing: 0.1,
+      },
+      bodyLarge: {
+        fontFamily: 'Roboto',
+        fontSize: 16,
+        fontWeight: '400',
+        lineHeight: 24,
+        letterSpacing: 0.15,
+      },
+      bodyMedium: {
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        fontWeight: '400',
+        lineHeight: 20,
+        letterSpacing: 0.25,
+      },
+      bodySmall: {
+        fontFamily: 'Roboto',
+        fontSize: 12,
+        fontWeight: '400',
+        lineHeight: 16,
+        letterSpacing: 0.4,
+      },
+      labelLarge: {
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        fontWeight: '500',
+        lineHeight: 20,
+        letterSpacing: 0.1,
+      },
+      labelMedium: {
+        fontFamily: 'Roboto',
+        fontSize: 12,
+        fontWeight: '500',
+        lineHeight: 16,
+        letterSpacing: 0.5,
+      },
+      labelSmall: {
+        fontFamily: 'Roboto',
+        fontSize: 11,
+        fontWeight: '500',
+        lineHeight: 16,
+        letterSpacing: 0.5,
+      },
+    },
+    roundness: 4,
+    isV3: true,
+  };
+
+  const MD3LightTheme = { ...mockTheme, dark: false };
+  const MD3DarkTheme = {
+    ...mockTheme,
+    dark: true,
+    colors: {
+      ...mockTheme.colors,
+      background: '#121212',
+      surface: '#1E1E1E',
+      onBackground: '#E0E0E0',
+      onSurface: '#EEEEEE',
+    },
+  };
+
+  const configureFonts = (config: any) => config.config || config;
+
+  return {
+    Button: React.forwardRef((props, ref) =>
+      React.createElement(
+        ReactNative.TouchableOpacity,
+        { ref, ...props },
+        props.children,
+      ),
+    ),
+    Text: React.forwardRef((props, ref) =>
+      React.createElement(ReactNative.Text, { ref, ...props }, props.children),
+    ),
+    Provider: ({ children, theme }: any) =>
+      React.createElement(ReactNative.View, { children }),
+    PaperProvider: ({ children, theme }: any) =>
+      React.createElement(ReactNative.View, { children }),
+    MD3LightTheme,
+    MD3DarkTheme,
+    useTheme: () => mockTheme,
+    Snackbar: React.forwardRef((props, ref) =>
+      React.createElement(ReactNative.View, { ref, ...props }),
+    ),
+    Modal: React.forwardRef((props, ref) =>
+      React.createElement(ReactNative.Modal, { ref, ...props }, props.children),
+    ),
+    Appbar: {
+      Header: React.forwardRef((props, ref) =>
+        React.createElement(
+          ReactNative.View,
+          { ref, ...props },
+          props.children,
+        ),
+      ),
+      BackAction: React.forwardRef((props, ref) =>
+        React.createElement(
+          ReactNative.TouchableOpacity,
+          { ref, ...props },
+          props.children,
+        ),
+      ),
+    },
+    ActivityIndicator: React.forwardRef((props, ref) =>
+      React.createElement(ReactNative.ActivityIndicator, { ref, ...props }),
+    ),
+    Divider: React.forwardRef((props, ref) =>
+      React.createElement(ReactNative.View, { ref, ...props }),
+    ),
+    Searchbar: React.forwardRef((props, ref) =>
+      React.createElement(ReactNative.TextInput, { ref, ...props }),
+    ),
+    configureFonts,
   };
 });

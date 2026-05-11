@@ -55,12 +55,13 @@ jest.mock('@modules/utils', () => ({
 }));
 
 import { EventType } from '@notifee/react-native';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useForegroundMessagesListener } from '@src/App/useForegroundMessagesListener';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
 import { UnreadNotificationsCountLocalStorage } from '@modules/features-notifications';
 import { useAppDispatch } from '@modules/store';
 import { displayLocalNotification, processNotification } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 
 describe('useForegroundMessagesListener', () => {
@@ -73,8 +74,8 @@ describe('useForegroundMessagesListener', () => {
     ).mockReturnValue(1);
   });
 
-  it('increments unread count and shows notification when message arrives with token', () => {
-    renderHook(() => useForegroundMessagesListener());
+  it('increments unread count and shows notification when message arrives with token', async () => {
+    await renderHookWithProviders(() => useForegroundMessagesListener());
 
     const message = {
       messageId: 'm1',
@@ -95,8 +96,8 @@ describe('useForegroundMessagesListener', () => {
     expect(displayLocalNotification).toHaveBeenCalledWith(message);
   });
 
-  it('processes foreground press events', () => {
-    renderHook(() => useForegroundMessagesListener());
+  it('processes foreground press events', async () => {
+    await renderHookWithProviders(() => useForegroundMessagesListener());
 
     act(() => {
       onForegroundEventCallback?.({

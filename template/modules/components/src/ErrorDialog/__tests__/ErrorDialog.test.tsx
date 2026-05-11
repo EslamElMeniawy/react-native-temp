@@ -58,7 +58,7 @@ describe('ErrorDialog', () => {
     storeMock.useAppDispatch.mockReturnValue(jest.fn());
   });
 
-  it('renders dialog props from store', () => {
+  it('renders dialog props from store', async () => {
     storeMock.useAppSelector.mockImplementation(
       (selector: (state: any) => any) =>
         selector({
@@ -66,7 +66,7 @@ describe('ErrorDialog', () => {
         }),
     );
 
-    render(<ErrorDialog />);
+    await render(<ErrorDialog />);
 
     expect(mockAlertDialog).toHaveBeenCalledTimes(1);
     expect(mockAlertDialog).toHaveBeenCalledWith(
@@ -78,7 +78,7 @@ describe('ErrorDialog', () => {
     );
   });
 
-  it('dismisses and clears store, triggering logout when session expired', () => {
+  it('dismisses and clears store, triggering logout when session expired', async () => {
     const dispatch = jest.fn();
     storeMock.useAppDispatch.mockReturnValue(dispatch);
     storeMock.useAppSelector.mockImplementation(
@@ -91,7 +91,7 @@ describe('ErrorDialog', () => {
         }),
     );
 
-    render(<ErrorDialog />);
+    await render(<ErrorDialog />);
 
     const props = mockAlertDialog.mock.calls[0][0];
     const dismiss = props.actions[0].actionProps.onPress;

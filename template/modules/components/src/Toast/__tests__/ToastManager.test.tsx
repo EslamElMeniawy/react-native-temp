@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { render } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import * as React from 'react';
 import ComponentToastManager from 'modules/components/src/Toast/ToastManager';
 
@@ -155,8 +155,8 @@ describe('ToastManager', () => {
     };
   }
 
-  it('passes theme, offsets, and icons to toast manager', () => {
-    render(<ComponentToastManager />);
+  it('passes theme, offsets, and icons to toast manager', async () => {
+    await renderWithProviders(<ComponentToastManager />);
 
     expect(mockToastManager).toHaveBeenCalledTimes(1);
 
@@ -183,8 +183,8 @@ describe('ToastManager', () => {
     );
   });
 
-  it('renders toast configs using provided components', () => {
-    render(<ComponentToastManager />);
+  it('renders toast configs using provided components', async () => {
+    await renderWithProviders(<ComponentToastManager />);
 
     const props = mockToastManager.mock.calls[0][0];
     const {
@@ -222,7 +222,7 @@ describe('ToastManager', () => {
     });
   });
 
-  it('uses light theme colors when dark mode is false', () => {
+  it('uses light theme colors when dark mode is false', async () => {
     const themeMock = jest.requireMock('@modules/theme') as jest.Mocked<
       Record<string, any>
     >;
@@ -234,7 +234,7 @@ describe('ToastManager', () => {
       },
     });
 
-    render(<ComponentToastManager />);
+    await renderWithProviders(<ComponentToastManager />);
 
     const props = mockToastManager.mock.calls[0][0];
 

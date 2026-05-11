@@ -72,7 +72,7 @@ describe('Screen', () => {
       }),
     );
 
-    const tree = toJSON() as any[];
+    const tree = toJSON() as unknown as any[];
     expect(Array.isArray(tree)).toBe(true);
 
     expect(tree[0].props.style).toEqual(
@@ -108,7 +108,7 @@ describe('Screen', () => {
       </Screen>,
     );
 
-    const tree = toJSON() as any[];
+    const tree = toJSON() as unknown as any[];
 
     expect(tree[0].props.style).toEqual(
       expect.objectContaining({ height: 0, backgroundColor: '#101010' }),

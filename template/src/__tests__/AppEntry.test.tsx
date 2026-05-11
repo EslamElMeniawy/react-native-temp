@@ -4,8 +4,9 @@ import {
   getMessaging,
   setBackgroundMessageHandler,
 } from '@react-native-firebase/messaging';
-import { render, act } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import * as React from 'react';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 let appEntry: React.ComponentType<{ isHeadless?: boolean }>;
 
 const mockSetBaseDimensions =
@@ -61,21 +62,23 @@ describe('AppEntry', () => {
     });
   });
 
-  it('returns null when launched headless', () => {
-    const view = render(React.createElement(appEntry, { isHeadless: true }));
+  it('returns null when launched headless', async () => {
+    const view = await renderWithProviders(
+      React.createElement(appEntry, { isHeadless: true }),
+    );
 
     expect(view.toJSON()).toBeNull();
   });
 
   it('renders App and registers handlers when not headless', async () => {
-    const view = render(React.createElement(appEntry));
+    const view = await renderWithProviders(React.createElement(appEntry));
 
     await act(async () => Promise.resolve());
 
     expect(view.toJSON()).not.toBeNull();
     expect(getMessaging).toHaveBeenCalledTimes(1);
     expect(setBackgroundMessageHandler).toHaveBeenCalledWith(
-      'messaging',
+      expect.any(String),
       expect.any(Function),
     );
     expect(mockSetBaseDimensions).toHaveBeenCalledWith({

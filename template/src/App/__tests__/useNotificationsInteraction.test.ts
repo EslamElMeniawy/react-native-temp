@@ -1,7 +1,11 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useNotificationsInteraction } from '@src/App/useNotificationsInteraction';
 import { processNotification } from '@modules/utils';
+import {
+  renderHook,
+  renderHookWithProviders,
+} from '@modules/utils/src/__tests__/TestUtils';
 import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 
 const mockOnNotificationOpenedApp = jest.fn();
@@ -44,7 +48,7 @@ describe('useNotificationsInteraction', () => {
   });
 
   it('processes the initial notification if present', async () => {
-    renderHook(() => useNotificationsInteraction());
+    renderHookWithProviders(() => useNotificationsInteraction());
 
     await act(async () => {
       await flushPromises();

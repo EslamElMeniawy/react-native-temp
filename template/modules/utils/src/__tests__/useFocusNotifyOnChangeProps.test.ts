@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from '@jest/globals';
 import { useFocusEffect } from '@react-navigation/native';
-import { renderHookWithProviders } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import { useFocusNotifyOnChangeProps } from '@modules/utils/src/useFocusNotifyOnChangeProps';
 import type { NotifyOnChangeProps } from '@tanstack/query-core';
 
@@ -11,7 +11,7 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('useFocusNotifyOnChangeProps - Focused State', () => {
-  test('should return notifyOnChangeProps when component is focused', () => {
+  test('should return notifyOnChangeProps when component is focused', async () => {
     const notifyOnChangeProps = 'all';
     let focusCallback: () => void = () => {};
 
@@ -19,7 +19,7 @@ describe('useFocusNotifyOnChangeProps - Focused State', () => {
       focusCallback = callback as () => void;
     });
 
-    const { result } = renderHookWithProviders(() =>
+    const { result } = await renderHookWithProviders(() =>
       useFocusNotifyOnChangeProps(notifyOnChangeProps),
     );
 
@@ -29,7 +29,7 @@ describe('useFocusNotifyOnChangeProps - Focused State', () => {
     expect(result.current()).toEqual(notifyOnChangeProps);
   });
 
-  test('should return result of notifyOnChangeProps function when component is focused', () => {
+  test('should return result of notifyOnChangeProps function when component is focused', async () => {
     const notifyOnChangeProps = jest.fn(() => ['data']);
     let focusCallback: () => void = () => {};
 
@@ -37,7 +37,7 @@ describe('useFocusNotifyOnChangeProps - Focused State', () => {
       focusCallback = callback as () => void;
     });
 
-    const { result } = renderHookWithProviders(() =>
+    const { result } = await renderHookWithProviders(() =>
       useFocusNotifyOnChangeProps(
         notifyOnChangeProps as unknown as NotifyOnChangeProps,
       ),
@@ -52,7 +52,7 @@ describe('useFocusNotifyOnChangeProps - Focused State', () => {
 });
 
 describe('useFocusNotifyOnChangeProps - Unfocused/Undefined State', () => {
-  test('should return empty array when component is not focused', () => {
+  test('should return empty array when component is not focused', async () => {
     const notifyOnChangeProps = 'all';
     let focusCallback: () => () => void = () => () => {};
 
@@ -60,7 +60,7 @@ describe('useFocusNotifyOnChangeProps - Unfocused/Undefined State', () => {
       focusCallback = callback as () => () => void;
     });
 
-    const { result } = renderHookWithProviders(() =>
+    const { result } = await renderHookWithProviders(() =>
       useFocusNotifyOnChangeProps(notifyOnChangeProps),
     );
 
@@ -71,13 +71,13 @@ describe('useFocusNotifyOnChangeProps - Unfocused/Undefined State', () => {
     expect(result.current()).toEqual([]);
   });
 
-  test('should return an empty array when notifyOnChangeProps is undefined', () => {
+  test('should return an empty array when notifyOnChangeProps is undefined', async () => {
     let focusCallback: () => void = () => {};
     (useFocusEffect as jest.Mock).mockImplementation((callback: unknown) => {
       focusCallback = callback as () => void;
     });
 
-    const { result } = renderHookWithProviders(() =>
+    const { result } = await renderHookWithProviders(() =>
       useFocusNotifyOnChangeProps(),
     );
 

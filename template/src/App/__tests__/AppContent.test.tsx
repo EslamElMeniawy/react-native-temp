@@ -1,7 +1,8 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import * as React from 'react';
 import AppContent from '@src/App/AppContent';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 const mockUseLocalizationInitialization = jest.fn();
 
@@ -23,11 +24,7 @@ jest.mock('@modules/navigation', () => {
   const react = require('react');
   return {
     ['NavigationContainer']: () =>
-      react.createElement(
-        rn.View,
-        { testID: 'navigation-container' },
-        'Navigation',
-      ),
+      react.createElement(rn.View, { testID: 'navigation-container' }),
   };
 });
 
@@ -107,10 +104,10 @@ describe('AppContent', () => {
     jest.clearAllMocks();
   });
 
-  it('renders providers and core UI when language is loaded', () => {
+  it('renders providers and core UI when language is loaded', async () => {
     mockUseLocalizationInitialization.mockReturnValue(true);
 
-    render(<AppContent />);
+    await renderWithProviders(<AppContent />);
 
     expect(screen.getByTestId('keyboard-provider')).toBeTruthy();
     expect(screen.getByTestId('paper-provider')).toBeTruthy();
@@ -121,10 +118,10 @@ describe('AppContent', () => {
     expect(screen.getByTestId('toast-manager')).toBeTruthy();
   });
 
-  it('returns null when language is not loaded', () => {
+  it('returns null when language is not loaded', async () => {
     mockUseLocalizationInitialization.mockReturnValue(false);
 
-    const view = render(<AppContent />);
+    const view = await renderWithProviders(<AppContent />);
 
     expect(view.toJSON()).toBeNull();
   });

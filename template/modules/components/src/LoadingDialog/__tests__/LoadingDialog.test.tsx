@@ -31,10 +31,10 @@ describe('LoadingDialog', () => {
     jest.clearAllMocks();
   });
 
-  it('shows dialog when store flag is true', () => {
+  it('shows dialog when store flag is true', async () => {
     useAppSelector.mockReturnValue({ showLoadingDialog: true });
 
-    render(<LoadingDialog />);
+    await render(<LoadingDialog />);
 
     expect(mockLoadingDialog).toHaveBeenCalledTimes(1);
     expect(mockLoadingDialog).toHaveBeenCalledWith(
@@ -42,10 +42,10 @@ describe('LoadingDialog', () => {
     );
   });
 
-  it('hides dialog when store flag is false', () => {
+  it('hides dialog when store flag is false', async () => {
     useAppSelector.mockReturnValue({ showLoadingDialog: false });
 
-    const { toJSON } = render(<LoadingDialog />);
+    const { toJSON } = await render(<LoadingDialog />);
 
     expect(mockLoadingDialog).toHaveBeenCalledWith(
       expect.objectContaining({ visible: false }),

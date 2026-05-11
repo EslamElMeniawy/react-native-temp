@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from '@jest/globals';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import { NavigationContainer } from '@react-navigation/native';
-import { render } from '@testing-library/react-native';
 import * as React from 'react';
 
 import { RootStack } from '@modules/navigation';
@@ -30,8 +30,8 @@ jest.mock('react-native-config', () => ({
 }));
 
 describe('RootStack', () => {
-  it('renders without crashing', () => {
-    const view = render(
+  it('renders without crashing', async () => {
+    const view = await renderWithProviders(
       <NavigationContainer>
         <RootStack />
       </NavigationContainer>,
@@ -39,8 +39,8 @@ describe('RootStack', () => {
     expect(view.toJSON()).toBeTruthy();
   });
 
-  it('renders correctly with all screens', () => {
-    const view = render(
+  it('renders correctly with all screens', async () => {
+    const view = await renderWithProviders(
       <NavigationContainer>
         <RootStack />
       </NavigationContainer>,

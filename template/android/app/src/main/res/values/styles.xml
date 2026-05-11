@@ -17,8 +17,9 @@
         <item name="enforceNavigationBarContrast">false</item>
     </style>
 
-    <!-- BootTheme should inherit from Theme.BootSplash or Theme.BootSplash.EdgeToEdge -->
-    <style name="BootTheme" parent="Theme.BootSplash.EdgeToEdge">
+    <!-- BootTheme should inherit from Theme.BootSplash (not combined with EdgeToEdge) -->
+    <!-- EdgeToEdge configuration is handled in AppTheme via postBootSplashTheme -->
+    <style name="BootTheme" parent="Theme.BootSplash">
         <item name="bootSplashBackground">@color/bootsplash_background</item>
         <item name="bootSplashLogo">@drawable/bootsplash_logo</item>
         <item name="postBootSplashTheme">@style/AppTheme</item>

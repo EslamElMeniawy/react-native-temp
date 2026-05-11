@@ -53,8 +53,8 @@ jest.mock('react-i18next', () => {
 });
 
 describe('ListEmptyComponent', () => {
-  it('shows error icon and message when loading error with custom error message', () => {
-    render(
+  it('shows error icon and message when loading error with custom error message', async () => {
+    await render(
       React.createElement(ListEmptyComponent, {
         isLoadingError: true,
         error: { errorMessage: 'Boom' } as any,
@@ -68,8 +68,8 @@ describe('ListEmptyComponent', () => {
     expect(screen.getByText('Boom')).toBeTruthy();
   });
 
-  it('shows no data message when no error', () => {
-    render(
+  it('shows no data message when no error', async () => {
+    await render(
       React.createElement(ListEmptyComponent, {
         isLoadingError: false,
         data: 'users',
@@ -82,12 +82,12 @@ describe('ListEmptyComponent', () => {
     expect(screen.getByText('noDataAvailable:users')).toBeTruthy();
   });
 
-  it('falls back to translated error when custom error is missing', () => {
+  it('falls back to translated error when custom error is missing', async () => {
     const { tMock } = jest.requireMock('react-i18next') as jest.Mocked<
       Record<string, any>
     >;
 
-    render(
+    await render(
       React.createElement(ListEmptyComponent, {
         isLoadingError: true,
         data: 'orders',
