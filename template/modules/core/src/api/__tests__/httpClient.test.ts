@@ -10,21 +10,6 @@ import {
   mockSetErrorDialogMessage,
 } from './httpClient.helpers';
 
-jest.mock('@modules/store', () => ({
-  ['store']: {
-    getState: jest.fn(),
-    dispatch: jest.fn(),
-  },
-  ['DialogsStore']: {
-    setErrorDialogMessage: jest.fn(),
-  },
-}));
-
-jest.mock('@modules/localization', () => ({
-  translate: jest.fn(),
-  getCurrentLocale: jest.fn(),
-}));
-
 jest.mock('axios', () => {
   const interceptors = {
     request: {

@@ -8,6 +8,7 @@ import { useAppTheme } from '@modules/theme';
 import { clientPersister, queryClient } from '@modules/utils';
 import { useFirebaseMessagingInitialization } from './useFirebaseMessagingInitialization';
 import { useForegroundMessagesListener } from './useForegroundMessagesListener';
+import { useHttpClientDependenciesRegistration } from './useHttpClientDependenciesRegistration';
 import { useLocalizationInitialization } from './useLocalizationInitialization';
 import { useLogInitialization } from './useLogInitialization';
 import { useNetworkListener } from './useNetworkListener';
@@ -17,6 +18,7 @@ import { useReactQueryFocusManager } from './useReactQueryFocusManager';
 import { useReactQueryOnlineManager } from './useReactQueryOnlineManager';
 
 export default React.memo(() => {
+  useHttpClientDependenciesRegistration();
   useLogInitialization();
   const languageLoaded = useLocalizationInitialization();
   useOrientationLocker();

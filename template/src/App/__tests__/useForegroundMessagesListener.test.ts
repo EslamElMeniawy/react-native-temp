@@ -36,7 +36,7 @@ jest.mock('@modules/features-notifications', () => ({
   },
 }));
 
-jest.mock('@modules/features-profile', () => ({
+jest.mock('@modules/domain-user', () => ({
   ['UserStore']: {
     setUnreadNotificationsCount: jest.fn(count => ({
       type: 'setUnreadNotificationsCount',

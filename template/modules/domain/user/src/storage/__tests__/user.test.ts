@@ -4,7 +4,7 @@ import {
   getUser,
   setUser,
   removeUser,
-} from '@modules/features-profile/src/storage/user';
+} from '@modules/domain-user/src/storage/user';
 
 describe('User Storage', () => {
   it('getUser returns user or null', () => {

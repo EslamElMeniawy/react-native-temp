@@ -1,5 +1,5 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { useGetUserDetailsApi } from '@modules/features-profile';
+import { useGetUserDetailsApi } from '@modules/domain-user';
 import { useFocusNotifyOnChangeProps, useRefreshOnFocus } from '@modules/utils';
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
@@ -19,7 +19,7 @@ jest.mock('@modules/components', () => {
   };
 });
 
-jest.mock('@modules/features-profile', () => ({
+jest.mock('@modules/domain-user', () => ({
   useGetUserDetailsApi: jest.fn(),
 }));
 

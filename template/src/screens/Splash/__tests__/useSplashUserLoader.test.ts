@@ -1,8 +1,8 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { waitFor } from '@testing-library/react-native';
 import { useSplashUserLoader } from '@src/screens/Splash/useSplashUserLoader';
+import { useGetUserDetailsApi, UserStore } from '@modules/domain-user';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
-import { useGetUserDetailsApi, UserStore } from '@modules/features-profile';
 import { useAppDispatch } from '@modules/store';
 import { saveUserData } from '@modules/utils';
 import {
@@ -18,7 +18,7 @@ jest.mock('@modules/features-auth', () => ({
   },
 }));
 
-jest.mock('@modules/features-profile', () => ({
+jest.mock('@modules/domain-user', () => ({
   useGetUserDetailsApi: jest.fn(),
   ['UserStore']: {
     setApiToken: jest.fn(token => ({ type: 'setApiToken', payload: token })),

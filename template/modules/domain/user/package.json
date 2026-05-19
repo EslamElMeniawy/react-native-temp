@@ -1,7 +1,7 @@
 {
-  "name": "@modules/features/profile",
+  "name": "@modules/domain/user",
   "version": "0.0.0",
-  "description": "Profile Feature Module",
+  "description": "User Domain Module",
   "main": "src/index",
   "author": " <> ()",
   "license": "UNLICENSED",

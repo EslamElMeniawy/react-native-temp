@@ -1,9 +1,8 @@
-import { translate, getCurrentLocale } from '@modules/localization';
-import { store, DialogsStore } from '@modules/store';
 import axios from 'axios';
 import { default as Config } from 'react-native-config';
 import type { ServerError, ServerErrorResponse } from '@modules/core';
 import ConsoleColors from './ConsoleColors';
+import { getHttpClientDependencies } from './httpClientDependencies';
 import skip401Urls from './skip401Urls';
 import type {
   AxiosError,
@@ -14,11 +13,12 @@ import type {
 const getLogMessage = (message: string) => `## HttpClient:: ${message}`;
 
 const addHeaders = (config: InternalAxiosRequestConfig<any>) => {
+  const deps = getHttpClientDependencies();
   config.headers.Accept = 'application/json';
   config.headers['Content-Type'] = 'application/json';
-  config.headers['Accept-Language'] = getCurrentLocale();
+  config.headers['Accept-Language'] = deps.getCurrentLocale();
   config.headers['cache-control'] = 'no-cache';
-  const token = store.getState().user?.apiToken;
+  const token = deps.getApiToken();
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -84,15 +84,15 @@ const handle401Error = (error: AxiosError<ServerErrorResponse>) => {
   console.info(getLogMessage('status'), status);
 
   if (status === 401 && !shouldSkip401(error)) {
-    store.dispatch(
-      DialogsStore.setErrorDialogMessage(translate('sessionExpired')),
-    );
+    const deps = getHttpClientDependencies();
+    deps.onSessionExpired(deps.translate('sessionExpired'));
   }
 };
 
 const getErrorMessage = (error: AxiosError<ServerErrorResponse>) => {
+  const deps = getHttpClientDependencies();
   // TODO: Construct error message base on "ServerErrorResponse" constructed from API.
-  let errorMessage: string = translate('unknownError');
+  let errorMessage: string = deps.translate('unknownError');
 
   if (error.response?.data?.error) {
     errorMessage = error.response?.data?.error;
@@ -182,9 +182,11 @@ const responseRejectedInterceptor = (error: any) => {
     return handleAxiosError(error);
   }
 
+  const deps = getHttpClientDependencies();
+
   const severError: ServerError = {
     ...error,
-    errorMessage: translate('unknownError'),
+    errorMessage: deps.translate('unknownError'),
   };
 
   return Promise.reject(severError);
@@ -193,7 +195,7 @@ const responseRejectedInterceptor = (error: any) => {
 const httpClient = axios.create({
   baseURL: Config.API_URL,
   timeout: 60 * 1 * 1000,
-  timeoutErrorMessage: translate('networkError'),
+  timeoutErrorMessage: 'Network Error',
 });
 
 httpClient.interceptors.request.use(

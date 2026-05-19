@@ -12,20 +12,22 @@ export const mockTranslate = jest.fn(
 ) as jest.Mock;
 export const mockGetCurrentLocale = jest.fn(() => 'en');
 export const mockIsAxiosError = jest.fn();
+export const mockOnSessionExpired = jest.fn();
 
 export function setupMocks() {
-  const storeModule = jest.requireMock('@modules/store') as any;
-  const store = storeModule.store;
-  const dialogsStore = storeModule.DialogsStore;
-  const localization = jest.requireMock('@modules/localization') as any;
+  const { registerHttpClientDependencies } = jest.requireActual(
+    '@modules/core/src/api/httpClientDependencies',
+  ) as any;
 
-  (localization.translate as unknown as jest.Mock) = mockTranslate;
-  (localization.getCurrentLocale as unknown as jest.Mock) =
-    mockGetCurrentLocale;
-  (store.getState as jest.Mock) = mockGetState;
-  (store.dispatch as jest.Mock) = mockDispatch;
-  (dialogsStore.setErrorDialogMessage as unknown as jest.Mock) =
-    mockSetErrorDialogMessage;
+  registerHttpClientDependencies({
+    getApiToken: () => (mockGetState() as any)?.user?.apiToken,
+    getCurrentLocale: mockGetCurrentLocale,
+    translate: mockTranslate,
+    onSessionExpired: (message: string) => {
+      mockSetErrorDialogMessage(message);
+      mockDispatch({ type: 'setErrorDialogMessage', payload: message });
+    },
+  });
 }
 
 export function getHandlers(httpClient: any) {

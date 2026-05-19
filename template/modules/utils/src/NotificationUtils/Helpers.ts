@@ -1,9 +1,9 @@
+import { UserStore } from '@modules/domain-user';
 import {
   fakerNotifications,
   queryNotifications,
   UnreadNotificationsCountLocalStorage,
 } from '@modules/features-notifications';
-import { UserStore } from '@modules/features-profile';
 import { store } from '@modules/store';
 import notifee from '@notifee/react-native';
 import { default as Config } from 'react-native-config';

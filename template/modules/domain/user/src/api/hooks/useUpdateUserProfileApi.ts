@@ -1,7 +1,7 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type { User, ServerError, ApiRequest } from '@modules/core';
-import { fakerUser, queryUser } from '@modules/features-profile';
+import { fakerUser, queryUser } from '@modules/domain-user';
 import type { UseMutationOptions } from '@tanstack/react-query';
 
 const useUpdateUserProfileApi = (

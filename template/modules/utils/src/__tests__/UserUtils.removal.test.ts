@@ -1,10 +1,10 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
+import { UserLocalStorage, UserStore } from '@modules/domain-user';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
 import {
   UnreadNotificationsCountLocalStorage,
   FcmTokenLocalStorage,
 } from '@modules/features-notifications';
-import { UserLocalStorage, UserStore } from '@modules/features-profile';
 import { store } from '@modules/store';
 import { getMessaging, deleteToken } from '@react-native-firebase/messaging';
 import {
@@ -33,7 +33,7 @@ jest.mock('@modules/features-notifications', () => ({
   },
 }));
 
-jest.mock('@modules/features-profile', () => ({
+jest.mock('@modules/domain-user', () => ({
   ['UserLocalStorage']: {
     setUser: jest.fn(),
     removeUser: jest.fn(),

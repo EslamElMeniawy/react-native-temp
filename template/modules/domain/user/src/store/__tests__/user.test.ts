@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { userSlice } from '@modules/features-profile/src/store/user';
+import { userSlice } from '@modules/domain-user/src/store/user';
 
 describe('User Store Slice', () => {
   it('has setUser action', () => {

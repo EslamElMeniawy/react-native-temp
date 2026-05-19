@@ -1,5 +1,5 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { UserLocalStorage, UserStore } from '@modules/features-profile';
+import { UserLocalStorage, UserStore } from '@modules/domain-user';
 import { reset } from '@modules/navigation';
 import { store } from '@modules/store';
 import { deleteToken } from '@react-native-firebase/messaging';
@@ -26,7 +26,7 @@ jest.mock('@modules/features-notifications', () => ({
   },
 }));
 
-jest.mock('@modules/features-profile', () => ({
+jest.mock('@modules/domain-user', () => ({
   ['UserLocalStorage']: {
     removeUser: jest.fn(),
   },

@@ -1,6 +1,6 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
+import { UserLocalStorage, UserStore } from '@modules/domain-user';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
-import { UserLocalStorage, UserStore } from '@modules/features-profile';
 import { reset } from '@modules/navigation';
 import { store } from '@modules/store';
 import type { User } from '@modules/core';
@@ -20,7 +20,7 @@ jest.mock('@modules/features-auth', () => ({
 
 jest.mock('@modules/features-notifications', () => ({}));
 
-jest.mock('@modules/features-profile', () => ({
+jest.mock('@modules/domain-user', () => ({
   ['UserLocalStorage']: {
     setUser: jest.fn(),
   },
