@@ -29,7 +29,7 @@ fail() {
 }
 
 echo "╔══════════════════════════════════════════════╗"
-echo "║   React Native Upgrade Validation Script    ║"
+echo "║   React Native Upgrade Validation Script     ║"
 echo "╚══════════════════════════════════════════════╝"
 
 # ─── 1. TypeScript compilation ───────────────────────────────────────────────
@@ -76,7 +76,7 @@ fi
 # ─── Summary ─────────────────────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════╗"
-echo -e "║   ${GREEN}All validation checks passed!${NC}              ║"
+echo -e "║   ${GREEN}All validation checks passed!${NC}   ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 echo "Next steps:"

@@ -22,8 +22,12 @@
       "@modules/features-debug-menu/*": ["./modules/features/debug-menu/src/*"],
       "@modules/features-home": ["./modules/features/home/src"],
       "@modules/features-home/*": ["./modules/features/home/src/*"],
-      "@modules/features-notifications": ["./modules/features/notifications/src"],
-      "@modules/features-notifications/*": ["./modules/features/notifications/src/*"],
+      "@modules/features-notifications": [
+        "./modules/features/notifications/src"
+      ],
+      "@modules/features-notifications/*": [
+        "./modules/features/notifications/src/*"
+      ],
       "@modules/localization": ["./modules/localization/src"],
       "@modules/localization/*": ["./modules/localization/src/*"],
       "@modules/navigation": ["./modules/navigation/src"],

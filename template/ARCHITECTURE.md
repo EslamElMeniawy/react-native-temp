@@ -6,27 +6,27 @@ This document describes the multi-module architecture, dependency rules, and key
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                        src/ (App Layer)                       │
-│  AppContent, screens, initialization hooks                   │
+│                        src/ (App Layer)                     │
+│  AppContent, screens, initialization hooks                  │
 ├─────────────────────────────────────────────────────────────┤
-│                  modules/navigation/                          │
-│  RootStack, NavigationContainer, NavigationUtils             │
+│                  modules/navigation/                        │
+│  RootStack, NavigationContainer, NavigationUtils            │
 ├─────────────────────────────────────────────────────────────┤
-│              modules/features/ (Feature Layer)                │
-│  auth, home, notifications, debug-menu                       │
+│              modules/features/ (Feature Layer)              │
+│  auth, home, notifications, debug-menu                      │
 ├─────────────────────────────────────────────────────────────┤
-│              modules/domain/ (Domain Layer)                   │
-│  user (API, store, local storage, fakers)                    │
+│              modules/domain/ (Domain Layer)                 │
+│  user (API, store, local storage, fakers)                   │
 ├─────────────────────────────────────────────────────────────┤
-│           modules/components/ modules/utils/                 │
-│           modules/theme/ modules/localization/               │
-│                    (Shared Layer)                             │
+│           modules/components/ modules/utils/                │
+│           modules/theme/ modules/localization/              │
+│                    (Shared Layer)                           │
 ├─────────────────────────────────────────────────────────────┤
-│              modules/core/ (Foundation Layer)                 │
-│  httpClient, interceptors, entities, storage, localStorage   │
+│              modules/core/ (Foundation Layer)               │
+│  httpClient, interceptors, entities, storage, localStorage  │
 ├─────────────────────────────────────────────────────────────┤
-│              modules/store/ (Infrastructure)                  │
-│  Redux store with dynamic reducer injection                  │
+│              modules/store/ (Infrastructure)                │
+│  Redux store with dynamic reducer injection                 │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -47,6 +47,7 @@ This document describes the multi-module architecture, dependency rules, and key
 External dependencies are injected at app startup rather than imported directly. This breaks circular dependency chains and enables isolated unit testing.
 
 **Pattern:**
+
 ```typescript
 // 1. Define interface in the module that needs deps
 interface ServiceDependencies { ... }
@@ -61,6 +62,7 @@ registerDependencies({ ... });
 ```
 
 **Applied in:**
+
 - `modules/core/src/api/httpClientDependencies.ts` — auth token, locale, session expiry
 - `modules/utils/src/userServiceDependencies.ts` — storage, store dispatch, navigation, firebase
 
@@ -81,6 +83,7 @@ injectReducer('user', userReducer);
 ### Interceptor Extraction (SRP)
 
 HTTP client interceptors are separated into single-responsibility modules:
+
 - `authInterceptor` — Bearer token + locale headers
 - `loggingInterceptor` — color-coded request/response logging
 - `errorInterceptor` — 401 handling + error message extraction
@@ -88,6 +91,7 @@ HTTP client interceptors are separated into single-responsibility modules:
 ## Module Structure Convention
 
 Each module follows this structure:
+
 ```
 modules/<name>/
 ├── package.json          # Name: @modules/<name>
@@ -103,6 +107,7 @@ modules/<name>/
 ## Path Aliases
 
 All modules are linked as local packages (`link:./modules/<path>`) and have TypeScript path aliases in `tsconfig.json`:
+
 - `@src/*` → `./src/*`
 - `@modules/<name>` → `./modules/<path>/src`
 - `@modules/<name>/*` → `./modules/<path>/src/*`

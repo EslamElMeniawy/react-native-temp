@@ -24,8 +24,7 @@ export const useUserServiceDependenciesRegistration = () => {
       dispatchSetApiToken: token =>
         store.dispatch(UserStore.setApiToken(token)),
       dispatchRemoveUser: () => store.dispatch(UserStore.removeUser()),
-      dispatchRemoveApiToken: () =>
-        store.dispatch(UserStore.removeApiToken()),
+      dispatchRemoveApiToken: () => store.dispatch(UserStore.removeApiToken()),
       dispatchRemoveUnreadNotificationsCount: () =>
         store.dispatch(UserStore.removeUnreadNotificationsCount()),
       resetNavigation: routeName =>
