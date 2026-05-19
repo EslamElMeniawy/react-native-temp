@@ -16,9 +16,11 @@ import { useNotificationsInteraction } from './useNotificationsInteraction';
 import { useOrientationLocker } from './useOrientationLocker';
 import { useReactQueryFocusManager } from './useReactQueryFocusManager';
 import { useReactQueryOnlineManager } from './useReactQueryOnlineManager';
+import { useUserServiceDependenciesRegistration } from './useUserServiceDependenciesRegistration';
 
 export default React.memo(() => {
   useHttpClientDependenciesRegistration();
+  useUserServiceDependenciesRegistration();
   useLogInitialization();
   const languageLoaded = useLocalizationInitialization();
   useOrientationLocker();

@@ -45,6 +45,7 @@ jest.mock('@modules/theme', () => ({
 jest.mock('@modules/utils', () => ({
   clientPersister: {},
   queryClient: {},
+  registerUserServiceDependencies: jest.fn(),
 }));
 
 jest.mock('@tanstack/react-query-persist-client', () => {

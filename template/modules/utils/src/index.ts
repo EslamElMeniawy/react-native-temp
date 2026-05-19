@@ -6,4 +6,5 @@ export * from './queryClient';
 export * from './RandomUtils';
 export * from './useFocusNotifyOnChangeProps';
 export * from './useRefreshOnFocus';
+export * from './userServiceDependencies';
 export * from './UserUtils';
