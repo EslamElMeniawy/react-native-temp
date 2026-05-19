@@ -33,8 +33,9 @@ jest.mock('@react-native-firebase/messaging', () => ({
   },
 }));
 
+const flushPromises = () => new Promise(resolve => setImmediate(resolve));
+
 describe('useMessagingPermission', () => {
-  const flushPromises = () => new Promise(resolve => setImmediate(resolve));
   const originalOS = Platform.OS;
   const originalRequest = PermissionsAndroid.request;
 

@@ -36,38 +36,40 @@ jest.mock('../useHandleNetworkState', () => ({
   useHandleNetworkState: () => mockHandleNetworkState,
 }));
 
-describe('useNetworkListener', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    (mockNetInfoFetch.mockResolvedValue as any)({
+const flushPromises = () => new Promise(resolve => setImmediate(resolve));
+
+const setupMocks = () => {
+  jest.clearAllMocks();
+  (mockNetInfoFetch.mockResolvedValue as any)({
+    isConnected: true,
+    isInternetReachable: true,
+  });
+  NativeModules.RNCNetInfo = {
+    getCurrentState: jest.fn<() => Promise<unknown>>().mockResolvedValue({
       isConnected: true,
       isInternetReachable: true,
-    });
-    NativeModules.RNCNetInfo = {
-      getCurrentState: jest.fn<() => Promise<unknown>>().mockResolvedValue({
-        isConnected: true,
-        isInternetReachable: true,
-      }),
-    };
-    jest
-      .spyOn(AppState, 'addEventListener')
-      .mockImplementation(
-        (_event: string, handler: (state: AppStateStatus) => void) => {
-          appStateListener = handler;
-          return { remove: mockAppStateRemove } as any;
-        },
-      );
-    const netInfo = require('@react-native-community/netinfo');
-    (netInfo.addEventListener as jest.Mock).mockImplementation(
-      (callback: any) => {
-        netStateListener = callback;
-        return mockNetInfoUnsubscribe;
+    }),
+  };
+  jest
+    .spyOn(AppState, 'addEventListener')
+    .mockImplementation(
+      (_event: string, handler: (state: AppStateStatus) => void) => {
+        appStateListener = handler;
+        return { remove: mockAppStateRemove } as any;
       },
     );
-    (netInfo.fetch as jest.Mock).mockImplementation(() => mockNetInfoFetch());
-  });
+  const netInfo = require('@react-native-community/netinfo');
+  (netInfo.addEventListener as jest.Mock).mockImplementation(
+    (callback: any) => {
+      netStateListener = callback;
+      return mockNetInfoUnsubscribe;
+    },
+  );
+  (netInfo.fetch as jest.Mock).mockImplementation(() => mockNetInfoFetch());
+};
 
-  const flushPromises = () => new Promise(resolve => setImmediate(resolve));
+describe('useNetworkListener', () => {
+  beforeEach(setupMocks);
 
   it('handles app resume on iOS and fetches latest state', async () => {
     const { unmount } = await renderHookWithProviders(() =>
