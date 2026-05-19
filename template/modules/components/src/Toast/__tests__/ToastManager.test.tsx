@@ -19,8 +19,19 @@ jest.mock('@eslam-elmeniawy/react-native-common-components', () => {
   const moduleMock: Record<string, any> = {};
   moduleMock.getStatusBarHeight = jest.fn(() => 24);
   moduleMock.ResponsiveDimensions = {
-    ms: jest.fn((value: number) => value),
+    setBaseDimensions: jest.fn(),
+    scale: jest.fn((value: number) => value),
+    s: jest.fn((value: number) => value),
+    verticalScale: jest.fn((value: number) => value),
     vs: jest.fn((value: number) => value),
+    moderateScale: jest.fn((value: number) => value),
+    ms: jest.fn((value: number) => value),
+    moderateVerticalScale: jest.fn((value: number) => value),
+    mvs: jest.fn((value: number) => value),
+    percentWidth: jest.fn((value: number) => value),
+    pw: jest.fn((value: number) => value),
+    percentHeight: jest.fn((value: number) => value),
+    ph: jest.fn((value: number) => value),
   };
   Object.defineProperty(moduleMock, '__esModule', { value: true });
   return moduleMock;

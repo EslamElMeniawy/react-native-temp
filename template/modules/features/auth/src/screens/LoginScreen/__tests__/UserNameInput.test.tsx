@@ -21,6 +21,7 @@ jest.mock('@modules/localization', () => ({
     ['COMMON']: 'common',
     ['AUTH']: 'auth',
   },
+  translate: jest.fn((key: string) => key),
 }));
 
 jest.mock('@modules/components', () => {

@@ -2,6 +2,7 @@ import { describe, expect, it, jest } from '@jest/globals';
 
 jest.mock('@modules/localization', () => ({
   setI18nConfig: jest.fn(() => Promise.resolve()),
+  translate: jest.fn((key: string) => key),
 }));
 
 import { waitFor } from '@testing-library/react-native';

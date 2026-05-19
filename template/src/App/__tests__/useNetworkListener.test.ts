@@ -1,5 +1,6 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { act } from '@testing-library/react-native';
+import { AppState, NativeModules } from 'react-native';
 import { useNetworkListener } from '@src/App/useNetworkListener';
 import {
   renderHook,
@@ -22,27 +23,12 @@ jest.mock('@react-native-community/netinfo', () => ({
   fetch: jest.fn(() => mockNetInfoFetch() as any),
 }));
 
-jest.mock('react-native', () => ({
-  ['Platform']: {
-    ['OS']: 'ios',
-    select: jest.fn(
-      (options: Record<string, unknown>) => options.ios || options.default,
-    ),
+jest.spyOn(AppState, 'addEventListener').mockImplementation(
+  (_event: string, handler: (state: AppStateStatus) => void) => {
+    appStateListener = handler;
+    return { remove: mockAppStateRemove } as any;
   },
-  ['NativeModules']: {
-    ['RNCNetInfo']: {
-      getCurrentState: (jest.fn() as any).mockResolvedValue({}),
-    },
-  },
-  ['AppState']: {
-    addEventListener: jest.fn(
-      (_event: string, handler: (status: AppStateStatus) => void) => {
-        appStateListener = handler;
-        return { remove: mockAppStateRemove };
-      },
-    ),
-  },
-}));
+);
 
 jest.mock('../useHandleNetworkState', () => ({
   useHandleNetworkState: () => mockHandleNetworkState,
@@ -55,6 +41,26 @@ describe('useNetworkListener', () => {
       isConnected: true,
       isInternetReachable: true,
     });
+    NativeModules.RNCNetInfo = {
+      getCurrentState: jest.fn<() => Promise<unknown>>().mockResolvedValue({
+        isConnected: true,
+        isInternetReachable: true,
+      }),
+    };
+    jest.spyOn(AppState, 'addEventListener').mockImplementation(
+      (_event: string, handler: (state: AppStateStatus) => void) => {
+        appStateListener = handler;
+        return { remove: mockAppStateRemove } as any;
+      },
+    );
+    const netInfo = require('@react-native-community/netinfo');
+    (netInfo.addEventListener as jest.Mock).mockImplementation(
+      (callback: any) => {
+        netStateListener = callback;
+        return mockNetInfoUnsubscribe;
+      },
+    );
+    (netInfo.fetch as jest.Mock).mockImplementation(() => mockNetInfoFetch());
   });
 
   const flushPromises = () => new Promise(resolve => setImmediate(resolve));
@@ -75,7 +81,7 @@ describe('useNetworkListener', () => {
       isInternetReachable: true,
     });
 
-    unmount();
+    await unmount();
     expect(mockAppStateRemove).toHaveBeenCalled();
   });
 
@@ -83,13 +89,13 @@ describe('useNetworkListener', () => {
     const { unmount } = await renderHook(() => useNetworkListener());
 
     const netInfoState = { isConnected: false, isInternetReachable: false };
-    act(() => {
+    await act(() => {
       netStateListener?.(netInfoState);
     });
 
     expect(mockHandleNetworkState).toHaveBeenCalledWith(netInfoState);
 
-    unmount();
+    await unmount();
     expect(mockNetInfoUnsubscribe).toHaveBeenCalled();
   });
 });

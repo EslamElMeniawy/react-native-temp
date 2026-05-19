@@ -1,9 +1,10 @@
-import { describe, expect, it, jest, beforeEach } from '@jest/globals';
+import { describe, expect, it, jest, beforeEach, afterAll } from '@jest/globals';
 import {
   AuthorizationStatus,
   getMessaging,
 } from '@react-native-firebase/messaging';
 import { act } from '@testing-library/react-native';
+import { Platform, PermissionsAndroid } from 'react-native';
 import { useMessagingPermission } from '@src/App/useMessagingPermission';
 import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
@@ -25,26 +26,22 @@ jest.mock('@react-native-firebase/messaging', () => ({
   },
 }));
 
-jest.mock('react-native', () => ({
-  ['Platform']: {
-    ['OS']: 'android',
-    select: jest.fn(
-      (options: Record<string, unknown>) => options.android || options.default,
-    ),
-  },
-  ['PermissionsAndroid']: {
-    ['PERMISSIONS']: {
-      ['POST_NOTIFICATIONS']: 'android.permission.POST_NOTIFICATIONS',
-    },
-    request: jest.fn(() => mockPermissionsAndroidRequest()),
-  },
-}));
-
 describe('useMessagingPermission', () => {
   const flushPromises = () => new Promise(resolve => setImmediate(resolve));
+  const originalOS = Platform.OS;
+  const originalRequest = PermissionsAndroid.request;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    (Platform as any).OS = 'android';
+    (PermissionsAndroid as any).request = jest.fn(() =>
+      mockPermissionsAndroidRequest(),
+    );
+  });
+
+  afterAll(() => {
+    (Platform as any).OS = originalOS;
+    PermissionsAndroid.request = originalRequest;
   });
 
   it('does not request permission when already granted', async () => {
@@ -52,7 +49,7 @@ describe('useMessagingPermission', () => {
       AuthorizationStatus.AUTHORIZED,
     );
 
-    renderHookWithProviders(() => useMessagingPermission());
+    await renderHookWithProviders(() => useMessagingPermission());
 
     await act(async () => {
       await flushPromises();
@@ -69,7 +66,7 @@ describe('useMessagingPermission', () => {
       AuthorizationStatus.DENIED,
     );
 
-    renderHookWithProviders(() => useMessagingPermission());
+    await renderHookWithProviders(() => useMessagingPermission());
 
     await act(async () => {
       await flushPromises();

@@ -130,6 +130,10 @@ module.exports = {
       // Test files only
       files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
       extends: ['plugin:testing-library/react'],
+      rules: {
+        // fireEvent is async in @testing-library/react-native v14+
+        'testing-library/no-await-sync-events': 'off',
+      },
     },
   ],
 };

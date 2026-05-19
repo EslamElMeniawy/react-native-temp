@@ -13,6 +13,7 @@ jest.mock('@modules/localization', () => ({
   ['TranslationNamespaces']: {
     ['DEBUG_MENU']: 'debug-menu',
   },
+  translate: jest.fn((key: string) => key),
 }));
 
 jest.mock('react-i18next', () => ({
@@ -21,6 +22,14 @@ jest.mock('react-i18next', () => ({
 
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockUseNavigation(),
+  createNavigationContainerRef: jest.fn(() => ({
+    isReady: jest.fn(() => false),
+    navigate: jest.fn(),
+    dispatch: jest.fn(),
+    reset: jest.fn(),
+    goBack: jest.fn(),
+    canGoBack: jest.fn(() => false),
+  })),
 }));
 
 jest.mock('react-native-paper', () => {
@@ -90,7 +99,7 @@ describe('DebugMenuScreen Header', () => {
     await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
-    fireEvent.press(backButton);
+    await fireEvent.press(backButton);
 
     expect(mockGetParent).toHaveBeenCalled();
     expect(mockNavigationGoBack).toHaveBeenCalled();
@@ -100,8 +109,8 @@ describe('DebugMenuScreen Header', () => {
     await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
-    fireEvent.press(backButton);
-    fireEvent.press(backButton);
+    await fireEvent.press(backButton);
+    await fireEvent.press(backButton);
 
     expect(mockNavigationGoBack).toHaveBeenCalledTimes(2);
   });
@@ -118,8 +127,7 @@ describe('DebugMenuScreen Header', () => {
     await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
-
-    expect(() => fireEvent.press(backButton)).not.toThrow();
+    await fireEvent.press(backButton);
   });
 
   it('handles undefined parent navigation gracefully', async () => {
@@ -128,8 +136,7 @@ describe('DebugMenuScreen Header', () => {
     await renderWithProviders(<Header />);
 
     const backButton = screen.getByTestId('appbar-back-action');
-
-    expect(() => fireEvent.press(backButton)).not.toThrow();
+    await fireEvent.press(backButton);
   });
 
   it('uses React.useCallback for onBackPress handler', async () => {
@@ -138,7 +145,7 @@ describe('DebugMenuScreen Header', () => {
     const backButton = screen.getByTestId('appbar-back-action');
     const originalOnPress = backButton.props.onPress;
 
-    view.rerender(<Header />);
+    await view.rerender(<Header />);
 
     const updatedBackButton = screen.getByTestId('appbar-back-action');
     const newOnPress = updatedBackButton.props.onPress;

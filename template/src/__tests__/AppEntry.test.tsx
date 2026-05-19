@@ -39,6 +39,18 @@ jest.mock('@eslam-elmeniawy/react-native-common-components', () => {
   return {
     ['ResponsiveDimensions']: {
       setBaseDimensions: jestGlobals.jest.fn(),
+      scale: jestGlobals.jest.fn((x: number) => x),
+      s: jestGlobals.jest.fn((x: number) => x),
+      verticalScale: jestGlobals.jest.fn((x: number) => x),
+      vs: jestGlobals.jest.fn((x: number) => x),
+      moderateScale: jestGlobals.jest.fn((x: number) => x),
+      ms: jestGlobals.jest.fn((x: number) => x),
+      moderateVerticalScale: jestGlobals.jest.fn((x: number) => x),
+      mvs: jestGlobals.jest.fn((x: number) => x),
+      percentWidth: jestGlobals.jest.fn((x: number) => x),
+      pw: jestGlobals.jest.fn((x: number) => x),
+      percentHeight: jestGlobals.jest.fn((x: number) => x),
+      ph: jestGlobals.jest.fn((x: number) => x),
     },
     ['Text']: (props: any) => react.createElement(rn.Text, props),
   };

@@ -16,20 +16,19 @@ jest.mock('@react-native-community/netinfo', () => ({
   }),
 }));
 
-jest.mock('react-native', () => ({
-  ['Platform']: {
-    ['OS']: 'ios',
-    select: jest.fn(
-      (options: Record<string, unknown>) => options.ios || options.default,
-    ),
-  },
-}));
-
 describe('useReactQueryOnlineManager', () => {
   const setOnlineSpy = jest.spyOn(onlineManager, 'setOnline');
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
+    netInfoHandler = undefined;
+    const netInfo = require('@react-native-community/netinfo');
+    (netInfo.addEventListener as jest.Mock).mockImplementation(
+      (callback: any) => {
+        netInfoHandler = callback;
+        return mockUnsubscribe;
+      },
+    );
   });
 
   it('subscribes to netinfo and updates online state', async () => {
@@ -37,17 +36,17 @@ describe('useReactQueryOnlineManager', () => {
       useReactQueryOnlineManager(),
     );
 
-    act(() => {
+    await act(() => {
       netInfoHandler?.({ isConnected: true, isInternetReachable: true });
     });
     expect(setOnlineSpy).toHaveBeenCalledWith(true);
 
-    act(() => {
+    await act(() => {
       netInfoHandler?.({ isConnected: true, isInternetReachable: false });
     });
     expect(setOnlineSpy).toHaveBeenCalledWith(false);
 
-    unmount();
+    await unmount();
     expect(mockUnsubscribe).toHaveBeenCalled();
   });
 });

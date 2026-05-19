@@ -9,7 +9,7 @@ import {
 import { DialogsStore, useAppDispatch } from '@modules/store';
 import { saveUserDataOpenHome } from '@modules/utils';
 import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
-import { act, waitFor } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import { useTranslation } from 'react-i18next';
 import { Keyboard } from 'react-native';
 import { useLoginApi } from '@modules/features-auth';
@@ -51,9 +51,7 @@ jest.mock('react-i18next', () => ({
   useTranslation: jest.fn(),
 }));
 
-jest.mock('react-native', () => ({
-  ['Keyboard']: { dismiss: jest.fn() },
-}));
+jest.spyOn(Keyboard, 'dismiss').mockImplementation(() => undefined as any);
 
 const typedSetErrorDialogMessage =
   DialogsStore.setErrorDialogMessage as unknown as jest.Mock;
@@ -110,7 +108,7 @@ describe('useLoginButton press handler', () => {
 
     const { result } = await renderHookWithProviders(() => useLoginButton());
 
-    act(() => result.current.onLoginPress(formData));
+    await act(() => result.current.onLoginPress(formData));
 
     expect(Keyboard.dismiss).toHaveBeenCalledTimes(1);
     expect(mockUseLoginApiReturn.mutate).toHaveBeenCalledWith({
@@ -133,9 +131,7 @@ describe('useLoginButton success handling', () => {
 
     await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() =>
-      expect(typedSaveUserDataOpenHome).toHaveBeenCalledWith(user, token),
-    );
+    expect(typedSaveUserDataOpenHome).toHaveBeenCalledWith(user, token);
   });
 
   it('shows error dialog when response lacks user or token', async () => {
@@ -148,7 +144,7 @@ describe('useLoginButton success handling', () => {
 
     await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'setErrorDialogMessage',
       payload: 'common:errorWhileAction-auth:login',
@@ -170,7 +166,7 @@ describe('useLoginButton error handling', () => {
 
     await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'setErrorDialogMessage',
       payload: 'Server failed',
@@ -187,7 +183,7 @@ describe('useLoginButton error handling', () => {
 
     await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'setErrorDialogMessage',
       payload: 'common:errorWhileAction-auth:login',

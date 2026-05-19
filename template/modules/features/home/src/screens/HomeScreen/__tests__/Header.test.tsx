@@ -12,6 +12,7 @@ jest.mock('@modules/localization', () => ({
   ['TranslationNamespaces']: {
     ['HOME']: 'home',
   },
+  translate: jest.fn((key: string) => key),
 }));
 
 jest.mock('@modules/utils', () => ({
@@ -22,6 +23,7 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({
     push: mockNavigationPush,
   }),
+  createNavigationContainerRef: jest.fn(() => ({ isReady: jest.fn(() => false), navigate: jest.fn(), dispatch: jest.fn(), reset: jest.fn(), goBack: jest.fn(), canGoBack: jest.fn(() => false) })),
 }));
 
 jest.mock('react-i18next', () => ({
@@ -100,7 +102,7 @@ describe('HomeScreen Header', () => {
     await render(<Header />);
 
     const bellButton = screen.getByTestId('appbar-action-bell');
-    fireEvent.press(bellButton);
+    await fireEvent.press(bellButton);
 
     expect(mockNavigationPush).toHaveBeenCalledWith('notifications');
   });
@@ -109,7 +111,7 @@ describe('HomeScreen Header', () => {
     await render(<Header />);
 
     const logoutButton = screen.getByTestId('appbar-action-logout');
-    fireEvent.press(logoutButton);
+    await fireEvent.press(logoutButton);
 
     expect(mockRemoveUserDataLogout).toHaveBeenCalled();
   });
@@ -118,9 +120,9 @@ describe('HomeScreen Header', () => {
     await render(<Header />);
 
     const bellButton = screen.getByTestId('appbar-action-bell');
-    fireEvent.press(bellButton);
-    fireEvent.press(bellButton);
-    fireEvent.press(bellButton);
+    await fireEvent.press(bellButton);
+    await fireEvent.press(bellButton);
+    await fireEvent.press(bellButton);
 
     expect(mockNavigationPush).toHaveBeenCalledTimes(3);
     expect(mockNavigationPush).toHaveBeenCalledWith('notifications');
@@ -130,8 +132,8 @@ describe('HomeScreen Header', () => {
     await render(<Header />);
 
     const logoutButton = screen.getByTestId('appbar-action-logout');
-    fireEvent.press(logoutButton);
-    fireEvent.press(logoutButton);
+    await fireEvent.press(logoutButton);
+    await fireEvent.press(logoutButton);
 
     expect(mockRemoveUserDataLogout).toHaveBeenCalledTimes(2);
   });

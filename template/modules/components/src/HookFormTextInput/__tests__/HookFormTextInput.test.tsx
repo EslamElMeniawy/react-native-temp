@@ -14,6 +14,21 @@ const mockTextInput = jest.fn((props: any) => {
 jest.mock('@eslam-elmeniawy/react-native-common-components', () => {
   const moduleMock: Record<string, any> = {};
   moduleMock.TextInput = (props: any) => mockTextInput(props);
+  moduleMock.ResponsiveDimensions = {
+    setBaseDimensions: jest.fn(),
+    scale: jest.fn((x: number) => x),
+    s: jest.fn((x: number) => x),
+    verticalScale: jest.fn((x: number) => x),
+    vs: jest.fn((x: number) => x),
+    moderateScale: jest.fn((x: number) => x),
+    ms: jest.fn((x: number) => x),
+    moderateVerticalScale: jest.fn((x: number) => x),
+    mvs: jest.fn((x: number) => x),
+    percentWidth: jest.fn((x: number) => x),
+    pw: jest.fn((x: number) => x),
+    percentHeight: jest.fn((x: number) => x),
+    ph: jest.fn((x: number) => x),
+  };
   Object.defineProperty(moduleMock, '__esModule', { value: true });
   return moduleMock;
 });
@@ -38,13 +53,13 @@ describe('HookFormTextInput', () => {
       </Wrapper>,
     );
 
-    fireEvent.changeText(screen.getByPlaceholderText('your-name'), 'Alice');
+    await fireEvent.changeText(screen.getByPlaceholderText('your-name'), 'Alice');
 
     expect(mockTextInput).toHaveBeenCalledWith(
       expect.objectContaining({ value: '', placeholder: 'your-name' }),
     );
 
-    fireEvent.changeText(screen.getByPlaceholderText('your-name'), 'Bob');
+    await fireEvent.changeText(screen.getByPlaceholderText('your-name'), 'Bob');
 
     expect(mockTextInput).toHaveBeenLastCalledWith(
       expect.objectContaining({ value: 'Bob' }),

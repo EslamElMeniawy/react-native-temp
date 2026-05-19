@@ -3,6 +3,19 @@ import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import { NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 
+jest.mock('@react-navigation/native-stack', () => {
+  const mockReact = require('react');
+  return {
+    createNativeStackNavigator: jest.fn(() => ({
+      ['Navigator']: ({ children }: any) =>
+        mockReact.createElement(mockReact.Fragment, null, children),
+      ['Screen']: () => null,
+      ['Group']: ({ children }: any) =>
+        mockReact.createElement(mockReact.Fragment, null, children),
+    })),
+  };
+});
+
 import { RootStack } from '@modules/navigation';
 
 jest.mock('@modules/features-auth', () => ({

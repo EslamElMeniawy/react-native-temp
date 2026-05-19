@@ -6,6 +6,19 @@ jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
+jest.mock('react-native-safe-area-context', () => {
+  const React = require('react');
+  const inset = { top: 0, right: 0, bottom: 0, left: 0 };
+  return {
+    SafeAreaProvider: ({ children }: { children: React.ReactNode }) => children,
+    SafeAreaView: ({ children }: { children: React.ReactNode }) => children,
+    useSafeAreaInsets: () => inset,
+    useSafeAreaFrame: () => ({ x: 0, y: 0, width: 390, height: 844 }),
+    SafeAreaInsetsContext: { Consumer: ({ children }: any) => children(inset) },
+    initialWindowMetrics: { insets: inset, frame: { x: 0, y: 0, width: 390, height: 844 } },
+  };
+});
+
 jest.mock('react-native-localize', () => {
   const getCalendar = () => 'gregorian';
   const getCountry = () => 'US';
@@ -55,6 +68,10 @@ jest.mock('react-native-localize', () => {
     usesMetricSystem,
   };
 });
+
+jest.mock('react-native-restart', () => ({
+  Restart: jest.fn(),
+}));
 
 jest.mock('react-native-bootsplash', () => {
   return {

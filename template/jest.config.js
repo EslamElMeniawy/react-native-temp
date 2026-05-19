@@ -8,17 +8,19 @@ module.exports = {
     '^axios$': '<rootDir>/__mocks__/axios.js',
     '^@react-navigation/native$':
       '<rootDir>/__mocks__/@react-navigation/native.js',
+    '^@react-navigation/native-stack$':
+      '<rootDir>/__mocks__/@react-navigation/native-stack.js',
     '^@eslam-elmeniawy/react-native-common-components$':
       '<rootDir>/__mocks__/@eslam-elmeniawy/react-native-common-components.js',
+    '^react-native-gesture-handler$':
+      '<rootDir>/__mocks__/react-native-gesture-handler.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   modulePaths: ['<rootDir>'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
-  setupFiles: [
-    '<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js',
-  ],
+  setupFiles: [],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?(react-native|@react-native|@react-native-community|@react-navigation|react-redux|@reduxjs/toolkit|immer|reactotron-react-native-mmkv|@eslam-elmeniawy/react-native-common-components|toastify-react-native|@faker-js/faker)/)',
+    'node_modules/(?!(jest-)?(react-native(-[^/]*)?|@react-native|@react-native-community|@react-navigation|react-redux|@reduxjs/toolkit|immer|reactotron-react-native-mmkv|@eslam-elmeniawy/react-native-common-components|toastify-react-native|@faker-js/faker)/)',
   ],
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}', 'modules/*/src/**/*.{ts,tsx}'],
