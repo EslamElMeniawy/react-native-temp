@@ -1,5 +1,6 @@
 export { default as ErrorDialog } from './ErrorDialog';
 export { default as ErrorFallbackView } from './ErrorFallbackView';
+export { default as FeatureErrorBoundary } from './FeatureErrorBoundary';
 export { default as HookFormTextInput } from './HookFormTextInput';
 export { default as ListEmptyComponent } from './ListEmptyComponent';
 export { default as ListLoadingMore } from './ListLoadingMore';

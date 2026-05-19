@@ -6,4 +6,3 @@ export {
   logResponse,
   logResponseError,
 } from './loggingInterceptor';
-export { handle401Error, getErrorMessage } from './errorInterceptor';
