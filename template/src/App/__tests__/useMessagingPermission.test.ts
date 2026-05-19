@@ -1,4 +1,11 @@
-import { describe, expect, it, jest, beforeEach, afterAll } from '@jest/globals';
+import {
+  describe,
+  expect,
+  it,
+  jest,
+  beforeEach,
+  afterAll,
+} from '@jest/globals';
 import {
   AuthorizationStatus,
   getMessaging,

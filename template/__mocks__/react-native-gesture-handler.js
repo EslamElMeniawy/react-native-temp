@@ -43,7 +43,7 @@ module.exports = {
   Gesture,
   Directions: {},
   State: {},
-  gestureHandlerRootHOC: (component) => component,
+  gestureHandlerRootHOC: component => component,
   PanGestureHandler: View,
   TapGestureHandler: View,
   FlingGestureHandler: View,

@@ -23,12 +23,14 @@ jest.mock('@react-native-community/netinfo', () => ({
   fetch: jest.fn(() => mockNetInfoFetch() as any),
 }));
 
-jest.spyOn(AppState, 'addEventListener').mockImplementation(
-  (_event: string, handler: (state: AppStateStatus) => void) => {
-    appStateListener = handler;
-    return { remove: mockAppStateRemove } as any;
-  },
-);
+jest
+  .spyOn(AppState, 'addEventListener')
+  .mockImplementation(
+    (_event: string, handler: (state: AppStateStatus) => void) => {
+      appStateListener = handler;
+      return { remove: mockAppStateRemove } as any;
+    },
+  );
 
 jest.mock('../useHandleNetworkState', () => ({
   useHandleNetworkState: () => mockHandleNetworkState,
@@ -47,12 +49,14 @@ describe('useNetworkListener', () => {
         isInternetReachable: true,
       }),
     };
-    jest.spyOn(AppState, 'addEventListener').mockImplementation(
-      (_event: string, handler: (state: AppStateStatus) => void) => {
-        appStateListener = handler;
-        return { remove: mockAppStateRemove } as any;
-      },
-    );
+    jest
+      .spyOn(AppState, 'addEventListener')
+      .mockImplementation(
+        (_event: string, handler: (state: AppStateStatus) => void) => {
+          appStateListener = handler;
+          return { remove: mockAppStateRemove } as any;
+        },
+      );
     const netInfo = require('@react-native-community/netinfo');
     (netInfo.addEventListener as jest.Mock).mockImplementation(
       (callback: any) => {
