@@ -14,6 +14,9 @@ export const useHandleNetworkState = () => {
   const dispatch = useAppDispatch();
   // #endregion
 
+  // Track previous internet state to only show toast on actual transitions.
+  const prevIsInternetAvailable = React.useRef<boolean | null>(null);
+
   const checkInternetAvailableState = React.useCallback(
     (state: NetInfoState) => {
       console.info(getLogMessage('checkInternetAvailableState'));
@@ -58,9 +61,12 @@ export const useHandleNetworkState = () => {
     (isInternetAvailable: boolean | null) => {
       console.info(getLogMessage('handleInternetLostToast'));
 
-      if (isInternetAvailable === false) {
+      const wasConnected = prevIsInternetAvailable.current === true;
+      prevIsInternetAvailable.current = isInternetAvailable;
+
+      if (isInternetAvailable === false && wasConnected) {
         Toast.show({ type: 'error', text2: translate('internetLost') });
-      } else {
+      } else if (isInternetAvailable) {
         Toast.hide();
       }
     },

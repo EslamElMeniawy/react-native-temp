@@ -85,10 +85,26 @@ describe('useHandleNetworkState', () => {
     verifyOnlineStateDispatch(mockDispatch);
   });
 
-  it('stores expensive flag and shows toast when offline', async () => {
+  it('stores expensive flag and shows toast when transitioning from online to offline', async () => {
     const { result } = await renderHook(() => useHandleNetworkState());
-    const state = testOfflineState();
-    result.current(state);
+
+    // First establish a connected state.
+    result.current(testOnlineState());
+    jest.clearAllMocks();
+    (translate as any as jest.Mock).mockReturnValue('internetLost');
+
+    // Then transition to offline.
+    result.current(testOfflineState());
     verifyOfflineStateDispatch();
+  });
+
+  it('does not show toast when offline is the initial state', async () => {
+    const { result } = await renderHook(() => useHandleNetworkState());
+    result.current(testOfflineState());
+
+    expect(NetworkStateStore.setIsInternetAvailable).toHaveBeenCalledWith(
+      false,
+    );
+    expect(Toast.show).not.toHaveBeenCalled();
   });
 });
