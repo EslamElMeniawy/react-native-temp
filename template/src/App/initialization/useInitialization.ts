@@ -1,14 +1,14 @@
-import { useFirebaseMessagingInitialization } from '../useFirebaseMessagingInitialization';
-import { useForegroundMessagesListener } from '../useForegroundMessagesListener';
-import { useHttpClientDependenciesRegistration } from '../useHttpClientDependenciesRegistration';
-import { useLocalizationInitialization } from '../useLocalizationInitialization';
-import { useLogInitialization } from '../useLogInitialization';
-import { useNetworkListener } from '../useNetworkListener';
-import { useNotificationsInteraction } from '../useNotificationsInteraction';
-import { useOrientationLocker } from '../useOrientationLocker';
-import { useReactQueryFocusManager } from '../useReactQueryFocusManager';
-import { useReactQueryOnlineManager } from '../useReactQueryOnlineManager';
-import { useUserServiceDependenciesRegistration } from '../useUserServiceDependenciesRegistration';
+import { useFirebaseMessagingInitialization } from '@src/App/useFirebaseMessagingInitialization';
+import { useForegroundMessagesListener } from '@src/App/useForegroundMessagesListener';
+import { useHttpClientDependenciesRegistration } from '@src/App/useHttpClientDependenciesRegistration';
+import { useLocalizationInitialization } from '@src/App/useLocalizationInitialization';
+import { useLogInitialization } from '@src/App/useLogInitialization';
+import { useNetworkListener } from '@src/App/useNetworkListener';
+import { useNotificationsInteraction } from '@src/App/useNotificationsInteraction';
+import { useOrientationLocker } from '@src/App/useOrientationLocker';
+import { useReactQueryFocusManager } from '@src/App/useReactQueryFocusManager';
+import { useReactQueryOnlineManager } from '@src/App/useReactQueryOnlineManager';
+import { useUserServiceDependenciesRegistration } from '@src/App/useUserServiceDependenciesRegistration';
 import InitPhase, { PhaseStatus } from './types';
 import type { InitializationState } from './types';
 
