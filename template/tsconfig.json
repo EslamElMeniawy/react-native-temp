@@ -38,9 +38,8 @@
       "@modules/theme/*": ["./modules/theme/src/*"],
       "@modules/utils": ["./modules/utils/src"],
       "@modules/utils/*": ["./modules/utils/src/*"]
-    },
-    "types": ["jest"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "./index.js", "src", "@types", "modules"],
-  "exclude": ["**/node_modules", "**/Pods", "jest.setup.ts", "__mocks__"]
+  "exclude": ["**/node_modules", "**/Pods", "jest.setup.ts", "__mocks__", "e2e"]
 }

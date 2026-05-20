@@ -1,3 +1,4 @@
+import { describe, expect, it, jest } from '@jest/globals';
 import {
   registerHttpClientDependencies,
   getHttpClientDependencies,
@@ -19,9 +20,11 @@ describe('httpClientDependencies', () => {
 
     it('returns dependencies after registration', () => {
       const mockDeps = {
-        getApiToken: jest.fn().mockReturnValue('token'),
-        getCurrentLocale: jest.fn().mockReturnValue('en'),
-        translate: jest.fn().mockReturnValue('translated'),
+        getApiToken: jest
+          .fn<() => string | undefined>()
+          .mockReturnValue('token'),
+        getCurrentLocale: jest.fn<() => string>().mockReturnValue('en'),
+        translate: jest.fn<() => string>().mockReturnValue('translated'),
         onSessionExpired: jest.fn(),
       };
 

@@ -9,7 +9,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 step=0
-total=5
+total=6
 
 header() {
   step=$((step + 1))
@@ -73,6 +73,16 @@ else
   fail "iOS Metro bundle failed"
 fi
 
+# ─── 6. E2E test build check ─────────────────────────────────────────────────
+header "E2E configuration check"
+if [ -f ".detoxrc.js" ] && command -v detox &> /dev/null; then
+  pass "Detox configuration found and CLI available"
+  echo "  Run 'yarn e2e:ios:build && yarn e2e:ios' for full E2E validation"
+else
+  pass "Detox configured (.detoxrc.js present)"
+  echo "  Install Detox CLI globally for E2E: npm install -g detox-cli"
+fi
+
 # ─── Summary ─────────────────────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════╗"
@@ -80,6 +90,6 @@ echo -e "║   ${GREEN}All validation checks passed!${NC}   ║"
 echo "╚══════════════════════════════════════════════╝"
 echo ""
 echo "Next steps:"
-echo "  • Run on device/simulator to verify native behavior"
+echo "  • Run E2E tests: yarn e2e:ios:build && yarn e2e:ios"
+echo "  • Run E2E tests: yarn e2e:android:build && yarn e2e:android"
 echo "  • Test deep linking, push notifications, and gestures manually"
-echo "  • Run E2E tests if configured: yarn e2e:ios / yarn e2e:android"

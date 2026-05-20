@@ -10,6 +10,7 @@ module.exports = {
   ignorePatterns: [
     '.eslintrc.js',
     '.prettierrc.js',
+    '.detoxrc.js',
     'babel.config.js',
     'commitlint.config.js',
     'jest.config.js',
@@ -19,6 +20,7 @@ module.exports = {
     '/@types/*',
     '__mocks__',
     '/coverage/*',
+    '/e2e/*',
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['autofix', 'import', 'react-func', '@tanstack/query', 'boundaries'],
@@ -43,8 +45,7 @@ module.exports = {
           {
             from: ['shared'],
             disallow: ['app'],
-            message:
-              'Shared modules must not import from {{target.type}}.',
+            message: 'Shared modules must not import from {{target.type}}.',
           },
           {
             from: ['domain'],

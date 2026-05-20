@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+
 describe('userServiceDependencies', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -32,8 +34,12 @@ describe('userServiceDependencies', () => {
       dispatchRemoveApiToken: jest.fn(),
       dispatchRemoveUnreadNotificationsCount: jest.fn(),
       resetNavigation: jest.fn(),
-      deleteMessagingToken: jest.fn().mockResolvedValue(undefined),
-      cancelQueries: jest.fn().mockResolvedValue(undefined),
+      deleteMessagingToken: jest
+        .fn<() => Promise<void>>()
+        .mockResolvedValue(undefined),
+      cancelQueries: jest
+        .fn<() => Promise<void>>()
+        .mockResolvedValue(undefined),
       clearQueryCache: jest.fn(),
     };
 
