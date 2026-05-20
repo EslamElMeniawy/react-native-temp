@@ -7,34 +7,14 @@ import { httpClient, localStorage, ServiceProvider } from '@modules/core';
 import { NavigationContainer } from '@modules/navigation';
 import { useAppTheme } from '@modules/theme';
 import { clientPersister, queryClient } from '@modules/utils';
-import { useFirebaseMessagingInitialization } from './useFirebaseMessagingInitialization';
-import { useForegroundMessagesListener } from './useForegroundMessagesListener';
-import { useHttpClientDependenciesRegistration } from './useHttpClientDependenciesRegistration';
-import { useLocalizationInitialization } from './useLocalizationInitialization';
-import { useLogInitialization } from './useLogInitialization';
-import { useNetworkListener } from './useNetworkListener';
-import { useNotificationsInteraction } from './useNotificationsInteraction';
-import { useOrientationLocker } from './useOrientationLocker';
-import { useReactQueryFocusManager } from './useReactQueryFocusManager';
-import { useReactQueryOnlineManager } from './useReactQueryOnlineManager';
-import { useUserServiceDependenciesRegistration } from './useUserServiceDependenciesRegistration';
+import { useInitialization } from './initialization';
 
 export default React.memo(() => {
-  useHttpClientDependenciesRegistration();
-  useUserServiceDependenciesRegistration();
-  useLogInitialization();
-  const languageLoaded = useLocalizationInitialization();
-  useOrientationLocker();
-  useNetworkListener();
-  useReactQueryFocusManager();
-  useReactQueryOnlineManager();
-  useFirebaseMessagingInitialization();
-  useForegroundMessagesListener();
-  useNotificationsInteraction();
+  const { isReady } = useInitialization();
   const theme = useAppTheme();
 
   // #region UI
-  return languageLoaded ? (
+  return isReady ? (
     <ServiceProvider httpClient={httpClient} localStorage={localStorage}>
       <KeyboardProvider>
         <PaperProvider theme={theme}>

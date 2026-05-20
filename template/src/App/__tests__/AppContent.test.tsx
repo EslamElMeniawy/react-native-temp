@@ -4,7 +4,7 @@ import * as React from 'react';
 import AppContent from '@src/App/AppContent';
 import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
-const mockUseLocalizationInitialization = jest.fn();
+const mockUseInitialization = jest.fn();
 
 jest.mock('@modules/components', () => {
   const rn = require('react-native');
@@ -75,30 +75,8 @@ jest.mock('react-native-keyboard-controller', () => {
   };
 });
 
-jest.mock('../useLogInitialization', () => ({
-  useLogInitialization: jest.fn(),
-}));
-jest.mock('../useOrientationLocker', () => ({
-  useOrientationLocker: jest.fn(),
-}));
-jest.mock('../useNetworkListener', () => ({ useNetworkListener: jest.fn() }));
-jest.mock('../useReactQueryFocusManager', () => ({
-  useReactQueryFocusManager: jest.fn(),
-}));
-jest.mock('../useReactQueryOnlineManager', () => ({
-  useReactQueryOnlineManager: jest.fn(),
-}));
-jest.mock('../useFirebaseMessagingInitialization', () => ({
-  useFirebaseMessagingInitialization: jest.fn(),
-}));
-jest.mock('../useForegroundMessagesListener', () => ({
-  useForegroundMessagesListener: jest.fn(),
-}));
-jest.mock('../useNotificationsInteraction', () => ({
-  useNotificationsInteraction: jest.fn(),
-}));
-jest.mock('../useLocalizationInitialization', () => ({
-  useLocalizationInitialization: () => mockUseLocalizationInitialization(),
+jest.mock('../initialization', () => ({
+  useInitialization: () => mockUseInitialization(),
 }));
 describe('AppContent', () => {
   beforeEach(() => {
@@ -106,7 +84,7 @@ describe('AppContent', () => {
   });
 
   it('renders providers and core UI when language is loaded', async () => {
-    mockUseLocalizationInitialization.mockReturnValue(true);
+    mockUseInitialization.mockReturnValue({ isReady: true });
 
     await renderWithProviders(<AppContent />);
 
@@ -120,7 +98,7 @@ describe('AppContent', () => {
   });
 
   it('returns null when language is not loaded', async () => {
-    mockUseLocalizationInitialization.mockReturnValue(false);
+    mockUseInitialization.mockReturnValue({ isReady: false });
 
     const view = await renderWithProviders(<AppContent />);
 
