@@ -21,8 +21,46 @@ module.exports = {
     '/coverage/*',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['autofix', 'import', 'react-func', '@tanstack/query'],
+  plugins: ['autofix', 'import', 'react-func', '@tanstack/query', 'boundaries'],
   rules: {
+    'boundaries/element-types': [
+      'error',
+      {
+        default: 'allow',
+        rules: [
+          {
+            from: ['core'],
+            disallow: ['store', 'domain', 'feature', 'navigation', 'app'],
+            message:
+              'Core must not import from {{target.type}}. Core is the foundation layer.',
+          },
+          {
+            from: ['store'],
+            disallow: ['shared', 'feature', 'navigation', 'app'],
+            message:
+              'Store must not import from {{target.type}}. Only core and domain types are allowed.',
+          },
+          {
+            from: ['shared'],
+            disallow: ['app'],
+            message:
+              'Shared modules must not import from {{target.type}}.',
+          },
+          {
+            from: ['domain'],
+            disallow: ['feature', 'navigation', 'app'],
+            message:
+              'Domain must not import from {{target.type}}. Domain is below features.',
+          },
+          {
+            from: ['feature'],
+            disallow: ['feature', 'app'],
+            message:
+              'Features must not import from other features or app layer. Use shared/domain modules for cross-feature communication.',
+          },
+        ],
+      },
+    ],
     '@typescript-eslint/naming-convention': [
       'error',
       { selector: 'default', format: ['camelCase'] },
@@ -122,6 +160,36 @@ module.exports = {
     project: './tsconfig.json',
   },
   settings: {
+    'boundaries/elements': [
+      { type: 'core', pattern: 'modules/core', mode: 'folder' },
+      { type: 'store', pattern: 'modules/store', mode: 'folder' },
+      {
+        type: 'shared',
+        pattern: [
+          'modules/utils',
+          'modules/components',
+          'modules/theme',
+          'modules/localization',
+          'modules/assets',
+        ],
+        mode: 'folder',
+      },
+      {
+        type: 'domain',
+        pattern: 'modules/domain/*',
+        mode: 'folder',
+        capture: ['domainName'],
+      },
+      {
+        type: 'feature',
+        pattern: 'modules/features/*',
+        mode: 'folder',
+        capture: ['featureName'],
+      },
+      { type: 'navigation', pattern: 'modules/navigation', mode: 'folder' },
+      { type: 'app', pattern: 'src/**', mode: 'full' },
+    ],
+    'boundaries/ignore': ['**/__tests__/**', '**/*.test.*', '**/*.spec.*'],
     'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
     'import/resolver': { typescript: true, node: true },
   },
