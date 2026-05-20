@@ -40,16 +40,19 @@ const FeatureErrorBoundary = ({
     onErrorProp?.(error, featureName);
   };
 
+  const fallbackRender = ({
+    resetErrorBoundary,
+  }: {
+    resetErrorBoundary: () => void;
+  }) => (
+    <FallbackComponent
+      featureName={featureName}
+      resetErrorBoundary={resetErrorBoundary}
+    />
+  );
+
   return (
-    <ErrorBoundary
-      fallbackRender={({ resetErrorBoundary }) => (
-        <FallbackComponent
-          featureName={featureName}
-          resetErrorBoundary={resetErrorBoundary}
-        />
-      )}
-      onError={onError}
-    >
+    <ErrorBoundary fallbackRender={fallbackRender} onError={onError}>
       {children}
     </ErrorBoundary>
   );

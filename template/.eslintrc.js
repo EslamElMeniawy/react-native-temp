@@ -202,6 +202,10 @@ module.exports = {
       rules: {
         // fireEvent is async in @testing-library/react-native v14+
         'testing-library/no-await-sync-events': 'off',
+        // Integration tests are naturally longer
+        'max-lines': 'off',
+        'max-statements': 'off',
+        'react-func/max-lines-per-function': 'off',
       },
     },
   ],
