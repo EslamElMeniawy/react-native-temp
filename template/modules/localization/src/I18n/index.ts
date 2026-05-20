@@ -9,6 +9,10 @@ import {
   AppLanguages,
   TranslationNamespaces,
 } from '@modules/localization/src/enums';
+import {
+  buildResources,
+  getRegisteredNamespaces,
+} from '@modules/localization/src/translationRegistry';
 import { translations } from '@modules/localization/src/translations';
 
 const getLogMessage = (message: string) => `## I18n:: ${message}`;
@@ -39,12 +43,15 @@ const handleRestart = (locale: string) => {
 export const setI18nConfig = async () => {
   console.info(getLogMessage('setI18nConfig'));
 
+  const resources = buildResources(translations);
+  const dynamicNamespaces = getRegisteredNamespaces();
+
   await i18n.init({
     debug: Config.ENABLE_LOCAL_LOG === 'true',
     compatibilityJSON: 'v4',
-    resources: translations,
+    resources,
     lng: defaultLocale,
-    ns: Object.values(TranslationNamespaces),
+    ns: [...Object.values(TranslationNamespaces), ...dynamicNamespaces],
     defaultNS: TranslationNamespaces.COMMON,
     interpolation: { escapeValue: false },
   });
