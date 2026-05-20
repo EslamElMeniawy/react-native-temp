@@ -29,9 +29,7 @@ describe('errorUtils', () => {
     });
 
     it('returns false for non-operational AppError', () => {
-      expect(isOperationalError(new AppError('bug', 'BUG', false))).toBe(
-        false,
-      );
+      expect(isOperationalError(new AppError('bug', 'BUG', false))).toBe(false);
     });
 
     it('returns false for plain Error', () => {

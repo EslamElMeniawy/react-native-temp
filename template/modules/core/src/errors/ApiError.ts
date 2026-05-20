@@ -22,11 +22,7 @@ export default class ApiError extends AppError {
   readonly statusCode: number;
   readonly errors?: string[];
 
-  constructor(
-    message: string,
-    statusCode: number,
-    options?: ApiErrorOptions,
-  ) {
+  constructor(message: string, statusCode: number, options?: ApiErrorOptions) {
     super(
       message,
       options?.code ?? mapStatusToCode(statusCode),

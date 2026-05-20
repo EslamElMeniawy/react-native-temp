@@ -7,7 +7,12 @@ export default class AppError extends Error {
   readonly isOperational: boolean;
   readonly cause?: Error;
 
-  constructor(message: string, code: string, isOperational = true, cause?: Error) {
+  constructor(
+    message: string,
+    code: string,
+    isOperational = true,
+    cause?: Error,
+  ) {
     super(message);
     this.name = this.constructor.name;
     this.code = code;

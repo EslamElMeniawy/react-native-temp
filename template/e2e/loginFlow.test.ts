@@ -1,3 +1,4 @@
+import { describe, it, beforeAll } from '@jest/globals';
 import { device, element, by, expect } from 'detox';
 
 describe('Login Flow', () => {
