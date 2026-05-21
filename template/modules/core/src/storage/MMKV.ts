@@ -1,8 +1,5 @@
 import {
   createMMKV,
-  useMMKVString,
-  useMMKVBoolean,
-  useMMKVNumber,
 } from 'react-native-mmkv';
 import type { LocalStorageKeys } from '@modules/core';
 import { StorageError, StorageErrorCode } from '@modules/core/src/errors';
@@ -49,8 +46,6 @@ export const getLocalStorageString = (key: LocalStorageKeys) => {
   }
 };
 
-export const useLocalStorageString = useMMKVString;
-
 export const setLocalStorageBoolean = (
   key: LocalStorageKeys,
   value: boolean,
@@ -84,8 +79,6 @@ export const getLocalStorageBoolean = (key: LocalStorageKeys) => {
   }
 };
 
-export const useLocalStorageBoolean = useMMKVBoolean;
-
 export const setLocalStorageNumber = (key: LocalStorageKeys, value: number) => {
   console.info(getLogMessage('setLocalStorageNumber'), key, value);
 
@@ -115,8 +108,6 @@ export const getLocalStorageNumber = (key: LocalStorageKeys) => {
     );
   }
 };
-
-export const useLocalStorageNumber = useMMKVNumber;
 
 export const deleteLocalStorageItem = (key: LocalStorageKeys) => {
   console.info(getLogMessage('deleteLocalStorageItem'), key);

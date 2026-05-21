@@ -1,4 +1,9 @@
 import * as React from 'react';
+import {
+  useMMKVString,
+  useMMKVBoolean,
+  useMMKVNumber,
+} from 'react-native-mmkv';
 
 import type { AxiosInstance } from 'axios';
 import type { PropsWithChildren } from 'react';
@@ -49,4 +54,19 @@ export const useLocalStorage = (): MMKV | null => {
   }
 
   return context.localStorage;
+};
+
+export const useStorageString = (key: string) => {
+  const storage = useLocalStorage();
+  return useMMKVString(key, storage ?? undefined);
+};
+
+export const useStorageBoolean = (key: string) => {
+  const storage = useLocalStorage();
+  return useMMKVBoolean(key, storage ?? undefined);
+};
+
+export const useStorageNumber = (key: string) => {
+  const storage = useLocalStorage();
+  return useMMKVNumber(key, storage ?? undefined);
 };

@@ -1,5 +1,5 @@
 import {
-  useLocalStorageString,
+  useStorageString,
   getLocalStorageString,
   setLocalStorageString,
   deleteLocalStorageItem,
@@ -10,7 +10,7 @@ const getLogMessage = (message: string) =>
   `## LocalStorage::fcmToken:: ${message}`;
 
 export const useLocalStorageFcmToken = () =>
-  useLocalStorageString(LocalStorageKeys.FCM_TOKEN);
+  useStorageString(LocalStorageKeys.FCM_TOKEN);
 
 export const getFcmToken = () => {
   console.info(getLogMessage('getFcmToken'));

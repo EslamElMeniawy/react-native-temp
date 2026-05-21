@@ -1,5 +1,5 @@
 import {
-  useLocalStorageString,
+  useStorageString,
   getLocalStorageString,
   setLocalStorageString,
   deleteLocalStorageItem,
@@ -15,7 +15,7 @@ export const useLocalStorageUser: () => [
   (user: User) => void,
 ] = () => {
   console.info(getLogMessage('useLocalStorageUser'));
-  const [jsonUser, setJsonUser] = useLocalStorageString(LocalStorageKeys.USER);
+  const [jsonUser, setJsonUser] = useStorageString(LocalStorageKeys.USER);
   console.info(getLogMessage('jsonUser'), jsonUser);
 
   const userObject = React.useMemo(

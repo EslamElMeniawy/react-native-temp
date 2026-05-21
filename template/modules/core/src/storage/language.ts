@@ -1,5 +1,5 @@
 import {
-  useLocalStorageString,
+  useStorageString,
   getLocalStorageString,
   setLocalStorageString,
   deleteLocalStorageItem,
@@ -11,7 +11,7 @@ const getLogMessage = (message: string) =>
   `## LocalStorage::language:: ${message}`;
 
 export const useLocalStorageLanguage = () =>
-  useLocalStorageString(LocalStorageKeys.LANGUAGE);
+  useStorageString(LocalStorageKeys.LANGUAGE);
 
 export const getLanguage = () => {
   console.info(getLogMessage('getLanguage'));
