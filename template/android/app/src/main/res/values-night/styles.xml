@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme (dark mode). -->
+    <style name="AppTheme" parent="Theme.EdgeToEdge">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="darkContentBarsStyle">false</item>
+        <item name="enforceNavigationBarContrast">false</item>
+    </style>
+
+    <!-- BootTheme dark mode override -->
+    <style name="BootTheme" parent="Theme.BootSplash">
+        <item name="bootSplashBackground">@color/bootsplash_background</item>
+        <item name="bootSplashLogo">@drawable/bootsplash_logo</item>
+        <item name="postBootSplashTheme">@style/AppTheme</item>
+    </style>
+
+</resources>

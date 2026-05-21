@@ -4,5 +4,5 @@
     <color name="notification">#6750a4</color>
 
     <!-- Color for splash screen background -->
-    <color name="bootsplash_background">#FFFFFF</color>
+    <color name="bootsplash_background">#FFFBFE</color>
 </resources>
