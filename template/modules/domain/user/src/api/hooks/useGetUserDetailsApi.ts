@@ -1,3 +1,4 @@
+import { useHttpClient } from '@modules/core';
 import { useQuery } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type { User, ServerError } from '@modules/core';
@@ -6,14 +7,17 @@ import type { UseQueryOptions } from '@tanstack/react-query';
 
 const useGetUserDetailsApi = (
   options?: Omit<UseQueryOptions<User, ServerError>, 'queryFn' | 'queryKey'>,
-) =>
-  useQuery<User, ServerError>({
+) => {
+  const httpClient = useHttpClient();
+
+  return useQuery<User, ServerError>({
     queryFn: () =>
       Config.USE_FAKE_API === 'true'
         ? fakerUser.getUserDetails()
-        : queryUser.getUserDetails(),
-    queryKey: ['user'],
+        : queryUser.getUserDetails(httpClient),
+    queryKey: ['user', httpClient],
     ...(options ?? {}),
   });
+};
 
 export default useGetUserDetailsApi;

@@ -1,9 +1,9 @@
-import { httpClient } from '@modules/core';
 import type { User, ApiRequest } from '@modules/core';
+import type { AxiosInstance } from 'axios';
 
 const queryUser = {
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
-  getUserDetails: () =>
+  getUserDetails: (httpClient: AxiosInstance) =>
     httpClient
       .get<User>('/user')
       .then(response => response.data)
@@ -13,7 +13,10 @@ const queryUser = {
         ),
       ),
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
-  updateUserProfile: (request: ApiRequest<FormData, number>) =>
+  updateUserProfile: (
+    httpClient: AxiosInstance,
+    request: ApiRequest<FormData, number>,
+  ) =>
     httpClient
       .putForm<User>(`/user/${request.pathVar}`, request.body)
       .then(response => response.data)

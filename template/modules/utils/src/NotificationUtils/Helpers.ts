@@ -1,3 +1,4 @@
+import { httpClient } from '@modules/core';
 import { UserStore } from '@modules/domain-user';
 import {
   fakerNotifications,
@@ -39,7 +40,7 @@ export const clearNotifications = (notification: Notification) => {
           mutationFn: request =>
             Config.USE_FAKE_API === 'true'
               ? fakerNotifications.markNotificationRead(request)
-              : queryNotifications.markNotificationRead(request),
+              : queryNotifications.markNotificationRead(httpClient, request),
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['notifications'] });
           },

@@ -1,14 +1,17 @@
-import { httpClient } from '@modules/core';
 import type { ApiRequest } from '@modules/core';
 import type {
   LoginBody,
   LoginResponse,
   LogoutResponse,
 } from '@modules/features-auth';
+import type { AxiosInstance } from 'axios';
 
 const queryAuth = {
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
-  login: (request: ApiRequest<LoginBody>): Promise<LoginResponse> =>
+  login: (
+    httpClient: AxiosInstance,
+    request: ApiRequest<LoginBody>,
+  ): Promise<LoginResponse> =>
     httpClient
       .post<LoginResponse>('/login', request.body)
       .then(response => response.data)
@@ -18,7 +21,7 @@ const queryAuth = {
         ),
       ),
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
-  logout: () =>
+  logout: (httpClient: AxiosInstance) =>
     httpClient
       .post<LogoutResponse>('/logout')
       .then(response => response.data)

@@ -1,3 +1,4 @@
+import { useHttpClient } from '@modules/core';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type { User, ServerError, ApiRequest } from '@modules/core';
@@ -10,6 +11,7 @@ const useUpdateUserProfileApi = (
     'mutationFn'
   >,
 ) => {
+  const httpClient = useHttpClient();
   const queryClient = useQueryClient();
   const { onSuccess, ...restOptions } = options ?? {};
 
@@ -17,7 +19,7 @@ const useUpdateUserProfileApi = (
     mutationFn: request =>
       Config.USE_FAKE_API === 'true'
         ? fakerUser.updateUserProfile(request)
-        : queryUser.updateUserProfile(request),
+        : queryUser.updateUserProfile(httpClient, request),
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
       onSuccess?.(data, variables, onMutateResult, context);

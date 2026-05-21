@@ -129,7 +129,7 @@ EOF
 
     # API
     cat > "$MODULE_DIR/src/api/services/query${PASCAL_NAME}.ts" << EOF
-import { httpClient } from '@modules/core';
+import type { AxiosInstance } from 'axios';
 
 const getBaseUrl = () => '';
 
@@ -237,7 +237,7 @@ EOF
 
     # API
     cat > "$MODULE_DIR/src/api/services/query${PASCAL_NAME}.ts" << EOF
-import { httpClient } from '@modules/core';
+import type { AxiosInstance } from 'axios';
 
 const getBaseUrl = () => '';
 

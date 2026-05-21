@@ -131,15 +131,11 @@ const errorInterceptor = (error: any) => {
 
   const deps = getHttpClientDependencies();
 
-  const serverError = new ServerError(
-    deps.translate('unknownError'),
-    0,
-    {
-      date: new Date(),
-      errorMessage: deps.translate('unknownError'),
-      cause: error instanceof Error ? error : undefined,
-    },
-  );
+  const serverError = new ServerError(deps.translate('unknownError'), 0, {
+    date: new Date(),
+    errorMessage: deps.translate('unknownError'),
+    cause: error instanceof Error ? error : undefined,
+  });
 
   return Promise.reject(serverError);
 };
