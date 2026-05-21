@@ -1,5 +1,5 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { render, fireEvent, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 import * as React from 'react';
 
 const mockDispatch = jest.fn();
@@ -76,7 +76,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 const errorDialogComponent = require('../').default;
-const renderErrorDialog = () =>
+const renderErrorDialog = async () =>
   render(React.createElement(errorDialogComponent));
 
 const resetDialogState = () => {
@@ -94,25 +94,25 @@ const registerVisibilityTests = () => {
   describe('visibility', () => {
     beforeEach(resetDialogState);
 
-    it('should not be visible when errorDialogMessage is undefined', () => {
-      renderErrorDialog();
+    it('should not be visible when errorDialogMessage is undefined', async () => {
+      await renderErrorDialog();
       expect(screen.queryByTestId('alert-dialog')).toBeNull();
     });
 
-    it('should be visible when errorDialogMessage is set', () => {
+    it('should be visible when errorDialogMessage is set', async () => {
       mockErrorDialogMessage = 'Test error message';
       mockErrorDialogTitle = 'Error Title';
 
-      renderErrorDialog();
+      await renderErrorDialog();
 
       expect(screen.getByText('Test error message')).toBeTruthy();
       expect(screen.getByText('Error Title')).toBeTruthy();
     });
 
-    it('should display only message without title', () => {
+    it('should display only message without title', async () => {
       mockErrorDialogMessage = 'Test error only';
 
-      renderErrorDialog();
+      await renderErrorDialog();
 
       expect(screen.getByText('Test error only')).toBeTruthy();
     });
@@ -123,11 +123,11 @@ const registerActionTests = () => {
   describe('actions', () => {
     beforeEach(resetDialogState);
 
-    it('should dispatch removeErrorDialog when OK button is pressed', () => {
+    it('should dispatch removeErrorDialog when OK button is pressed', async () => {
       mockErrorDialogMessage = 'Test error';
       mockErrorDialogTitle = 'Error';
 
-      renderErrorDialog();
+      await renderErrorDialog();
       pressOkButton();
 
       expect(mockDispatch).toHaveBeenCalledWith(
@@ -137,19 +137,19 @@ const registerActionTests = () => {
       );
     });
 
-    it('should call removeUserDataLogout when session expired', () => {
+    it('should call removeUserDataLogout when session expired', async () => {
       mockErrorDialogMessage = 'sessionExpired';
 
-      renderErrorDialog();
+      await renderErrorDialog();
       pressOkButton();
 
       expect(mockRemoveUserDataLogout).toHaveBeenCalledTimes(1);
     });
 
-    it('should not call removeUserDataLogout for non-session errors', () => {
+    it('should not call removeUserDataLogout for non-session errors', async () => {
       mockErrorDialogMessage = 'Regular error message';
 
-      renderErrorDialog();
+      await renderErrorDialog();
       pressOkButton();
 
       expect(mockRemoveUserDataLogout).not.toHaveBeenCalled();

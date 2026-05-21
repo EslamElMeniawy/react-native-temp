@@ -1,3 +1,4 @@
+import { useHttpClient } from '@modules/core';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type { ServerError, ApiRequest } from '@modules/core';
@@ -18,6 +19,7 @@ const useMarkNotificationReadApi = (
     'mutationFn'
   >,
 ) => {
+  const httpClient = useHttpClient();
   const queryClient = useQueryClient();
   const { onSuccess, ...restOptions } = options ?? {};
 
@@ -29,7 +31,7 @@ const useMarkNotificationReadApi = (
     mutationFn: request =>
       Config.USE_FAKE_API === 'true'
         ? fakerNotifications.markNotificationRead(request)
-        : queryNotifications.markNotificationRead(request),
+        : queryNotifications.markNotificationRead(httpClient, request),
     onSuccess: (data, variables, onMutateResult, context) => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       onSuccess?.(data, variables, onMutateResult, context);

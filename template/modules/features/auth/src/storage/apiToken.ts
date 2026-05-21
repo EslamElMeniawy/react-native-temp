@@ -1,5 +1,5 @@
 import {
-  useLocalStorageString,
+  useStorageString,
   getLocalStorageString,
   setLocalStorageString,
   deleteLocalStorageItem,
@@ -10,7 +10,7 @@ const getLogMessage = (message: string) =>
   `## LocalStorage::apiToken:: ${message}`;
 
 export const useLocalStorageApiToken = () =>
-  useLocalStorageString(LocalStorageKeys.API_TOKEN);
+  useStorageString(LocalStorageKeys.API_TOKEN);
 
 export const getApiToken = () => {
   console.info(getLogMessage('getApiToken'));

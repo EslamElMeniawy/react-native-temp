@@ -1,9 +1,9 @@
 import notifee, { EventType } from '@notifee/react-native';
 import { getMessaging, onMessage } from '@react-native-firebase/messaging';
 import * as React from 'react';
+import { UserStore } from '@modules/domain-user';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
 import { UnreadNotificationsCountLocalStorage } from '@modules/features-notifications';
-import { UserStore } from '@modules/features-profile';
 import { useAppDispatch } from '@modules/store';
 import { displayLocalNotification, processNotification } from '@modules/utils';
 

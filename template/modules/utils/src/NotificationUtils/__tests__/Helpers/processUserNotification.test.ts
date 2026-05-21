@@ -1,6 +1,6 @@
 import { test, expect, jest } from '@jest/globals';
+import { UserStore } from '@modules/domain-user';
 import * as LocalStorage from '@modules/features-notifications/src/storage/unreadNotificationsCount';
-import { UserStore } from '@modules/features-profile';
 import { store } from '@modules/store';
 import * as NotificationUtils from '@modules/utils/src/NotificationUtils';
 import { processUserNotification } from '@modules/utils/src/NotificationUtils/Helpers';

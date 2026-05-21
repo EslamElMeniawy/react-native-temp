@@ -98,8 +98,8 @@ const setMockTheme = (theme: any) => {
   const { useAppTheme } = require('@modules/theme');
   useAppTheme.mockReturnValue(theme);
 };
-const assertSuccessToast = () => {
-  const { toJSON } = render(
+const assertSuccessToast = async () => {
+  const { toJSON } = await render(
     <BaseToast
       type="success"
       text1="Title"
@@ -127,8 +127,8 @@ const assertSuccessToast = () => {
   expect(lastColor(title.props.style)).toBe('#001122');
   expect(lastColor(body.props.style)).toBe('#001122');
 };
-const assertWarnToast = () => {
-  const { toJSON } = render(
+const assertWarnToast = async () => {
+  const { toJSON } = await render(
     <BaseToast
       type="warn"
       text1="Warn Title"
@@ -145,8 +145,8 @@ const assertWarnToast = () => {
   expect(containerStyle.borderColor).toBe('#11111140');
   expect(lastColor(screen.getByText('Warn Body').props.style)).toBe('#332200');
 };
-const assertErrorToast = () => {
-  const { toJSON } = render(
+const assertErrorToast = async () => {
+  const { toJSON } = await render(
     <BaseToast
       type="error"
       text1="Error Title"
@@ -165,8 +165,8 @@ const assertErrorToast = () => {
   });
   expect(lastColor(screen.getByText('Error Body').props.style)).toBe('#330000');
 };
-const assertDefaultToast = () => {
-  const { toJSON } = render(
+const assertDefaultToast = async () => {
+  const { toJSON } = await render(
     <BaseToast
       type="info"
       text1="Info Title"
@@ -208,8 +208,8 @@ const assertToastManagerConfig = (props: any) => {
   expect(props.config.warn({ type: 'warn' }).type).toBe(WarnToast);
   expect(props.config.default({ type: 'default' }).type).toBe(InfoToast);
 };
-const assertToastManager = () => {
-  render(<ToastManager />);
+const assertToastManager = async () => {
+  await render(<ToastManager />);
 
   expect(mockToastifyRender).toHaveBeenCalledTimes(1);
   const props = mockCapturedToastProps;
@@ -232,19 +232,21 @@ describe('BaseToast', () => {
     jest.clearAllMocks();
   });
   it('applies success styling and renders content', async () => {
-    assertSuccessToast();
+    await assertSuccessToast();
   });
-  it('falls back to warn styling when no iconColor is provided', () => {
-    assertWarnToast();
+  it('falls back to warn styling when no iconColor is provided', async () => {
+    await assertWarnToast();
   });
-  it('applies error styling with provided iconColor', () => {
-    assertErrorToast();
+  it('applies error styling with provided iconColor', async () => {
+    await assertErrorToast();
   });
-  it('applies default styling for info type', () => {
-    assertDefaultToast();
+  it('applies default styling for info type', async () => {
+    await assertDefaultToast();
   });
-  it('omits optional elements when they are absent', () => {
-    const { toJSON } = render(<BaseToast type="info" text2="Only body" />);
+  it('omits optional elements when they are absent', async () => {
+    const { toJSON } = await render(
+      <BaseToast type="info" text2="Only body" />,
+    );
 
     const json = toJSON() as any;
 
@@ -261,10 +263,10 @@ describe('ToastManager', () => {
     I18nManager.isRTL = true;
     setMockTheme(baseTheme);
   });
-  it('wires toast manager with theme, layout, icons, and config', () => {
-    assertToastManager();
+  it('wires toast manager with theme, layout, icons, and config', async () => {
+    await assertToastManager();
   });
-  it('uses dark theme values when provided', () => {
+  it('uses dark theme values when provided', async () => {
     setMockTheme(
       makeTheme({
         dark: true,
@@ -285,7 +287,7 @@ describe('ToastManager', () => {
       }),
     );
 
-    render(<ToastManager />);
+    await render(<ToastManager />);
 
     const props = mockCapturedToastProps;
     const managerStyle = StyleSheet.flatten(props.style);

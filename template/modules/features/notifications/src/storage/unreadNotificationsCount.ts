@@ -1,5 +1,5 @@
 import {
-  useLocalStorageNumber,
+  useStorageNumber,
   getLocalStorageNumber,
   setLocalStorageNumber,
   deleteLocalStorageItem,
@@ -10,7 +10,7 @@ const getLogMessage = (message: string) =>
   `## LocalStorage::unreadNotificationsCount:: ${message}`;
 
 export const useLocalStorageUnreadNotificationsCount = () =>
-  useLocalStorageNumber(LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT);
+  useStorageNumber(LocalStorageKeys.UNREAD_NOTIFICATIONS_COUNT);
 
 export const getUnreadNotificationsCount = () => {
   console.info(getLogMessage('getUnreadNotificationsCount'));

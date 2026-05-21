@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { render } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import * as React from 'react';
 import SystemBars from 'modules/components/src/SystemBars';
 
@@ -31,10 +31,10 @@ describe('SystemBars', () => {
     jest.clearAllMocks();
   });
 
-  it('derives light styles from light background when props omitted', () => {
+  it('derives light styles from light background when props omitted', async () => {
     useAppTheme.mockReturnValue({ colors: { background: '#ffffff' } });
 
-    render(<SystemBars />);
+    await renderWithProviders(<SystemBars />);
 
     expect(mockSystemBars).toHaveBeenCalledTimes(1);
     expect(mockSystemBars).toHaveBeenCalledWith(
@@ -45,10 +45,10 @@ describe('SystemBars', () => {
     );
   });
 
-  it('uses provided styles and hidden flags', () => {
+  it('uses provided styles and hidden flags', async () => {
     useAppTheme.mockReturnValue({ colors: { background: '#000000' } });
 
-    render(
+    await renderWithProviders(
       <SystemBars
         statusBarProps={{ style: 'light', hidden: true }}
         navigationBarProps={{ style: 'dark', hidden: false }}

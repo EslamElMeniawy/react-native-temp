@@ -11,42 +11,42 @@ import RNBootSplash
 
 // Added for "react-native-firebase".
 import Firebase
-import RNFBMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
-  
+
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
-  
+
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
     // Added for "react-native-firebase".
     FirebaseApp.configure()
-    
+
     let delegate = ReactNativeDelegate()
     let factory = RCTReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()
-    
+
     reactNativeDelegate = delegate
     reactNativeFactory = factory
-    
+
     window = UIWindow(frame: UIScreen.main.bounds)
-    
+
     factory.startReactNative(
       withModuleName: "TempApp",
       in: window,
-      // Added for injecting "isHeadless" prop into app for "react-native-firebase".
+      // Added for "react-native-firebase" - inject isHeadless prop for background message handling
+      // This allows the app to conditionally render when launched in the background
       initialProperties: RNFBMessagingModule.addCustomProps(toUserProps: nil, withLaunchOptions: launchOptions),
       launchOptions: launchOptions
     )
-    
+
     return true
   }
-  
+
   // Added for "react-native-orientation-locker".
   func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
     return Orientation.getOrientation()
@@ -57,7 +57,7 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
   override func sourceURL(for bridge: RCTBridge) -> URL? {
     self.bundleURL()
   }
-  
+
   override func bundleURL() -> URL? {
 #if DEBUG
     RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index")
@@ -65,7 +65,7 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
     Bundle.main.url(forResource: "main", withExtension: "jsbundle")
 #endif
   }
-  
+
   // Added for "react-native-bootsplash".
   override func customize(_ rootView: RCTRootView) {
     super.customize(rootView)

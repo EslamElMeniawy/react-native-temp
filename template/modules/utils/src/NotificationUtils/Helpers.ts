@@ -1,9 +1,10 @@
+import { httpClient } from '@modules/core';
+import { UserStore } from '@modules/domain-user';
 import {
   fakerNotifications,
   queryNotifications,
   UnreadNotificationsCountLocalStorage,
 } from '@modules/features-notifications';
-import { UserStore } from '@modules/features-profile';
 import { store } from '@modules/store';
 import notifee from '@notifee/react-native';
 import { default as Config } from 'react-native-config';
@@ -39,7 +40,7 @@ export const clearNotifications = (notification: Notification) => {
           mutationFn: request =>
             Config.USE_FAKE_API === 'true'
               ? fakerNotifications.markNotificationRead(request)
-              : queryNotifications.markNotificationRead(request),
+              : queryNotifications.markNotificationRead(httpClient, request),
           onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['notifications'] });
           },

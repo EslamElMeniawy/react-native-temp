@@ -1,3 +1,4 @@
+import { useHttpClient } from '@modules/core';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type {
@@ -27,8 +28,10 @@ const useGetNotificationsApi = (
     >,
     'queryFn' | 'queryKey' | 'initialPageParam' | 'getNextPageParam'
   >,
-) =>
-  useInfiniteQuery<
+) => {
+  const httpClient = useHttpClient();
+
+  return useInfiniteQuery<
     PagingResponse<Notification>,
     ServerError,
     InfiniteData<PagingResponse<Notification>, ApiRequest>,
@@ -38,8 +41,8 @@ const useGetNotificationsApi = (
     queryFn: ({ pageParam }) =>
       Config.USE_FAKE_API === 'true'
         ? fakerNotifications.getNotifications(pageParam)
-        : queryNotifications.getNotifications(pageParam),
-    queryKey: ['notifications'],
+        : queryNotifications.getNotifications(httpClient, pageParam),
+    queryKey: ['notifications', httpClient],
     initialPageParam: {
       // TODO: Change `params` object to match API.
       params: { page: 1, size: 10 },
@@ -56,5 +59,6 @@ const useGetNotificationsApi = (
           },
     ...(options ?? {}),
   });
+};
 
 export default useGetNotificationsApi;

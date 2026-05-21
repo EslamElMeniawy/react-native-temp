@@ -36,11 +36,11 @@ jest.mock('@modules/components', () => ({
 }));
 
 const screenComponent = require('../').default;
-const renderComponent = (props: any) =>
+const renderComponent = async (props: any) =>
   render(React.createElement(screenComponent, props));
 
 const registerChildRenderTests = () => {
-  it('should render children', () => {
+  it('should render children', async () => {
     const reactNative = require('react-native');
     const child = React.createElement(
       reactNative.Text,
@@ -48,13 +48,13 @@ const registerChildRenderTests = () => {
       'Test child',
     );
 
-    renderComponent({ children: child });
+    await renderComponent({ children: child });
 
     expect(screen.getByTestId('child')).toBeTruthy();
   });
 
-  it('should render SystemBars component', () => {
-    renderComponent({
+  it('should render SystemBars component', async () => {
+    await renderComponent({
       children: null,
     });
 
@@ -63,8 +63,8 @@ const registerChildRenderTests = () => {
 };
 
 const registerColorTests = () => {
-  it('should apply theme background color by default', () => {
-    renderComponent({
+  it('should apply theme background color by default', async () => {
+    await renderComponent({
       children: null,
     });
 
@@ -72,8 +72,8 @@ const registerColorTests = () => {
     expect(systemBars).toBeTruthy();
   });
 
-  it('should apply custom statusBarColor', () => {
-    renderComponent({
+  it('should apply custom statusBarColor', async () => {
+    await renderComponent({
       statusBarColor: '#000000',
       children: null,
     });
@@ -82,8 +82,8 @@ const registerColorTests = () => {
     expect(systemBars).toBeTruthy();
   });
 
-  it('should apply custom navigationBarColor', () => {
-    renderComponent({
+  it('should apply custom navigationBarColor', async () => {
+    await renderComponent({
       navigationBarColor: '#FF0000',
       children: null,
     });
@@ -94,8 +94,8 @@ const registerColorTests = () => {
 };
 
 const registerPropsTests = () => {
-  it('should pass statusBarProps to SystemBars', () => {
-    renderComponent({
+  it('should pass statusBarProps to SystemBars', async () => {
+    await renderComponent({
       statusBarProps: { style: 'dark' },
       children: null,
     });
@@ -104,8 +104,8 @@ const registerPropsTests = () => {
     expect(systemBars).toBeTruthy();
   });
 
-  it('should pass navigationBarProps to SystemBars', () => {
-    renderComponent({
+  it('should pass navigationBarProps to SystemBars', async () => {
+    await renderComponent({
       navigationBarProps: { style: 'light' },
       children: null,
     });
@@ -114,8 +114,8 @@ const registerPropsTests = () => {
     expect(systemBars).toBeTruthy();
   });
 
-  it('should apply custom style', () => {
-    renderComponent({
+  it('should apply custom style', async () => {
+    await renderComponent({
       style: { flex: 1 },
       children: null,
     });
@@ -126,8 +126,8 @@ const registerPropsTests = () => {
 };
 
 const registerEdgesTests = () => {
-  it('should handle edges prop with all edges', () => {
-    renderComponent({
+  it('should handle edges prop with all edges', async () => {
+    await renderComponent({
       edges: ['top', 'bottom', 'left', 'right'],
       children: null,
     });
@@ -135,8 +135,8 @@ const registerEdgesTests = () => {
     expect(screen.getByTestId('system-bars')).toBeTruthy();
   });
 
-  it('should handle edges prop with subset of edges', () => {
-    renderComponent({
+  it('should handle edges prop with subset of edges', async () => {
+    await renderComponent({
       edges: ['top'],
       children: null,
     });
@@ -144,8 +144,8 @@ const registerEdgesTests = () => {
     expect(screen.getByTestId('system-bars')).toBeTruthy();
   });
 
-  it('should handle undefined edges prop', () => {
-    renderComponent({
+  it('should handle undefined edges prop', async () => {
+    await renderComponent({
       children: null,
     });
 

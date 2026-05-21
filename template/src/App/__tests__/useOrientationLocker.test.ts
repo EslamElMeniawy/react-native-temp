@@ -1,7 +1,7 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
 import Orientation from 'react-native-orientation-locker';
 import { useOrientationLocker } from '@src/App/useOrientationLocker';
-import { renderHookWithProviders } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 // Mock react-native-orientation-locker
 jest.mock('react-native-orientation-locker', () => ({
@@ -13,8 +13,8 @@ describe('useOrientationLocker', () => {
     jest.clearAllMocks();
   });
 
-  test('should lock orientation to portrait on mount', () => {
-    renderHookWithProviders(() => useOrientationLocker());
+  test('should lock orientation to portrait on mount', async () => {
+    await renderHookWithProviders(() => useOrientationLocker());
 
     expect(Orientation.lockToPortrait).toHaveBeenCalledTimes(1);
   });

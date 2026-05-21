@@ -1,0 +1,4 @@
+<resources>
+    <!-- Color for splash screen background (dark mode) -->
+    <color name="bootsplash_background">#1C1B1F</color>
+</resources>

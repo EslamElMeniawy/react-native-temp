@@ -1,14 +1,5 @@
-import { ApiTokenLocalStorage } from '@modules/features-auth';
-import {
-  UnreadNotificationsCountLocalStorage,
-  FcmTokenLocalStorage,
-} from '@modules/features-notifications';
-import { UserLocalStorage, UserStore } from '@modules/features-profile';
-import { reset } from '@modules/navigation';
-import { store } from '@modules/store';
-import { getMessaging, deleteToken } from '@react-native-firebase/messaging';
 import type { User } from '@modules/core';
-import { queryClient } from '@modules/utils';
+import { getUserServiceDependencies } from './userServiceDependencies';
 
 const getLogMessage = (message: string) => `## UserUtils:: ${message}`;
 
@@ -19,8 +10,9 @@ const getLogMessage = (message: string) => `## UserUtils:: ${message}`;
  */
 export const saveUserData = (user: User) => {
   console.info(getLogMessage('saveUserData'), user);
-  UserLocalStorage.setUser(user);
-  store.dispatch(UserStore.setUser(user));
+  const deps = getUserServiceDependencies();
+  deps.setUser(user);
+  deps.dispatchSetUser(user);
 };
 
 /**
@@ -30,22 +22,24 @@ export const saveUserData = (user: User) => {
  */
 export const saveApiToken = (apiToken: string) => {
   console.info(getLogMessage('saveApiToken'), apiToken);
-  ApiTokenLocalStorage.setApiToken(apiToken);
-  store.dispatch(UserStore.setApiToken(apiToken));
+  const deps = getUserServiceDependencies();
+  deps.setApiToken(apiToken);
+  deps.dispatchSetApiToken(apiToken);
 };
 
 /**
  * Save user data and navigate to the home screen.
  *
  * @param user - The user object containing user data.
- * * @param apiToken - The api token.
+ * @param apiToken - The api token.
  * @returns void
  */
 export const saveUserDataOpenHome = (user: User, apiToken: string) => {
   console.info(getLogMessage('saveUserDataOpenHome'), user, apiToken);
   saveUserData(user);
   saveApiToken(apiToken);
-  reset('home');
+  const deps = getUserServiceDependencies();
+  deps.resetNavigation('home');
 };
 
 /**
@@ -54,10 +48,11 @@ export const saveUserDataOpenHome = (user: User, apiToken: string) => {
  */
 export const removeLocalStorageUserData = () => {
   console.info(getLogMessage('removeLocalStorageUserData'));
-  UserLocalStorage.removeUser();
-  UnreadNotificationsCountLocalStorage.removeUnreadNotificationsCount();
-  ApiTokenLocalStorage.removeApiToken();
-  FcmTokenLocalStorage.removeFcmToken();
+  const deps = getUserServiceDependencies();
+  deps.removeUser();
+  deps.removeUnreadNotificationsCount();
+  deps.removeApiToken();
+  deps.removeFcmToken();
 };
 
 /**
@@ -66,16 +61,17 @@ export const removeLocalStorageUserData = () => {
  */
 export const removeReduxUserData = () => {
   console.info(getLogMessage('removeReduxUserData'));
-  store.dispatch(UserStore.removeUser());
-  store.dispatch(UserStore.removeUnreadNotificationsCount());
-  store.dispatch(UserStore.removeApiToken());
+  const deps = getUserServiceDependencies();
+  deps.dispatchRemoveUser();
+  deps.dispatchRemoveUnreadNotificationsCount();
+  deps.dispatchRemoveApiToken();
 };
 
 /**
  * Asynchronously removes user data by performing the following steps:
  * 1. Logs a message indicating the start of the process.
  * 2. Removes user data from local storage by calling 'removeLocalStorageUserData' function.
- * 3. Deletes the messaging token by calling `deleteToken(getMessaging())` function.
+ * 3. Deletes the messaging token by calling `deleteMessagingToken` function.
  * 4. Removes user data from Redux store by calling `removeReduxUserData` function.
  * 5. Calls the optional 'onFinish' callback function if provided.
  *
@@ -88,7 +84,8 @@ export const removeUserData = async (onFinish?: () => void): Promise<void> => {
   removeReduxUserData();
 
   try {
-    await deleteToken(getMessaging());
+    const deps = getUserServiceDependencies();
+    await deps.deleteMessagingToken();
   } catch (error) {
     console.error(getLogMessage('removeUserData::deleteToken Error'), error);
   } finally {
@@ -107,16 +104,18 @@ export const removeUserDataLogout = async (): Promise<void> => {
   console.info(getLogMessage('removeUserDataLogout'));
 
   await removeUserData(async () => {
+    const deps = getUserServiceDependencies();
+
     try {
-      await queryClient.cancelQueries();
+      await deps.cancelQueries();
     } catch (error) {
       console.error(
         getLogMessage('removeUserDataLogout::cancelQueries Error'),
         error,
       );
     } finally {
-      queryClient.clear();
-      reset('login');
+      deps.clearQueryCache();
+      deps.resetNavigation('login');
     }
   });
 };

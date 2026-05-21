@@ -41,29 +41,29 @@ describe('PasswordInput', () => {
     jest.clearAllMocks();
   });
 
-  it('should render input with correct name', () => {
-    render(<PasswordInput />);
+  it('should render input with correct name', async () => {
+    await render(<PasswordInput />);
 
     expect(screen.getByTestId('input-password')).toBeTruthy();
   });
 
-  it('should set secureTextEntry to true', () => {
-    render(<PasswordInput />);
+  it('should set secureTextEntry to true', async () => {
+    await render(<PasswordInput />);
 
     const input = screen.getByTestId('input-password');
     expect(input.props.secureTextEntry).toBe(true);
   });
 
-  it('should translate password label', () => {
-    render(<PasswordInput />);
+  it('should translate password label', async () => {
+    await render(<PasswordInput />);
 
     expect(mockTranslate).toHaveBeenCalledWith(
       expect.stringContaining('auth:password'),
     );
   });
 
-  it('should have required validation rule', () => {
-    render(<PasswordInput />);
+  it('should have required validation rule', async () => {
+    await render(<PasswordInput />);
 
     expect(mockTranslate).toHaveBeenCalledWith(
       expect.stringContaining('fieldRequired'),

@@ -1,10 +1,10 @@
 import { describe, test, expect } from '@jest/globals';
-import { renderHook } from '@testing-library/react-native';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import useAppThemeFonts from '@modules/theme/src/useAppThemeFonts';
 
 describe('useAppThemeFonts', () => {
-  test('should return configured fonts object when invoked', () => {
-    const { result } = renderHook(() => useAppThemeFonts());
+  test('should return configured fonts object when invoked', async () => {
+    const { result } = await renderHookWithProviders(() => useAppThemeFonts());
     expect(result.current).toBeDefined();
     expect(result.current).toHaveProperty('titleSmall');
     expect(result.current).toHaveProperty('titleMedium');

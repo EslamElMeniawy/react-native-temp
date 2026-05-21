@@ -1,9 +1,10 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import * as React from 'react';
 import AppContent from '@src/App/AppContent';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
-const mockUseLocalizationInitialization = jest.fn();
+const mockUseInitialization = jest.fn();
 
 jest.mock('@modules/components', () => {
   const rn = require('react-native');
@@ -23,11 +24,7 @@ jest.mock('@modules/navigation', () => {
   const react = require('react');
   return {
     ['NavigationContainer']: () =>
-      react.createElement(
-        rn.View,
-        { testID: 'navigation-container' },
-        'Navigation',
-      ),
+      react.createElement(rn.View, { testID: 'navigation-container' }),
   };
 });
 
@@ -48,6 +45,7 @@ jest.mock('@modules/theme', () => ({
 jest.mock('@modules/utils', () => ({
   clientPersister: {},
   queryClient: {},
+  registerUserServiceDependencies: jest.fn(),
 }));
 
 jest.mock('@tanstack/react-query-persist-client', () => {
@@ -77,40 +75,18 @@ jest.mock('react-native-keyboard-controller', () => {
   };
 });
 
-jest.mock('../useLogInitialization', () => ({
-  useLogInitialization: jest.fn(),
-}));
-jest.mock('../useOrientationLocker', () => ({
-  useOrientationLocker: jest.fn(),
-}));
-jest.mock('../useNetworkListener', () => ({ useNetworkListener: jest.fn() }));
-jest.mock('../useReactQueryFocusManager', () => ({
-  useReactQueryFocusManager: jest.fn(),
-}));
-jest.mock('../useReactQueryOnlineManager', () => ({
-  useReactQueryOnlineManager: jest.fn(),
-}));
-jest.mock('../useFirebaseMessagingInitialization', () => ({
-  useFirebaseMessagingInitialization: jest.fn(),
-}));
-jest.mock('../useForegroundMessagesListener', () => ({
-  useForegroundMessagesListener: jest.fn(),
-}));
-jest.mock('../useNotificationsInteraction', () => ({
-  useNotificationsInteraction: jest.fn(),
-}));
-jest.mock('../useLocalizationInitialization', () => ({
-  useLocalizationInitialization: () => mockUseLocalizationInitialization(),
+jest.mock('../initialization', () => ({
+  useInitialization: () => mockUseInitialization(),
 }));
 describe('AppContent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders providers and core UI when language is loaded', () => {
-    mockUseLocalizationInitialization.mockReturnValue(true);
+  it('renders providers and core UI when language is loaded', async () => {
+    mockUseInitialization.mockReturnValue({ isReady: true });
 
-    render(<AppContent />);
+    await renderWithProviders(<AppContent />);
 
     expect(screen.getByTestId('keyboard-provider')).toBeTruthy();
     expect(screen.getByTestId('paper-provider')).toBeTruthy();
@@ -121,10 +97,10 @@ describe('AppContent', () => {
     expect(screen.getByTestId('toast-manager')).toBeTruthy();
   });
 
-  it('returns null when language is not loaded', () => {
-    mockUseLocalizationInitialization.mockReturnValue(false);
+  it('returns null when language is not loaded', async () => {
+    mockUseInitialization.mockReturnValue({ isReady: false });
 
-    const view = render(<AppContent />);
+    const view = await renderWithProviders(<AppContent />);
 
     expect(view.toJSON()).toBeNull();
   });

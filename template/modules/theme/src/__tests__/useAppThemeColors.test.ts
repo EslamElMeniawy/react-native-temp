@@ -1,51 +1,54 @@
 import { describe, test, expect, jest } from '@jest/globals';
-import { renderHook } from '@testing-library/react-native';
+import {
+  renderHookWithProviders,
+  renderHook,
+} from '@modules/utils/src/__tests__/TestUtils';
 import AppColors from '@modules/theme/src/AppColors';
 import useAppThemeColors from '@modules/theme/src/useAppThemeColors';
 
 describe('useAppThemeColors HAPPY PATH', () => {
-  test('should return defined theme colors object when invoked', () => {
-    const { result } = renderHook(() => useAppThemeColors());
+  test('should return defined theme colors object when invoked', async () => {
+    const { result } = await renderHookWithProviders(() => useAppThemeColors());
     expect(result.current).toBeDefined();
   });
 
-  test('should return dark theme colors when color scheme is dark', () => {
+  test('should return dark theme colors when color scheme is dark', async () => {
     jest
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue('dark');
 
-    const { result } = renderHook(() => useAppThemeColors());
+    const { result } = await renderHookWithProviders(() => useAppThemeColors());
     expect(result.current.primary).toEqual(AppColors.themeDark.primary);
     expect(result.current.onPrimary).toEqual(AppColors.themeDark.onPrimary);
   });
 
-  test('should return light theme colors when color scheme is light', () => {
+  test('should return light theme colors when color scheme is light', async () => {
     jest
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue('light');
 
-    const { result } = renderHook(() => useAppThemeColors());
+    const { result } = await renderHookWithProviders(() => useAppThemeColors());
     expect(result.current.primary).toEqual(AppColors.themeLight.primary);
     expect(result.current.onPrimary).toEqual(AppColors.themeLight.onPrimary);
   });
 });
 
 describe('useAppThemeColors EDGE CASES', () => {
-  test('should handle undefined color scheme gracefully when invoked', () => {
+  test('should handle undefined color scheme gracefully when invoked', async () => {
     jest
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue(undefined);
 
-    const { result } = renderHook(() => useAppThemeColors());
+    const { result } = await renderHookWithProviders(() => useAppThemeColors());
     expect(result.current).toBeDefined();
   });
 
-  test('should handle unexpected color scheme values gracefully', () => {
+  test('should handle unexpected color scheme values gracefully', async () => {
     jest
       .spyOn(require('react-native'), 'useColorScheme')
       .mockReturnValue('invalid');
 
-    const { result } = renderHook(() => useAppThemeColors());
+    const { result } = await renderHook(() => useAppThemeColors());
     expect(result.current).toBeDefined();
   });
 });
