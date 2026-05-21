@@ -1,4 +1,3 @@
-import { httpClient } from '@modules/core';
 import type { ApiRequest, PagingResponse, Notification } from '@modules/core';
 import type {
   MarkNotificationReadResponse,
@@ -6,10 +5,12 @@ import type {
   UpdateFcmTokenBody,
   UpdateFcmTokenResponse,
 } from '@modules/features-notifications';
+import type { AxiosInstance } from 'axios';
 
 const queryNotifications = {
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
   getNotifications: (
+    httpClient: AxiosInstance,
     request: ApiRequest,
   ): Promise<PagingResponse<Notification>> =>
     httpClient
@@ -28,7 +29,10 @@ const queryNotifications = {
         ),
       ),
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
-  updateFcmToken: (request: ApiRequest<UpdateFcmTokenBody>) =>
+  updateFcmToken: (
+    httpClient: AxiosInstance,
+    request: ApiRequest<UpdateFcmTokenBody>,
+  ) =>
     httpClient
       .post<UpdateFcmTokenResponse>('/update-fcm-token', request.body)
       .then(response => response.data)
@@ -38,7 +42,10 @@ const queryNotifications = {
         ),
       ),
   // TODO: Change params, endpoint, method, and response mapping based on API requirements.
-  markNotificationRead: (request: ApiRequest<any, string | number>) =>
+  markNotificationRead: (
+    httpClient: AxiosInstance,
+    request: ApiRequest<any, string | number>,
+  ) =>
     httpClient
       .post<MarkNotificationReadResponse>(
         `/mark-notification-read/${request.pathVar}`,

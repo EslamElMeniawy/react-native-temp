@@ -1,50 +1,50 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { focusManager } from '@tanstack/react-query';
-import { act, renderHook } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
+import { AppState } from 'react-native';
 import { useReactQueryFocusManager } from '@src/App/useReactQueryFocusManager';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import type { AppStateStatus } from 'react-native';
 
 let appStateHandler: ((status: AppStateStatus) => void) | undefined;
 const mockRemove = jest.fn();
 
-jest.mock('react-native', () => ({
-  ['Platform']: {
-    ['OS']: 'ios',
-    select: jest.fn(
-      (options: Record<string, unknown>) => options.ios || options.default,
-    ),
+jest.spyOn(AppState, 'addEventListener').mockImplementation(
+  (_event: string, handler: (state: AppStateStatus) => void) => {
+    appStateHandler = handler;
+    return { remove: mockRemove } as any;
   },
-  ['AppState']: {
-    addEventListener: jest.fn(
-      (_event: string, handler: (status: AppStateStatus) => void) => {
-        appStateHandler = handler;
-        return { remove: mockRemove };
-      },
-    ),
-  },
-}));
+);
 
 describe('useReactQueryFocusManager', () => {
   const setFocusedSpy = jest.spyOn(focusManager, 'setFocused');
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(AppState, 'addEventListener').mockImplementation(
+      (_event: string, handler: (state: AppStateStatus) => void) => {
+        appStateHandler = handler;
+        return { remove: mockRemove } as any;
+      },
+    );
   });
 
-  it('updates focus manager on app state changes', () => {
-    const { unmount } = renderHook(() => useReactQueryFocusManager());
+  it('updates focus manager on app state changes', async () => {
+    const { unmount } = await renderHookWithProviders(() =>
+      useReactQueryFocusManager(),
+    );
 
-    act(() => {
+    await act(() => {
       appStateHandler?.('active');
     });
     expect(setFocusedSpy).toHaveBeenCalledWith(true);
 
-    act(() => {
+    await act(() => {
       appStateHandler?.('background');
     });
     expect(setFocusedSpy).toHaveBeenCalledWith(false);
 
-    unmount();
+    await unmount();
     expect(mockRemove).toHaveBeenCalled();
   });
 });

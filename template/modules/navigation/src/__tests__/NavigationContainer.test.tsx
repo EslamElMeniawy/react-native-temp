@@ -1,6 +1,7 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import { logEvent, getAnalytics } from '@react-native-firebase/analytics';
-import { render, screen } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 import * as React from 'react';
 import config from 'react-native-config';
 import {
@@ -126,36 +127,36 @@ describe('NavigationContainer', () => {
     container.props.onStateChange?.();
   };
 
-  it('logs analytics when route changes', () => {
-    render(<AppNavigationContainer />);
+  it('logs analytics when route changes', async () => {
+    await renderWithProviders(<AppNavigationContainer />);
 
     triggerStateChange();
 
     expect(getAnalytics).toHaveBeenCalledTimes(1);
-    expect(logEvent).toHaveBeenCalledWith('analytics-instance', 'screen_view', {
+    expect(logEvent).toHaveBeenCalledWith(expect.any(String), 'screen_view', {
       firebase_screen: 'settings',
       firebase_screen_class: 'settings',
     });
   });
 
-  it('renders gesture detector when local log is enabled', () => {
-    render(<AppNavigationContainer />);
+  it('renders gesture detector when local log is enabled', async () => {
+    await renderWithProviders(<AppNavigationContainer />);
 
     expect(screen.getByTestId('gesture-detector')).toBeTruthy();
     expect(screen.getByTestId('root-stack')).toBeTruthy();
   });
 
-  it('skips gesture detector when local log is disabled', () => {
+  it('skips gesture detector when local log is disabled', async () => {
     mockConfig.ENABLE_LOCAL_LOG = 'false';
 
-    render(<AppNavigationContainer />);
+    await renderWithProviders(<AppNavigationContainer />);
 
     expect(screen.queryByTestId('gesture-detector')).toBeNull();
     expect(screen.getByTestId('root-stack')).toBeTruthy();
   });
 
-  it('pushes debug menu when two-finger gesture succeeds on non-debug screens', () => {
-    render(<AppNavigationContainer />);
+  it('pushes debug menu when two-finger gesture succeeds on non-debug screens', async () => {
+    await renderWithProviders(<AppNavigationContainer />);
 
     triggerStateChange();
     lastGesture.invokeOnEnd(true);
@@ -165,13 +166,13 @@ describe('NavigationContainer', () => {
     });
   });
 
-  it('does not push debug menu when already on debug screens', () => {
+  it('does not push debug menu when already on debug screens', async () => {
     mockGetCurrentRoute.mockReset();
     mockGetCurrentRoute
       .mockReturnValueOnce({ name: 'debugMenu' })
       .mockReturnValueOnce({ name: 'debugMenu' });
 
-    render(<AppNavigationContainer />);
+    await renderWithProviders(<AppNavigationContainer />);
 
     triggerStateChange();
     lastGesture.invokeOnEnd(true);

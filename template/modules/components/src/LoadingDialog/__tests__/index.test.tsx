@@ -29,25 +29,25 @@ jest.mock('@modules/store', () => ({
 }));
 
 const loadingDialogComponent = require('../').default;
-const renderLoadingDialog = () =>
+const renderLoadingDialog = async () =>
   render(React.createElement(loadingDialogComponent));
 
 describe('LoadingDialog', () => {
-  it('should not be visible when showLoadingDialog is undefined', () => {
+  it('should not be visible when showLoadingDialog is undefined', async () => {
     mockShowLoadingDialog = undefined;
-    renderLoadingDialog();
+    await renderLoadingDialog();
     expect(screen.queryByTestId(mockLoadingDialog)).toBeNull();
   });
 
-  it('should not be visible when showLoadingDialog is false', () => {
+  it('should not be visible when showLoadingDialog is false', async () => {
     mockShowLoadingDialog = false;
-    renderLoadingDialog();
+    await renderLoadingDialog();
     expect(screen.queryByTestId(mockLoadingDialog)).toBeNull();
   });
 
-  it('should be visible when showLoadingDialog is true', () => {
+  it('should be visible when showLoadingDialog is true', async () => {
     mockShowLoadingDialog = true;
-    renderLoadingDialog();
+    await renderLoadingDialog();
     const loadingIndicator = screen.getByTestId(mockLoadingDialog);
     expect(loadingIndicator).toBeTruthy();
   });

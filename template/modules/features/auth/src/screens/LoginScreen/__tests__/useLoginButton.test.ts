@@ -7,8 +7,9 @@ import {
   jest,
 } from '@jest/globals';
 import { DialogsStore, useAppDispatch } from '@modules/store';
-import { renderHookWithProviders, saveUserDataOpenHome } from '@modules/utils';
-import { act, waitFor } from '@testing-library/react-native';
+import { saveUserDataOpenHome } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
+import { act } from '@testing-library/react-native';
 import { useTranslation } from 'react-i18next';
 import { Keyboard } from 'react-native';
 import { useLoginApi } from '@modules/features-auth';
@@ -50,9 +51,7 @@ jest.mock('react-i18next', () => ({
   useTranslation: jest.fn(),
 }));
 
-jest.mock('react-native', () => ({
-  ['Keyboard']: { dismiss: jest.fn() },
-}));
+jest.spyOn(Keyboard, 'dismiss').mockImplementation(() => undefined as any);
 
 const typedSetErrorDialogMessage =
   DialogsStore.setErrorDialogMessage as unknown as jest.Mock;
@@ -95,22 +94,21 @@ afterEach(() => {
 });
 
 describe('useLoginButton loading state', () => {
-  it('exposes pending flag from login api', () => {
+  it('exposes pending flag from login api', async () => {
     mockUseLoginApiReturn.isPending = true;
-
-    const { result } = renderHookWithProviders(() => useLoginButton());
+    const { result } = await renderHookWithProviders(() => useLoginButton());
 
     expect(result.current.isLoggingIn).toBe(true);
   });
 });
 
 describe('useLoginButton press handler', () => {
-  it('dismisses keyboard and triggers login with form data', () => {
+  it('dismisses keyboard and triggers login with form data', async () => {
     const formData = { username: 'john', password: 'secret' } as const;
 
-    const { result } = renderHookWithProviders(() => useLoginButton());
+    const { result } = await renderHookWithProviders(() => useLoginButton());
 
-    act(() => result.current.onLoginPress(formData));
+    await act(() => result.current.onLoginPress(formData));
 
     expect(Keyboard.dismiss).toHaveBeenCalledTimes(1);
     expect(mockUseLoginApiReturn.mutate).toHaveBeenCalledWith({
@@ -131,11 +129,9 @@ describe('useLoginButton success handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() =>
-      expect(typedSaveUserDataOpenHome).toHaveBeenCalledWith(user, token),
-    );
+    expect(typedSaveUserDataOpenHome).toHaveBeenCalledWith(user, token);
   });
 
   it('shows error dialog when response lacks user or token', async () => {
@@ -146,9 +142,9 @@ describe('useLoginButton success handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'setErrorDialogMessage',
       payload: 'common:errorWhileAction-auth:login',
@@ -168,9 +164,9 @@ describe('useLoginButton error handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'setErrorDialogMessage',
       payload: 'Server failed',
@@ -185,9 +181,9 @@ describe('useLoginButton error handling', () => {
     };
     typedUseLoginApi.mockReturnValue(mockUseLoginApiReturn);
 
-    renderHookWithProviders(() => useLoginButton());
+    await renderHookWithProviders(() => useLoginButton());
 
-    await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'setErrorDialogMessage',
       payload: 'common:errorWhileAction-auth:login',

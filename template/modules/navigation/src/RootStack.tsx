@@ -1,3 +1,4 @@
+import { FeatureErrorBoundary } from '@modules/components';
 import { LoginScreen } from '@modules/features-auth';
 import { DebugMenuStack } from '@modules/features-debug-menu';
 import { HomeScreen } from '@modules/features-home';
@@ -10,6 +11,30 @@ import type { RootStackParamList } from './RootStack.types';
 
 const stack = createNativeStackNavigator<RootStackParamList, 'RootStack'>();
 
+const WrappedLoginScreen = React.memo(() => (
+  <FeatureErrorBoundary featureName="auth">
+    <LoginScreen />
+  </FeatureErrorBoundary>
+));
+
+const WrappedHomeScreen = React.memo(() => (
+  <FeatureErrorBoundary featureName="home">
+    <HomeScreen />
+  </FeatureErrorBoundary>
+));
+
+const WrappedNotificationsScreen = React.memo(() => (
+  <FeatureErrorBoundary featureName="notifications">
+    <NotificationsScreen />
+  </FeatureErrorBoundary>
+));
+
+const WrappedDebugMenuStack = React.memo(() => (
+  <FeatureErrorBoundary featureName="debug-menu">
+    <DebugMenuStack />
+  </FeatureErrorBoundary>
+));
+
 export default React.memo(() => (
   <stack.Navigator
     id="RootStack"
@@ -18,13 +43,13 @@ export default React.memo(() => (
   >
     {/* Screens */}
     <stack.Screen name="splash" component={Splash} />
-    <stack.Screen name="login" component={LoginScreen} />
-    <stack.Screen name="home" component={HomeScreen} />
-    <stack.Screen name="notifications" component={NotificationsScreen} />
+    <stack.Screen name="login" component={WrappedLoginScreen} />
+    <stack.Screen name="home" component={WrappedHomeScreen} />
+    <stack.Screen name="notifications" component={WrappedNotificationsScreen} />
 
     {/* Navigators */}
     {Config.ENABLE_LOCAL_LOG === 'true' ? (
-      <stack.Screen name="debugMenuStack" component={DebugMenuStack} />
+      <stack.Screen name="debugMenuStack" component={WrappedDebugMenuStack} />
     ) : null}
 
     {/* Modals */}

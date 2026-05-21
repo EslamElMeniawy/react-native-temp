@@ -1,15 +1,45 @@
 {
   "extends": "@react-native/typescript-config",
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "module": "esnext",
     "baseUrl": ".",
     "paths": {
       "@src/*": ["./src/*"],
       "@packageJson": ["./package.json"],
-      "@appJson": ["./app.json"]
-    },
-    "types": ["jest"]
+      "@appJson": ["./app.json"],
+      "@modules/assets": ["./modules/assets/src"],
+      "@modules/assets/*": ["./modules/assets/src/*"],
+      "@modules/components": ["./modules/components/src"],
+      "@modules/components/*": ["./modules/components/src/*"],
+      "@modules/core": ["./modules/core/src"],
+      "@modules/core/*": ["./modules/core/src/*"],
+      "@modules/domain-user": ["./modules/domain/user/src"],
+      "@modules/domain-user/*": ["./modules/domain/user/src/*"],
+      "@modules/features-auth": ["./modules/features/auth/src"],
+      "@modules/features-auth/*": ["./modules/features/auth/src/*"],
+      "@modules/features-debug-menu": ["./modules/features/debug-menu/src"],
+      "@modules/features-debug-menu/*": ["./modules/features/debug-menu/src/*"],
+      "@modules/features-home": ["./modules/features/home/src"],
+      "@modules/features-home/*": ["./modules/features/home/src/*"],
+      "@modules/features-notifications": [
+        "./modules/features/notifications/src"
+      ],
+      "@modules/features-notifications/*": [
+        "./modules/features/notifications/src/*"
+      ],
+      "@modules/localization": ["./modules/localization/src"],
+      "@modules/localization/*": ["./modules/localization/src/*"],
+      "@modules/navigation": ["./modules/navigation/src"],
+      "@modules/navigation/*": ["./modules/navigation/src/*"],
+      "@modules/store": ["./modules/store/src"],
+      "@modules/store/*": ["./modules/store/src/*"],
+      "@modules/theme": ["./modules/theme/src"],
+      "@modules/theme/*": ["./modules/theme/src/*"],
+      "@modules/utils": ["./modules/utils/src"],
+      "@modules/utils/*": ["./modules/utils/src/*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "./index.js", "src", "@types", "modules"],
-  "exclude": ["**/node_modules", "**/Pods", "jest.setup.ts", "__mocks__"]
+  "exclude": ["**/node_modules", "**/Pods", "jest.setup.ts", "__mocks__", "e2e"]
 }

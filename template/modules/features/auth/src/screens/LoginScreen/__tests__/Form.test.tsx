@@ -78,16 +78,16 @@ jest.mock('@modules/features-auth/src/screens/LoginScreen/LoginButton', () => {
 });
 
 describe('LoginScreen Form', () => {
-  it('should render all form inputs', () => {
-    render(<Form />);
+  it('should render all form inputs', async () => {
+    await render(<Form />);
 
     expect(screen.getByTestId('username-input')).toBeTruthy();
     expect(screen.getByTestId('password-input')).toBeTruthy();
     expect(screen.getByTestId('login-button')).toBeTruthy();
   });
 
-  it('should initialize form with default values', () => {
-    render(<Form />);
+  it('should initialize form with default values', async () => {
+    await render(<Form />);
 
     const { useForm } = require('react-hook-form');
     expect(useForm).toHaveBeenCalledWith(
@@ -100,8 +100,8 @@ describe('LoginScreen Form', () => {
     );
   });
 
-  it('should render FormProvider wrapper', () => {
-    render(<Form />);
+  it('should render FormProvider wrapper', async () => {
+    await render(<Form />);
 
     expect(screen.getByTestId('username-input')).toBeTruthy();
   });

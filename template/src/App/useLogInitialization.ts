@@ -36,6 +36,26 @@ const setupShakeListener = () =>
     }
   });
 
+const filterReactotronNetworking = (
+  reactotron: ReactotronReactNative | null | undefined,
+) => {
+  if (!reactotron) {
+    return;
+  }
+
+  const originalApiResponse = reactotron.apiResponse?.bind(reactotron);
+
+  if (originalApiResponse) {
+    reactotron.apiResponse = (request, response, duration) => {
+      if (/generate_204/.test(request?.url ?? '')) {
+        return;
+      }
+
+      originalApiResponse(request, response, duration);
+    };
+  }
+};
+
 export const useLogInitialization = () => {
   React.useEffect(() => {
     const appName = getApplicationName();
@@ -43,7 +63,7 @@ export const useLogInitialization = () => {
     const queryClientManager = new QueryClientManager({ queryClient });
     const pluginCreators = createPlugins(queryClientManager);
 
-    configureLog?.({
+    const reactotron = configureLog?.({
       appName: appName,
       firebaseLogLevels:
         Config.ENABLE_FIREBASE_LOG === 'true'
@@ -59,7 +79,11 @@ export const useLogInitialization = () => {
     });
 
     if (isLocalLogEnable) {
-      startNetworkLogging({ ignoredPatterns: [/^HEAD /] });
+      filterReactotronNetworking(reactotron);
+
+      startNetworkLogging({
+        ignoredPatterns: [/^HEAD /, /generate_204/],
+      });
     }
 
     const shakeSubscription = isLocalLogEnable

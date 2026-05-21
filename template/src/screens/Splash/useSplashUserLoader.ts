@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { useGetUserDetailsApi, UserStore } from '@modules/domain-user';
 import { ApiTokenLocalStorage } from '@modules/features-auth';
-import { useGetUserDetailsApi, UserStore } from '@modules/features-profile';
 import { useAppDispatch } from '@modules/store';
 import { saveUserData } from '@modules/utils';
 

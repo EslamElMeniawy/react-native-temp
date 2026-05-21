@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { render } from '@testing-library/react-native';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import * as React from 'react';
 import ComponentToastManager from 'modules/components/src/Toast/ToastManager';
 
@@ -19,8 +19,19 @@ jest.mock('@eslam-elmeniawy/react-native-common-components', () => {
   const moduleMock: Record<string, any> = {};
   moduleMock.getStatusBarHeight = jest.fn(() => 24);
   moduleMock.ResponsiveDimensions = {
-    ms: jest.fn((value: number) => value),
+    setBaseDimensions: jest.fn(),
+    scale: jest.fn((value: number) => value),
+    s: jest.fn((value: number) => value),
+    verticalScale: jest.fn((value: number) => value),
     vs: jest.fn((value: number) => value),
+    moderateScale: jest.fn((value: number) => value),
+    ms: jest.fn((value: number) => value),
+    moderateVerticalScale: jest.fn((value: number) => value),
+    mvs: jest.fn((value: number) => value),
+    percentWidth: jest.fn((value: number) => value),
+    pw: jest.fn((value: number) => value),
+    percentHeight: jest.fn((value: number) => value),
+    ph: jest.fn((value: number) => value),
   };
   Object.defineProperty(moduleMock, '__esModule', { value: true });
   return moduleMock;
@@ -155,8 +166,8 @@ describe('ToastManager', () => {
     };
   }
 
-  it('passes theme, offsets, and icons to toast manager', () => {
-    render(<ComponentToastManager />);
+  it('passes theme, offsets, and icons to toast manager', async () => {
+    await renderWithProviders(<ComponentToastManager />);
 
     expect(mockToastManager).toHaveBeenCalledTimes(1);
 
@@ -183,8 +194,8 @@ describe('ToastManager', () => {
     );
   });
 
-  it('renders toast configs using provided components', () => {
-    render(<ComponentToastManager />);
+  it('renders toast configs using provided components', async () => {
+    await renderWithProviders(<ComponentToastManager />);
 
     const props = mockToastManager.mock.calls[0][0];
     const {
@@ -222,7 +233,7 @@ describe('ToastManager', () => {
     });
   });
 
-  it('uses light theme colors when dark mode is false', () => {
+  it('uses light theme colors when dark mode is false', async () => {
     const themeMock = jest.requireMock('@modules/theme') as jest.Mocked<
       Record<string, any>
     >;
@@ -234,7 +245,7 @@ describe('ToastManager', () => {
       },
     });
 
-    render(<ComponentToastManager />);
+    await renderWithProviders(<ComponentToastManager />);
 
     const props = mockToastManager.mock.calls[0][0];
 

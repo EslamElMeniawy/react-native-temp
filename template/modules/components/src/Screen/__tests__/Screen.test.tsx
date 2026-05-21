@@ -50,8 +50,8 @@ describe('Screen', () => {
     jest.clearAllMocks();
   });
 
-  it('renders content with safe-area paddings and passes bar props', () => {
-    const { toJSON } = render(
+  it('renders content with safe-area paddings and passes bar props', async () => {
+    const { toJSON } = await render(
       <Screen
         statusBarProps={{ hidden: true }}
         statusBarColor="#111111"
@@ -72,14 +72,14 @@ describe('Screen', () => {
       }),
     );
 
-    const tree = toJSON() as any[];
-    expect(Array.isArray(tree)).toBe(true);
+    const tree = toJSON() as unknown as any;
+    const children = tree.children as any[];
 
-    expect(tree[0].props.style).toEqual(
+    expect(children[0].props.style).toEqual(
       expect.objectContaining({ height: 10, backgroundColor: '#111111' }),
     );
 
-    expect(tree[1].props.style).toEqual(
+    expect(children[1].props.style).toEqual(
       expect.objectContaining({
         flex: 1,
         backgroundColor: '#101010',
@@ -89,12 +89,12 @@ describe('Screen', () => {
       }),
     );
 
-    expect(tree[2].props.style).toEqual(
+    expect(children[2].props.style).toEqual(
       expect.objectContaining({ height: 5, backgroundColor: '#222222' }),
     );
   });
 
-  it('respects edges by removing top and bottom padding', () => {
+  it('respects edges by removing top and bottom padding', async () => {
     safeAreaMock.useSafeAreaInsets.mockReturnValue({
       top: 3,
       bottom: 7,
@@ -102,19 +102,20 @@ describe('Screen', () => {
       right: 11,
     });
 
-    const { toJSON } = render(
+    const { toJSON } = await render(
       <Screen edges={['left', 'right']}>
         <React.Fragment />
       </Screen>,
     );
 
-    const tree = toJSON() as any[];
+    const tree = toJSON() as unknown as any;
+    const children = tree.children as any[];
 
-    expect(tree[0].props.style).toEqual(
+    expect(children[0].props.style).toEqual(
       expect.objectContaining({ height: 0, backgroundColor: '#101010' }),
     );
 
-    expect(tree[1].props.style).toEqual(
+    expect(children[1].props.style).toEqual(
       expect.objectContaining({
         backgroundColor: '#101010',
         paddingLeft: 9,
@@ -123,7 +124,7 @@ describe('Screen', () => {
       }),
     );
 
-    expect(tree[2].props.style).toEqual(
+    expect(children[2].props.style).toEqual(
       expect.objectContaining({ height: 0, backgroundColor: '#101010' }),
     );
   });

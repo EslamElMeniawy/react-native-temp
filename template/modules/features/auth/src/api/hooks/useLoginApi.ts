@@ -1,3 +1,4 @@
+import { useHttpClient } from '@modules/core';
 import { useMutation } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type { ServerError, ApiRequest } from '@modules/core';
@@ -10,13 +11,16 @@ const useLoginApi = (
     UseMutationOptions<LoginResponse, ServerError, ApiRequest<LoginBody>>,
     'mutationFn'
   >,
-) =>
-  useMutation<LoginResponse, ServerError, ApiRequest<LoginBody>>({
+) => {
+  const httpClient = useHttpClient();
+
+  return useMutation<LoginResponse, ServerError, ApiRequest<LoginBody>>({
     mutationFn: request =>
       Config.USE_FAKE_API === 'true'
         ? fakerAuth.login(request)
-        : queryAuth.login(request),
+        : queryAuth.login(httpClient, request),
     ...(options ?? {}),
   });
+};
 
 export default useLoginApi;

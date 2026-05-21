@@ -13,6 +13,7 @@ This directory contains the core building blocks of the application. Each packag
 - **`assets/`**: Images, fonts, and other static assets.
 - **`components/`**: Reusable UI components.
 - **`core/`**: Core utilities and base configurations.
+- **`domain/`**: Domain modules (e.g., `user`).
 - **`features/`**: Feature modules (e.g., `auth`, `home`, `profile`, `debug-menu`, `notifications`).
 - **`localization/`**: Internationalization setup.
 - **`navigation/`**: Navigation configuration and navigators.
@@ -68,7 +69,7 @@ The project uses **ESLint** and **Prettier** to enforce code quality and consist
 
 ## Hooks & commits
 
-- **Lefthook**: Pre-commit runs Prettier (src), ESLint --fix, and `tsc --noEmit` on staged files. Commit-msg runs commitlint.
+- **Lefthook**: Pre-commit runs Prettier (src), ESLint --fix, and `tsc --noEmit` on files differing from remote (`git diff --name-only @{push}`). Commit-msg runs commitlint.
 - **Commitlint**: Conventional commits enforced.
 
 ## Testing
@@ -80,5 +81,5 @@ The project uses **ESLint** and **Prettier** to enforce code quality and consist
 ## Tooling & environment
 
 - **TypeScript paths**: `@src/*`, `@packageJson`, `@appJson` via `tsconfig.json`.
-- **Yarn**: Yarn 4.10.2 (classic linker, `node_modules`), `yarnPath` under `.yarn/releases`.
+- **Yarn**: Yarn 4.14.1 (classic linker, `node_modules`), `yarnPath` under `.yarn/releases`.
 - **Fastlane**: iOS and Android lanes for badge, build, beta/release, and Firebase distribution.

@@ -1,6 +1,7 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it, beforeAll } from '@jest/globals';
 
 import AppLanguages from '@modules/localization/src/enums/AppLanguages';
+import { initializeLocalStorage } from '@modules/core/src/storage/MMKV';
 import {
   getLanguage,
   setLanguage,
@@ -8,10 +9,20 @@ import {
 } from '@modules/core/src/storage/language';
 
 describe('Language Storage', () => {
-  it('getLanguage returns language or null', () => {
-    const language = getLanguage();
+  beforeAll(() => {
+    initializeLocalStorage();
+  });
 
-    expect(language === null || typeof language === 'string').toBe(true);
+  it('getLanguage returns null when no language is set', () => {
+    removeLanguage();
+    const language = getLanguage();
+    expect(language).toBeNull();
+  });
+
+  it('getLanguage returns stored language after setLanguage', () => {
+    setLanguage(AppLanguages.ARABIC);
+    const language = getLanguage();
+    expect(language).toBe(AppLanguages.ARABIC);
   });
 
   it('setLanguage works without error', () => {

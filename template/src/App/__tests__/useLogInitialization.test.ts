@@ -1,5 +1,4 @@
 import { describe, expect, it, jest, beforeEach } from '@jest/globals';
-import { renderHook } from '@testing-library/react-native';
 import { getApplicationName } from 'react-native-device-info';
 import { startNetworkLogging } from 'react-native-network-logger';
 import Shake from 'react-native-shake';
@@ -7,6 +6,7 @@ import {
   QueryClientManager,
   reactotronReactQuery,
 } from 'reactotron-react-query';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 jest.mock('react-native-config', () => ({
   ['ENABLE_LOCAL_LOG']: 'false',
@@ -78,19 +78,19 @@ const testBasicSetup = function () {
     jest.clearAllMocks();
   });
 
-  it('calls configureLog on mount', function () {
+  it('calls configureLog on mount', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     expect(mockConfigureLog).toHaveBeenCalled();
   });
 
-  it('passes app name to configureLog', function () {
+  it('passes app name to configureLog', async function () {
     const appName = 'MyTestApp';
     mockGetApplicationName.mockReturnValue(appName);
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     const lastCall =
       mockConfigureLog.mock.calls[mockConfigureLog.mock.calls.length - 1];
@@ -99,18 +99,18 @@ const testBasicSetup = function () {
     });
   });
 
-  it('does not call startNetworkLogging when ENABLE_LOCAL_LOG is false', function () {
+  it('does not call startNetworkLogging when ENABLE_LOCAL_LOG is false', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     expect(mockStartNetworkLogging).not.toHaveBeenCalled();
   });
 
-  it('does not set shake listener when ENABLE_LOCAL_LOG is false', function () {
+  it('does not set shake listener when ENABLE_LOCAL_LOG is false', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     // Verify Shake.addListener was not called
     const shakeAddListenerCallCount = mockShake.addListener.mock.calls.length;
@@ -123,20 +123,20 @@ const testFirebaseLogConfiguration = function () {
     jest.clearAllMocks();
   });
 
-  it('does not set firebaseLogLevels when ENABLE_FIREBASE_LOG is false', function () {
+  it('does not set firebaseLogLevels when ENABLE_FIREBASE_LOG is false', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     const lastCall =
       mockConfigureLog.mock.calls[mockConfigureLog.mock.calls.length - 1];
     expect((lastCall[0] as any).firebaseLogLevels).toBeUndefined();
   });
 
-  it('sets isLocalLogEnable based on ENABLE_LOCAL_LOG', function () {
+  it('sets isLocalLogEnable based on ENABLE_LOCAL_LOG', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     const lastCall =
       mockConfigureLog.mock.calls[mockConfigureLog.mock.calls.length - 1];
@@ -151,10 +151,10 @@ const testNetworkLoggingSetup = function () {
     jest.clearAllMocks();
   });
 
-  it('includes onDisconnect callback in clientOptions', function () {
+  it('includes onDisconnect callback in clientOptions', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     const lastCall =
       mockConfigureLog.mock.calls[mockConfigureLog.mock.calls.length - 1];
@@ -163,7 +163,7 @@ const testNetworkLoggingSetup = function () {
     expect(typeof clientOptions.onDisconnect).toBe('function');
   });
 
-  it('calls unsubscribe on disconnect', function () {
+  it('calls unsubscribe on disconnect', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
     const mockUnsubscribe = jest.fn();
     mockQueryClientManager.mockImplementation(function (this: {
@@ -172,7 +172,7 @@ const testNetworkLoggingSetup = function () {
       this.unsubscribe = mockUnsubscribe;
     } as any);
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     const lastCall =
       mockConfigureLog.mock.calls[mockConfigureLog.mock.calls.length - 1];
@@ -182,10 +182,10 @@ const testNetworkLoggingSetup = function () {
     expect(mockUnsubscribe).toHaveBeenCalled();
   });
 
-  it('calls reactotronReactQuery plugin creator', function () {
+  it('calls reactotronReactQuery plugin creator', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    renderHook(() => useLogInitialization());
+    await renderHookWithProviders(() => useLogInitialization());
 
     expect(mockReactotronReactQuery).toHaveBeenCalled();
   });
@@ -196,10 +196,12 @@ const testCleanup = function () {
     jest.clearAllMocks();
   });
 
-  it('returns cleanup function on mount', function () {
+  it('returns cleanup function on mount', async function () {
     mockGetApplicationName.mockReturnValue('TestApp');
 
-    const { unmount } = renderHook(() => useLogInitialization());
+    const { unmount } = await renderHookWithProviders(() =>
+      useLogInitialization(),
+    );
 
     expect(() => {
       unmount();

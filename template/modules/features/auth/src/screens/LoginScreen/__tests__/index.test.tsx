@@ -42,15 +42,15 @@ jest.mock('@modules/features-auth/src/screens/LoginScreen/Form', () => {
 });
 
 describe('LoginScreen', () => {
-  it('should render correctly', () => {
-    render(<LoginScreen />);
+  it('should render correctly', async () => {
+    await render(<LoginScreen />);
 
     expect(screen.getByTestId('login-header')).toBeTruthy();
     expect(screen.getByTestId('login-form')).toBeTruthy();
   });
 
-  it('should render with correct scroll structure', () => {
-    render(<LoginScreen />);
+  it('should render with correct scroll structure', async () => {
+    await render(<LoginScreen />);
 
     const form = screen.getByTestId('login-form');
     expect(form).toBeTruthy();

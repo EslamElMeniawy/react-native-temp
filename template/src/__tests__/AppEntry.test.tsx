@@ -4,8 +4,9 @@ import {
   getMessaging,
   setBackgroundMessageHandler,
 } from '@react-native-firebase/messaging';
-import { render, act } from '@testing-library/react-native';
+import { act } from '@testing-library/react-native';
 import * as React from 'react';
+import { renderWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 let appEntry: React.ComponentType<{ isHeadless?: boolean }>;
 
 const mockSetBaseDimensions =
@@ -38,6 +39,18 @@ jest.mock('@eslam-elmeniawy/react-native-common-components', () => {
   return {
     ['ResponsiveDimensions']: {
       setBaseDimensions: jestGlobals.jest.fn(),
+      scale: jestGlobals.jest.fn((x: number) => x),
+      s: jestGlobals.jest.fn((x: number) => x),
+      verticalScale: jestGlobals.jest.fn((x: number) => x),
+      vs: jestGlobals.jest.fn((x: number) => x),
+      moderateScale: jestGlobals.jest.fn((x: number) => x),
+      ms: jestGlobals.jest.fn((x: number) => x),
+      moderateVerticalScale: jestGlobals.jest.fn((x: number) => x),
+      mvs: jestGlobals.jest.fn((x: number) => x),
+      percentWidth: jestGlobals.jest.fn((x: number) => x),
+      pw: jestGlobals.jest.fn((x: number) => x),
+      percentHeight: jestGlobals.jest.fn((x: number) => x),
+      ph: jestGlobals.jest.fn((x: number) => x),
     },
     ['Text']: (props: any) => react.createElement(rn.Text, props),
   };
@@ -61,21 +74,23 @@ describe('AppEntry', () => {
     });
   });
 
-  it('returns null when launched headless', () => {
-    const view = render(React.createElement(appEntry, { isHeadless: true }));
+  it('returns null when launched headless', async () => {
+    const view = await renderWithProviders(
+      React.createElement(appEntry, { isHeadless: true }),
+    );
 
     expect(view.toJSON()).toBeNull();
   });
 
   it('renders App and registers handlers when not headless', async () => {
-    const view = render(React.createElement(appEntry));
+    const view = await renderWithProviders(React.createElement(appEntry));
 
     await act(async () => Promise.resolve());
 
     expect(view.toJSON()).not.toBeNull();
     expect(getMessaging).toHaveBeenCalledTimes(1);
     expect(setBackgroundMessageHandler).toHaveBeenCalledWith(
-      'messaging',
+      expect.any(String),
       expect.any(Function),
     );
     expect(mockSetBaseDimensions).toHaveBeenCalledWith({

@@ -13,7 +13,7 @@ jest.mock('@react-native-firebase/messaging', () => ({
 }));
 
 import { useMessagingAutoInitialize } from '@src/App/useMessagingAutoInitialize';
-import { renderHookWithProviders } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 
 describe('useMessagingAutoInitialize', () => {
   const mockMessaging = {};
@@ -23,30 +23,30 @@ describe('useMessagingAutoInitialize', () => {
     mockGetMessaging.mockReturnValue(mockMessaging);
   });
 
-  test('should enable auto-init when disabled', () => {
+  test('should enable auto-init when disabled', async () => {
     mockIsAutoInitEnabled.mockReturnValue(false);
 
-    renderHookWithProviders(() => useMessagingAutoInitialize());
+    await renderHookWithProviders(() => useMessagingAutoInitialize());
 
     expect(mockGetMessaging).toHaveBeenCalledTimes(1);
     expect(mockIsAutoInitEnabled).toHaveBeenCalledWith(mockMessaging);
     expect(mockSetAutoInitEnabled).toHaveBeenCalledWith(mockMessaging, true);
   });
 
-  test('should not enable auto-init when already enabled', () => {
+  test('should not enable auto-init when already enabled', async () => {
     mockIsAutoInitEnabled.mockReturnValue(true);
 
-    renderHookWithProviders(() => useMessagingAutoInitialize());
+    await renderHookWithProviders(() => useMessagingAutoInitialize());
 
     expect(mockGetMessaging).toHaveBeenCalledTimes(1);
     expect(mockIsAutoInitEnabled).toHaveBeenCalledWith(mockMessaging);
     expect(mockSetAutoInitEnabled).not.toHaveBeenCalled();
   });
 
-  test('should call getMessaging on mount', () => {
+  test('should call getMessaging on mount', async () => {
     mockIsAutoInitEnabled.mockReturnValue(true);
 
-    renderHookWithProviders(() => useMessagingAutoInitialize());
+    await renderHookWithProviders(() => useMessagingAutoInitialize());
 
     expect(mockGetMessaging).toHaveBeenCalledTimes(1);
   });

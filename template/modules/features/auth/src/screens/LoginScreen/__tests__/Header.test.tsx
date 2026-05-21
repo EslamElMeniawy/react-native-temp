@@ -47,42 +47,42 @@ describe('LoginScreen Header', () => {
     mockTranslate.mockImplementation((...args: any[]) => args[0] as string);
   });
 
-  it('renders header with correct structure', () => {
-    render(<Header />);
-
-    expect(render(<Header />)).toBeTruthy();
-  });
-
-  it('displays translated login title', () => {
-    render(<Header />);
-
-    expect(mockTranslate).toHaveBeenCalledWith('login');
-  });
-
-  it('uses TranslationNamespaces.AUTH for translations', () => {
-    render(<Header />);
+  it('renders header with correct structure', async () => {
+    await render(<Header />);
 
     expect(mockTranslate).toHaveBeenCalled();
   });
 
-  it('renders without crashing', () => {
-    const { unmount } = render(<Header />);
+  it('displays translated login title', async () => {
+    await render(<Header />);
+
+    expect(mockTranslate).toHaveBeenCalledWith('login');
+  });
+
+  it('uses TranslationNamespaces.AUTH for translations', async () => {
+    await render(<Header />);
+
+    expect(mockTranslate).toHaveBeenCalled();
+  });
+
+  it('renders without crashing', async () => {
+    const { unmount } = await render(<Header />);
     unmount();
   });
 
-  it('uses memo for performance optimization', () => {
-    const { rerender } = render(<Header />);
+  it('uses memo for performance optimization', async () => {
+    const { rerender } = await render(<Header />);
 
     const initialCallCount = mockTranslate.mock.calls.length;
-    rerender(<Header />);
+    await rerender(<Header />);
 
     expect(mockTranslate.mock.calls.length).toBeLessThanOrEqual(
       initialCallCount + 1,
     );
   });
 
-  it('only renders Appbar.Header and Appbar.Content', () => {
-    render(<Header />);
+  it('only renders Appbar.Header and Appbar.Content', async () => {
+    await render(<Header />);
 
     expect(mockTranslate.mock.calls.length).toBeGreaterThanOrEqual(1);
   });

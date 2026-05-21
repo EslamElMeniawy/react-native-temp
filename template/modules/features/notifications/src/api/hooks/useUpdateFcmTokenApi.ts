@@ -1,3 +1,4 @@
+import { useHttpClient } from '@modules/core';
 import { useMutation } from '@tanstack/react-query';
 import { default as Config } from 'react-native-config';
 import type { ServerError, ApiRequest } from '@modules/core';
@@ -20,8 +21,10 @@ const useUpdateFcmTokenApi = (
     >,
     'mutationFn'
   >,
-) =>
-  useMutation<
+) => {
+  const httpClient = useHttpClient();
+
+  return useMutation<
     UpdateFcmTokenResponse,
     ServerError,
     ApiRequest<UpdateFcmTokenBody>
@@ -29,8 +32,9 @@ const useUpdateFcmTokenApi = (
     mutationFn: request =>
       Config.USE_FAKE_API === 'true'
         ? fakerNotifications.updateFcmToken(request)
-        : queryNotifications.updateFcmToken(request),
+        : queryNotifications.updateFcmToken(httpClient, request),
     ...(options ?? {}),
   });
+};
 
 export default useUpdateFcmTokenApi;

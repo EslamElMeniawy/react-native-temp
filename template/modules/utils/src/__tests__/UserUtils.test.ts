@@ -1,51 +1,30 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { ApiTokenLocalStorage } from '@modules/features-auth';
-import { UserLocalStorage, UserStore } from '@modules/features-profile';
-import { reset } from '@modules/navigation';
-import { store } from '@modules/store';
 import type { User } from '@modules/core';
 import {
+  registerUserServiceDependencies,
   saveUserData,
   saveApiToken,
   saveUserDataOpenHome,
-} from '@modules/utils/src/UserUtils';
+} from '@modules/utils/src';
+import type { UserServiceDependencies } from '@modules/utils/src/userServiceDependencies';
 
-// Mock all dependencies
-
-jest.mock('@modules/features-auth', () => ({
-  ['ApiTokenLocalStorage']: {
-    setApiToken: jest.fn(),
-  },
-}));
-
-jest.mock('@modules/features-notifications', () => ({}));
-
-jest.mock('@modules/features-profile', () => ({
-  ['UserLocalStorage']: {
-    setUser: jest.fn(),
-  },
-
-  ['UserStore']: {
-    setUser: jest.fn(() => ({ type: 'user/setUser' })),
-    setApiToken: jest.fn(() => ({ type: 'user/setApiToken' })),
-  },
-}));
-
-jest.mock('@modules/navigation', () => ({
-  reset: jest.fn(),
-}));
-
-jest.mock('@modules/store', () => ({
-  store: {
-    dispatch: jest.fn(),
-  },
-}));
-
-jest.mock('@react-native-firebase/messaging', () => ({
-  getMessaging: jest.fn(),
-}));
-
-jest.mock('@modules/utils', () => ({}));
+const createMockDeps = (): UserServiceDependencies => ({
+  setUser: jest.fn(),
+  removeUser: jest.fn(),
+  setApiToken: jest.fn(),
+  removeApiToken: jest.fn(),
+  removeUnreadNotificationsCount: jest.fn(),
+  removeFcmToken: jest.fn(),
+  dispatchSetUser: jest.fn(),
+  dispatchSetApiToken: jest.fn(),
+  dispatchRemoveUser: jest.fn(),
+  dispatchRemoveApiToken: jest.fn(),
+  dispatchRemoveUnreadNotificationsCount: jest.fn(),
+  resetNavigation: jest.fn(),
+  deleteMessagingToken: jest.fn<() => Promise<void>>().mockResolvedValue(),
+  cancelQueries: jest.fn<() => Promise<void>>().mockResolvedValue(),
+  clearQueryCache: jest.fn(),
+});
 
 describe('UserUtils - Storage - saveUserData', () => {
   const mockUser: User = {
@@ -53,22 +32,23 @@ describe('UserUtils - Storage - saveUserData', () => {
     name: 'Test User',
     email: 'test@example.com',
   };
-  const mockDispatch = jest.fn();
+  let mockDeps: UserServiceDependencies;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (store.dispatch as jest.Mock) = mockDispatch;
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
   });
 
   test('should save user to local storage', () => {
     saveUserData(mockUser);
-    expect(UserLocalStorage.setUser).toHaveBeenCalledWith(mockUser);
+    expect(mockDeps.setUser).toHaveBeenCalledWith(mockUser);
   });
 
   test('should dispatch setUser action to Redux store', () => {
     saveUserData(mockUser);
-    expect(mockDispatch).toHaveBeenCalledWith(UserStore.setUser(mockUser));
+    expect(mockDeps.dispatchSetUser).toHaveBeenCalledWith(mockUser);
   });
 
   test('should log the operation', () => {
@@ -82,24 +62,23 @@ describe('UserUtils - Storage - saveUserData', () => {
 
 describe('UserUtils - Storage - saveApiToken', () => {
   const mockApiToken = 'mock-api-token-12345';
-  const mockDispatch = jest.fn();
+  let mockDeps: UserServiceDependencies;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (store.dispatch as jest.Mock) = mockDispatch;
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
   });
 
   test('should save api token to local storage', () => {
     saveApiToken(mockApiToken);
-    expect(ApiTokenLocalStorage.setApiToken).toHaveBeenCalledWith(mockApiToken);
+    expect(mockDeps.setApiToken).toHaveBeenCalledWith(mockApiToken);
   });
 
   test('should dispatch setApiToken action to Redux store', () => {
     saveApiToken(mockApiToken);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      UserStore.setApiToken(mockApiToken),
-    );
+    expect(mockDeps.dispatchSetApiToken).toHaveBeenCalledWith(mockApiToken);
   });
 
   test('should log the operation', () => {
@@ -118,25 +97,28 @@ describe('UserUtils - Storage - saveUserDataOpenHome', () => {
     email: 'test@example.com',
   };
   const mockApiToken = 'mock-api-token-12345';
+  let mockDeps: UserServiceDependencies;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
   });
 
   test('should save user data', () => {
     saveUserDataOpenHome(mockUser, mockApiToken);
-    expect(UserLocalStorage.setUser).toHaveBeenCalledWith(mockUser);
+    expect(mockDeps.setUser).toHaveBeenCalledWith(mockUser);
   });
 
   test('should save api token', () => {
     saveUserDataOpenHome(mockUser, mockApiToken);
-    expect(ApiTokenLocalStorage.setApiToken).toHaveBeenCalledWith(mockApiToken);
+    expect(mockDeps.setApiToken).toHaveBeenCalledWith(mockApiToken);
   });
 
   test('should reset navigation to home screen', () => {
     saveUserDataOpenHome(mockUser, mockApiToken);
-    expect(reset).toHaveBeenCalledWith('home');
+    expect(mockDeps.resetNavigation).toHaveBeenCalledWith('home');
   });
 
   test('should log the operation', () => {

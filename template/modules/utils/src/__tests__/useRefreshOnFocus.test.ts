@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from '@jest/globals';
 import { useFocusEffect } from '@react-navigation/native';
-import { renderHookWithProviders } from '@modules/utils';
+import { renderHookWithProviders } from '@modules/utils/src/__tests__/TestUtils';
 import { useRefreshOnFocus } from '@modules/utils/src/useRefreshOnFocus';
 
 // Mock useFocusEffect
@@ -10,13 +10,13 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('useRefreshOnFocus', () => {
-  test('should not trigger refetch on initial render', () => {
+  test('should not trigger refetch on initial render', async () => {
     const refetch = jest.fn<() => Promise<unknown>>().mockResolvedValue({});
-    renderHookWithProviders(() => useRefreshOnFocus(refetch));
+    await renderHookWithProviders(() => useRefreshOnFocus(refetch));
     expect(refetch).toHaveBeenCalledTimes(0);
   });
 
-  test('should trigger refetch when screen gains focus', () => {
+  test('should trigger refetch when screen gains focus', async () => {
     const refetch = jest.fn<() => Promise<unknown>>().mockResolvedValue({});
     let focusCallback: () => void = () => {};
 
@@ -24,7 +24,7 @@ describe('useRefreshOnFocus', () => {
       focusCallback = callback as () => void;
     });
 
-    renderHookWithProviders(() => useRefreshOnFocus(refetch));
+    await renderHookWithProviders(() => useRefreshOnFocus(refetch));
 
     // Simulate first focus (should be skipped)
     focusCallback();

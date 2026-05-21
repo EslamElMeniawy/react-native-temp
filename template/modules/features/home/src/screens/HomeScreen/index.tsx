@@ -1,6 +1,6 @@
 import { Text } from '@eslam-elmeniawy/react-native-common-components';
 import { Screen, ScrollContainer } from '@modules/components';
-import { useGetUserDetailsApi } from '@modules/features-profile';
+import { useGetUserDetailsApi } from '@modules/domain-user';
 import { useFocusNotifyOnChangeProps, useRefreshOnFocus } from '@modules/utils';
 import * as React from 'react';
 import Header from './Header';

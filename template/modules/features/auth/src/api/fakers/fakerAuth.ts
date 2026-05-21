@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { type ApiRequest } from '@modules/core';
-import { fakerUser } from '@modules/features-profile';
+import { fakerUser } from '@modules/domain-user';
 import { randomIntFromInterval } from '@modules/utils';
 import type {
   LoginBody,

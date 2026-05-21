@@ -1,101 +1,58 @@
 import { describe, test, expect, jest, beforeEach } from '@jest/globals';
-import { ApiTokenLocalStorage } from '@modules/features-auth';
 import {
-  UnreadNotificationsCountLocalStorage,
-  FcmTokenLocalStorage,
-} from '@modules/features-notifications';
-import { UserLocalStorage, UserStore } from '@modules/features-profile';
-import { store } from '@modules/store';
-import { getMessaging, deleteToken } from '@react-native-firebase/messaging';
-import {
+  registerUserServiceDependencies,
   removeLocalStorageUserData,
   removeReduxUserData,
   removeUserData,
-} from '@modules/utils/src/UserUtils';
+} from '@modules/utils/src';
+import type { UserServiceDependencies } from '@modules/utils/src/userServiceDependencies';
 
-// Mock all dependencies
-
-jest.mock('@modules/features-auth', () => ({
-  ['ApiTokenLocalStorage']: {
-    setApiToken: jest.fn(),
-    removeApiToken: jest.fn(),
-  },
-}));
-
-jest.mock('@modules/features-notifications', () => ({
-  ['UnreadNotificationsCountLocalStorage']: {
-    setUnreadNotificationsCount: jest.fn(),
-    removeUnreadNotificationsCount: jest.fn(),
-  },
-
-  ['FcmTokenLocalStorage']: {
-    removeFcmToken: jest.fn(),
-  },
-}));
-
-jest.mock('@modules/features-profile', () => ({
-  ['UserLocalStorage']: {
-    setUser: jest.fn(),
-    removeUser: jest.fn(),
-  },
-
-  ['UserStore']: {
-    setUser: jest.fn(() => ({ type: 'user/setUser' })),
-    setApiToken: jest.fn(() => ({ type: 'user/setApiToken' })),
-    removeUser: jest.fn(() => ({ type: 'user/removeUser' })),
-    removeUnreadNotificationsCount: jest.fn(() => ({
-      type: 'user/removeUnreadNotificationsCount',
-    })),
-    removeApiToken: jest.fn(() => ({ type: 'user/removeApiToken' })),
-    setUnreadNotificationsCount: jest.fn(() => ({
-      type: 'user/setUnreadNotificationsCount',
-    })),
-  },
-}));
-
-jest.mock('@modules/navigation', () => ({
-  reset: jest.fn(),
-}));
-
-jest.mock('@modules/store', () => ({
-  store: {
-    dispatch: jest.fn(),
-  },
-}));
-
-jest.mock('@react-native-firebase/messaging', () => ({
-  getMessaging: jest.fn(),
-  deleteToken: jest.fn<() => Promise<void>>(),
-}));
-
-jest.mock('@modules/utils', () => ({}));
+const createMockDeps = (): UserServiceDependencies => ({
+  setUser: jest.fn(),
+  removeUser: jest.fn(),
+  setApiToken: jest.fn(),
+  removeApiToken: jest.fn(),
+  removeUnreadNotificationsCount: jest.fn(),
+  removeFcmToken: jest.fn(),
+  dispatchSetUser: jest.fn(),
+  dispatchSetApiToken: jest.fn(),
+  dispatchRemoveUser: jest.fn(),
+  dispatchRemoveApiToken: jest.fn(),
+  dispatchRemoveUnreadNotificationsCount: jest.fn(),
+  resetNavigation: jest.fn(),
+  deleteMessagingToken: jest.fn<() => Promise<void>>().mockResolvedValue(),
+  cancelQueries: jest.fn<() => Promise<void>>().mockResolvedValue(),
+  clearQueryCache: jest.fn(),
+});
 
 describe('UserUtils - removeLocalStorageUserData', () => {
+  let mockDeps: UserServiceDependencies;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
   });
 
   test('should remove user from local storage', () => {
     removeLocalStorageUserData();
-    expect(UserLocalStorage.removeUser).toHaveBeenCalled();
+    expect(mockDeps.removeUser).toHaveBeenCalled();
   });
 
   test('should remove unread notifications count from local storage', () => {
     removeLocalStorageUserData();
-    expect(
-      UnreadNotificationsCountLocalStorage.removeUnreadNotificationsCount,
-    ).toHaveBeenCalled();
+    expect(mockDeps.removeUnreadNotificationsCount).toHaveBeenCalled();
   });
 
   test('should remove api token from local storage', () => {
     removeLocalStorageUserData();
-    expect(ApiTokenLocalStorage.removeApiToken).toHaveBeenCalled();
+    expect(mockDeps.removeApiToken).toHaveBeenCalled();
   });
 
   test('should remove FCM token from local storage', () => {
     removeLocalStorageUserData();
-    expect(FcmTokenLocalStorage.removeFcmToken).toHaveBeenCalled();
+    expect(mockDeps.removeFcmToken).toHaveBeenCalled();
   });
 
   test('should log the operation', () => {
@@ -107,29 +64,28 @@ describe('UserUtils - removeLocalStorageUserData', () => {
 });
 
 describe('UserUtils - removeReduxUserData', () => {
-  const mockDispatch = jest.fn();
+  let mockDeps: UserServiceDependencies;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (store.dispatch as jest.Mock) = mockDispatch;
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
   });
 
   test('should dispatch removeUser action', () => {
     removeReduxUserData();
-    expect(mockDispatch).toHaveBeenCalledWith(UserStore.removeUser());
+    expect(mockDeps.dispatchRemoveUser).toHaveBeenCalled();
   });
 
   test('should dispatch removeUnreadNotificationsCount action', () => {
     removeReduxUserData();
-    expect(mockDispatch).toHaveBeenCalledWith(
-      UserStore.removeUnreadNotificationsCount(),
-    );
+    expect(mockDeps.dispatchRemoveUnreadNotificationsCount).toHaveBeenCalled();
   });
 
   test('should dispatch removeApiToken action', () => {
     removeReduxUserData();
-    expect(mockDispatch).toHaveBeenCalledWith(UserStore.removeApiToken());
+    expect(mockDeps.dispatchRemoveApiToken).toHaveBeenCalled();
   });
 
   test('should log the operation', () => {
@@ -141,56 +97,54 @@ describe('UserUtils - removeReduxUserData', () => {
 });
 
 describe('UserUtils - removeUserData - Basic', () => {
-  const mockDispatch = jest.fn();
-  const mockGetMessaging = jest.fn();
+  let mockDeps: UserServiceDependencies;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (store.dispatch as jest.Mock) = mockDispatch;
-    (getMessaging as jest.Mock).mockReturnValue(mockGetMessaging);
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
     console.error = jest.fn();
   });
 
   test('should remove local storage user data', async () => {
     await removeUserData();
-    expect(UserLocalStorage.removeUser).toHaveBeenCalled();
+    expect(mockDeps.removeUser).toHaveBeenCalled();
   });
 
   test('should remove Redux user data', async () => {
     await removeUserData();
-    expect(mockDispatch).toHaveBeenCalledWith(UserStore.removeUser());
+    expect(mockDeps.dispatchRemoveUser).toHaveBeenCalled();
   });
 
   test('should delete FCM token', async () => {
-    (deleteToken as jest.Mock).mockResolvedValue(undefined as never);
     await removeUserData();
-    expect(deleteToken).toHaveBeenCalledWith(mockGetMessaging as never);
+    expect(mockDeps.deleteMessagingToken).toHaveBeenCalled();
   });
 });
 
 describe('UserUtils - removeUserData - Advanced', () => {
-  const mockDispatch = jest.fn();
-  const mockGetMessaging = jest.fn();
+  let mockDeps: UserServiceDependencies;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (store.dispatch as jest.Mock) = mockDispatch;
-    (getMessaging as jest.Mock).mockReturnValue(mockGetMessaging);
+    mockDeps = createMockDeps();
+    registerUserServiceDependencies(mockDeps);
     console.info = jest.fn();
     console.error = jest.fn();
   });
 
   test('should call onFinish callback when provided', async () => {
     const onFinish = jest.fn();
-    (deleteToken as jest.Mock).mockResolvedValue(undefined as never);
     await removeUserData(onFinish);
     expect(onFinish).toHaveBeenCalled();
   });
 
   test('should handle deleteToken error gracefully', async () => {
     const error = new Error('Failed to delete token');
-    (deleteToken as jest.Mock).mockRejectedValue(error as never);
+    (mockDeps.deleteMessagingToken as jest.Mock).mockRejectedValue(
+      error as never,
+    );
     await removeUserData();
     expect(console.error).toHaveBeenCalledWith(
       expect.stringContaining('deleteToken Error'),
@@ -200,7 +154,7 @@ describe('UserUtils - removeUserData - Advanced', () => {
 
   test('should call onFinish even when deleteToken fails', async () => {
     const onFinish = jest.fn();
-    (deleteToken as jest.Mock).mockRejectedValue(
+    (mockDeps.deleteMessagingToken as jest.Mock).mockRejectedValue(
       new Error('Token error') as never,
     );
     await removeUserData(onFinish);

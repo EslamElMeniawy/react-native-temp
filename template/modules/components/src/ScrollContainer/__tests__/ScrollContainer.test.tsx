@@ -24,9 +24,9 @@ jest.mock('@eslam-elmeniawy/react-native-common-components', () => {
 });
 
 describe('ScrollContainer', () => {
-  it('composes content container styles and passes through props', () => {
+  it('composes content container styles and passes through props', async () => {
     const inner = React.createElement('View', { testID: 'child' });
-    const { toJSON } = render(
+    const { toJSON } = await render(
       <ScrollContainer contentContainerStyle={{ padding: 12 }} testID="list">
         {inner}
       </ScrollContainer>,

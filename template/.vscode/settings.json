@@ -1,10 +1,10 @@
 {
   // Format a file on save. A formatter must be available, the file must not be auto-saved, and editor must not be shutting down.
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "prettier.prettier-vscode",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   // Enable/disable default JavaScript formatter (For Prettier)
-  "javascript.format.enable": false,
+  "js/ts.format.enabled": false,
 
   // Enable/disable default JSON formatter (For Prettier)
   "json.format.enable": false,
@@ -18,8 +18,6 @@
   },
 
   "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
-    "editor.defaultFormatter": "prettier.prettier-vscode"
-  },
-
-  "java.configuration.updateBuildConfiguration": "interactive"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
