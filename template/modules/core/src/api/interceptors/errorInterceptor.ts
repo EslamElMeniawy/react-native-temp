@@ -1,7 +1,9 @@
 import axios from 'axios';
-import type { ServerError, ServerErrorResponse } from '@modules/core';
+import type { ServerErrorResponse } from '@modules/core';
+import ServerError from '@modules/core/src/api/entities/ServerError';
 import { getHttpClientDependencies } from '@modules/core/src/api/httpClientDependencies';
 import skip401Urls from '@modules/core/src/api/skip401Urls';
+import { NetworkError, NetworkErrorCode } from '@modules/core/src/errors';
 
 import type { AxiosError } from 'axios';
 
@@ -69,21 +71,54 @@ export const getErrorMessage = (
 };
 
 /**
- * Handles axios errors by processing 401s and constructing a ServerError.
+ * Determines the appropriate NetworkErrorCode from an AxiosError.
+ */
+const getNetworkErrorCode = (
+  error: AxiosError<ServerErrorResponse>,
+): NetworkErrorCode => {
+  if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+    return NetworkErrorCode.TIMEOUT;
+  }
+
+  if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+    return NetworkErrorCode.NO_CONNECTION;
+  }
+
+  return NetworkErrorCode.REQUEST_FAILED;
+};
+
+/**
+ * Handles axios errors by processing 401s and constructing a structured error.
  */
 export const handleAxiosError = (error: AxiosError<ServerErrorResponse>) => {
   console.info(getLogMessage('handleAxiosError'), error);
   handle401Error(error);
 
-  const severError: ServerError = {
-    ...error,
-    date: new Date(),
-    status: error.response?.status,
-    data: error.response?.data,
-    errorMessage: getErrorMessage(error),
-  };
+  // Network-level failure (no response received from server)
+  if (!error.response) {
+    const networkError = new NetworkError(
+      getErrorMessage(error),
+      getNetworkErrorCode(error),
+      undefined,
+      error,
+    );
 
-  return Promise.reject(severError);
+    return Promise.reject(networkError);
+  }
+
+  // Server responded with an error status
+  const serverError = new ServerError(
+    getErrorMessage(error),
+    error.response.status,
+    {
+      date: new Date(),
+      data: error.response.data,
+      errorMessage: getErrorMessage(error),
+      cause: error,
+    },
+  );
+
+  return Promise.reject(serverError);
 };
 
 /**
@@ -96,12 +131,17 @@ const errorInterceptor = (error: any) => {
 
   const deps = getHttpClientDependencies();
 
-  const severError: ServerError = {
-    ...error,
-    errorMessage: deps.translate('unknownError'),
-  };
+  const serverError = new ServerError(
+    deps.translate('unknownError'),
+    0,
+    {
+      date: new Date(),
+      errorMessage: deps.translate('unknownError'),
+      cause: error instanceof Error ? error : undefined,
+    },
+  );
 
-  return Promise.reject(severError);
+  return Promise.reject(serverError);
 };
 
 export default errorInterceptor;

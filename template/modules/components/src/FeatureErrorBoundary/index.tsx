@@ -1,3 +1,4 @@
+import { isAppError, isOperationalError } from '@modules/core';
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import FallbackComponent from './FallbackComponent';
@@ -15,7 +16,16 @@ const FeatureErrorBoundary = ({
   children,
 }: PropsWithChildren<FeatureErrorBoundaryProps>) => {
   const onError = (error: unknown, info: ErrorInfo) => {
-    console.error(`FeatureErrorBoundary::${featureName}`, error, info);
+    if (isAppError(error)) {
+      console.error(
+        `FeatureErrorBoundary::${featureName} [${error.code}] operational=${isOperationalError(error)}`,
+        error,
+        info,
+      );
+    } else {
+      console.error(`FeatureErrorBoundary::${featureName}`, error, info);
+    }
+
     onErrorProp?.(error, featureName);
   };
 
