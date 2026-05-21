@@ -63,8 +63,7 @@ export const useInitialization = (): InitializationState => {
   }, [languageLoaded]);
 
   const isReady = useMemo(
-    () =>
-      Object.values(phaseStatuses).every(s => s === PhaseStatus.COMPLETED),
+    () => Object.values(phaseStatuses).every(s => s === PhaseStatus.COMPLETED),
     [phaseStatuses],
   );
 
