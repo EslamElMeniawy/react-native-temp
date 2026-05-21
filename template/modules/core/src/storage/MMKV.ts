@@ -1,6 +1,4 @@
-import {
-  createMMKV,
-} from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
 import type { LocalStorageKeys } from '@modules/core';
 import { StorageError, StorageErrorCode } from '@modules/core/src/errors';
 import type { MMKV } from 'react-native-mmkv';
